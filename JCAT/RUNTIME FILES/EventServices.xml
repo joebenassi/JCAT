@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<channel>
+	<name>Event Service</name>
+	<prefix>EVS</prefix>
+
+	<commands>
+		<command>
+			<name>COMMANDNAME1</name>
+			<data>somedata</data>
+		</command>
+		<command>
+			<name>COMMANDNAME1</name>
+			<data>somedata</data>
+		</command>
+		<command>
+			<name>COMMANDNAME1</name>
+			<data>somedata</data>
+		</command>
+	</commands>
+	
+	<telemetrynames>
+		<name>TlmHeader</name>
+		<name>CommandCounter</name>
+		<name>CommandErrCounter</name>
+		<name>MessageFormatMode</name>
+		<name>MessageTruncCounter</name>
+		<name>UnregisteredAppCounter</name>
+		<name>OutputPort</name>
+		<name>LogFullFlag</name>
+		<name>LogMode</name>
+		<name>MessageSendCounter</name>
+		<name>LogOverflowCounter</name>
+		<name>MemPoolHandle</name>
+		<name>AppData</name>
+	</telemetrynames>
+</channel>

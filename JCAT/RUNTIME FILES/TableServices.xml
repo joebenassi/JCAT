@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<channel>
+	<name>Table Service</name>
+	<prefix>TBL</prefix>
+
+	<commands>
+		<command>
+			<name>COMMANDNAME1</name>
+			<data>somedata</data>
+		</command>
+		<command>
+			<name>COMMANDNAME1</name>
+			<data>somedata</data>
+		</command>
+		<command>
+			<name>COMMANDNAME1</name>
+			<data>somedata</data>
+		</command>
+	</commands>
+	
+	<telemetrynames>
+		<name>TlmHeader</name>
+		<name>CmdCounter</name>
+		<name>ErrCounter</name>
+		<name>NumTables</name>
+		<name>NumLoadPending</name>
+		<name>ValidationCtr</name>
+		<name>LastValCrc</name>
+		<name>LastValStatus</name>
+		<name>ActiveBuffer</name>
+		<name>LastValTableName</name>
+		<name>SuccessValCtr</name>
+		<name>FailedValCtr</name>
+		<name>NumValRequests</name>
+		<name>NumFreeSharedBufs</name>
+		<name>ByteAlignPad1</name>
+		<name>MemPoolHandle</name>
+		<name>LastUpdateTime</name>
+		<name>LastUpdatedTbl</name>
+		<name>LastFileLoaded</name>
+		<name>LastFileDumped</name>
+		<name>ByteAlignPad2</name>
+	</telemetrynames>
+</channel>

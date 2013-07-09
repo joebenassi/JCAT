@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<channel>
+	<name>Software Bus Services</name>
+	<prefix>SB</prefix>
+
+	<commands>
+		<command>
+			<name>COMMANDNAME1</name>
+			<data>somedata</data>
+		</command>
+		<command>
+			<name>COMMANDNAME1</name>
+			<data>somedata</data>
+		</command>
+		<command>
+			<name>COMMANDNAME1</name>
+			<data>somedata</data>
+		</command>
+	</commands>
+	
+	<telemetrynames>
+		<name>Hdr</name>
+		<name>CommandCnt</name>
+		<name>CmdErrCnt</name>
+		<name>NoSubscribersCnt</name>
+		<name>MsgSendErrCnt</name>
+		<name>MsgReceiveErrCnt</name>
+		<name>InternalErrCnt</name>
+		<name>CreatePipeErrCnt</name>
+		<name>SubscribeErrCnt</name>
+		<name>Spare</name>
+		<name>DupSubscriptionsCnt</name>
+		<name>Spare2Align</name>
+		<name>PopeOverflowErrCnt</name>
+		<name>MsgIDToPipeErrCnt</name>
+		<name>MemPoolHandle</name>
+	</telemetrynames>
+</channel>

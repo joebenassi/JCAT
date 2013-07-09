@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<channel>
+	<name>Time Services</name>
+	<prefix>TIME</prefix>
+
+	<commands>
+		<command>
+			<name>COMMANDNAME1</name>
+			<data>somedata</data>
+		</command>
+		<command>
+			<name>COMMANDNAME1</name>
+			<data>somedata</data>
+		</command>
+		<command>
+			<name>COMMANDNAME1</name>
+			<data>somedata</data>
+		</command>
+	</commands>
+	
+	<telemetrynames>
+		<name>TlmHeader</name>
+		<name>CmdCounter</name>
+		<name>ErrCounter</name>
+		<name>ClockStateFlags</name>
+		<name>LeapSeconds</name>
+		<name>SecondsMET</name>
+		<name>SubsecsMET</name>
+		<name>SecondsSTCF</name>
+		<name>SubsecsSTCF</name>
+	</telemetrynames>
+</channel>
