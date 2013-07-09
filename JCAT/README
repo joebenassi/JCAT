@@ -1,0 +1,108 @@
+JCAT README
+LAST UPDATED: July 8, 2013
+
+TOOLS TO NAVIGATE JCAT CODE:
+	1. SUMMARY OF STARTUP: Walkthrough of code execution. [Broad Overview].
+	2. PACKAGE INFORMATION: Breif summary of each class. [Description of Parts].
+	3. JavaDocs: In-Depth. [Highly-Detailed Definitions].
+
+---------------------------------
+SUMMARY OF STARTUP: 
+main.Launcher.main is executed. 
+	A Shell is created. 
+	gui.mainpage.MainPageFiller is utilized.
+		Adds a TopBar, StatusWindowSash, and CommandLine to the Shell.
+	gui.menu is utilized.
+		Adds a menu without apps to the Shell (the Command and Telemetry menus are empty).
+		When File -> Populate Apps -> (Select XML files) -> Open is clicked,
+		applications.XMLParser is utilized.
+			XMLParser parses each document for app configuration details, and 
+			creates a new applications.App.
+				Each App is completely defined, including all Telemetry and 
+				Command information. Creates its gui.popup.PopupFiller, which will
+				display telemetry information. There is no equivalent like this for Command.
+					PopupFiller is completely defined. Creates its various 
+					parts: Titlebox, UniversalBox, LeftBar, and EntryBox and its Entrys.
+					When File -> Telemetry -> (SomeApp) is clicked, (SomeApp).launchPopup()
+					is executed, which displays its instance of PopupFiller, and its 
+					telemetry information.
+
+---------------------------------
+PACKAGE INFORMATION:
+
+main: 
+	A. Launcher: The class whose main method executes the program.
+	Utilizes gui.mainpage and gui.menu.
+	
+gui.mainpage:
+	A. MainPageFiller: The class that fills the main page of
+	the program. 
+	B. TopBar: (Contained within MainPageFiller).
+	C. CommandLine: (Contained within MainPageFiller).
+	D. StatusWindowSash: (Contained within MainPageFiller).
+	E. StatusWindow: (Contained within StatusWindowSash).
+	F. PicturePopup: (CLASS SUBJECT TO CHANGE) (CURRENTLY UNUSED).
+
+gui.menu:
+	A. MenuFiller: The class that populates the menu. 
+	Executed upon startup.
+	B. MenuHelper: a helper class
+	
+applications:
+	A. App: (CLASS SUBJECT TO CHANGE). The foundation of any flight software app
+	B. Telemetry: (CLASS SUBJECT TO CHANGE). A current-value object to store the name 
+	and value of a single telemetry entry. There is an array 
+	of them for each App, and the GUI is updated by setting 
+	the displayed values to these.
+	C. XMLParser: Used only once for each App. Used after 
+	navigating to File->Populate Apps, selecting apps, and 
+	pressing Enter.
+	
+helpers:
+	A. ColorConstants: Simply stores Color objects. Referenced by the GUI.
+	B. FontConstants: Simply stores Font objects. Referenced by the GUI.
+	C. Updater: (CLASS SUBJECT TO CHANGE). Stores and updates the 
+	values of GMT, SC, UTC, and Sequence Count. Heavy use of Threads.
+	
+gui.popup:
+	A. PopupFiller: The class that contains the Shell that 
+	displays the telemetry for an App. Every App has a 
+	PopupFiller, and it is created within the constructor of 
+	said App.
+	B. LeftBar: (Contained within a PopupFiller)
+	C. TitleBox: (Contained within a PopupFiller)
+	D. UniversalBox: (Contained within a PopupFiller)
+	E. EntryBox: (Contained within a PopupFiller)
+	F. Entry: (Contained within an EntryBox)
+	G. ProgressBarPopup: (CLASS SUBJECT TO CHANGE/REMOVAL) (CURRENTLY UNUSED).
+	
+
+	
+gui.menu.prompts:
+	A. AboutPrompt: Displays the "About JCAT" information. 
+	Displayed via Help -> About JCAT
+	B. CommandPrompt: Prompts for parameter information for 
+	a executed Command. Displayed via Command -> (app) -> 
+	(app command).
+	C. GenericInputPrompt: A helper class.
+	D. GenericTextPrompt: A helper class.
+	E. GettingStartedPrompt: Displays the "Getting Started" 
+	information. Displayed via Help -> Getting Started
+	F. PopulateAppsPrompt: Prompts the user to select XML 
+	files to configure Apps. Displayed via File -> Populate 
+	Apps.
+	G. RecieverPrompt: Prompts the user for desired IP and 
+	prompt to send commands to. Displayed via File -> Add 
+	Reciever.
+	
+udp:
+	A. PacketSender: (CLASS SUBJECT TO CHANGE/REMOVAL). 
+	(CURRENTLY BARELY USED). Stores IP/Port info and/or sends 
+	packets.
+	
+app: (McComas Package)
+ccsds: (McComas Package)
+curval: (McComas Package)
+fsw: (McComas Package) 
+	A. CmdPkt: Currently utilized in applications.App
+network: (McComas Package)
