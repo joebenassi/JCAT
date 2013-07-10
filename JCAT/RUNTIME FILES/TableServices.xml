@@ -6,16 +6,108 @@
 
 	<commands>
 		<command>
-			<name>COMMANDNAME1</name>
+			<name>CFE_TBL_NOOP_CC</name>
 			<data>somedata</data>
 		</command>
 		<command>
-			<name>COMMANDNAME1</name>
+			<name>CFE_TBL_RESET_CC</name>
 			<data>somedata</data>
 		</command>
 		<command>
-			<name>COMMANDNAME1</name>
+			<name>CFE_TBL_LOAD_CC</name>
 			<data>somedata</data>
+			<parameters>
+				<inputparameter>
+					<name>LoadFilename</name>
+					<type>char</type>
+				</inputparameter>
+			</parameters>
+		</command>
+		<command>
+			<name>CFE_TBL_DUMP_CC</name>
+			<data>somedata</data>
+			<parameters>
+				<choiceparameter>
+					<name>ActiveTblFlag</name>
+					<type>uint16</type>
+					<choice>CFE_TBL_INACTIVE_BUFFER</choice>
+					<choice>CFE_TBL_ACTIVE_BUFFER</choice>
+				</choiceparameter>
+				<inputparameter>
+					<name>TableName</name>
+					<type>char</type>
+				</inputparameter>
+				<inputparameter>
+					<name>DumpFilename</name>
+					<type>char</type>
+				</inputparameter>
+			</parameters>
+		</command>
+		<command>
+			<name>CFE_TBL_VALIDATE_CC</name>
+			<data>somedata</data>
+			<parameters>
+				<choiceparameter>
+					<name>ActiveTblFlag</name>
+					<type>uint16</type>
+					<choice>CFE_TBL_INACTIVE_BUFFER</choice>
+					<choice>CFE_TBL_ACTIVE_BUFFER</choice>
+				</choiceparameter>
+				<inputparameter>
+					<name>TableName</name>
+					<type>char</type>
+				</inputparameter>
+			</parameters>
+		</command>
+		<command>
+			<name>CFE_TBL_ACTIVATE_CC</name>
+			<data>somedata</data>
+			<parameters>
+				<inputparameter>
+					<name>TableName</name>
+					<type>char</type>
+				</inputparameter>
+			</parameters>
+		</command>
+		<command>
+			<name>CFE_TBL_DUMP_REG_CC</name>
+			<data>somedata</data>
+			<parameters>
+				<inputparameter>
+					<name>DumpFilename</name>
+					<type>char</type>
+				</inputparameter>
+			</parameters>
+		</command>
+		<command>
+			<name>CFE_TBL_TLM_REG_CC</name>
+			<data>somedata</data>
+			<parameters>
+				<inputparameter>
+					<name>TableName</name>
+					<type>char</type>
+				</inputparameter>
+			</parameters>
+		</command>
+		<command>
+			<name>CFE_TBL_DELETE_CDS_CC</name>
+			<data>somedata</data>
+			<parameters>
+				<inputparameter>
+					<name>TableName</name>
+					<type>char</type>
+				</inputparameter>
+			</parameters>
+		</command>
+		<command>
+			<name>CFE_TBL_ABORT_LOAD_CC</name>
+			<data>somedata</data>
+			<parameters>
+				<inputparameter>
+					<name>TableName</name>
+					<type>char</type>
+				</inputparameter>
+			</parameters>
 		</command>
 	</commands>
 	

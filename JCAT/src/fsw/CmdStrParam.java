@@ -1,5 +1,7 @@
 package fsw;
 
+import gui.menu.prompts.ParameterDetails;
+
 public class CmdStrParam extends CmdParam
 {
 
@@ -9,9 +11,9 @@ public class CmdStrParam extends CmdParam
     * NumBytes is the maximum length of teh string
     * 
     */
-   public CmdStrParam(String Name, String DefValue, int NumBytes)
+   public CmdStrParam(String Name, ParameterDetails parameterDetails, String DefValue, int NumBytes)
    {
-      super (Name, ParamType.STR, DefValue, NumBytes);
+      super (Name, parameterDetails, ParamType.STR, DefValue, NumBytes);
       
    } // End CmdParam()
    

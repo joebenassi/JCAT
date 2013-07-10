@@ -1,5 +1,6 @@
 package fsw;
 
+import gui.menu.prompts.ParameterDetails;
 import ccsds.*;
 
 public class EsApp extends FswApp {
@@ -56,13 +57,13 @@ public class EsApp extends FswApp {
 
 		CmdPkt Cmd = new CmdPkt(PREFIX_STR, "Set Sys Log Mode", CMD_MID,
 				CMD_FC_OVERWRITE_SYSLOG, 4);
-		Cmd.addParam(new CmdIntParam("Mode", "0", 4)); // 0=Overwrite, 1=Discard
+		Cmd.addParam(new CmdIntParam("Mode", new ParameterDetails(true),"0", 4)); // 0=Overwrite, 1=Discard
 		Cmd.loadParamList();
 		commands.set(CMD_FC_OVERWRITE_SYSLOG, Cmd);
 
 		Cmd = new CmdPkt(PREFIX_STR, "Write Sys Log to a File", CMD_MID,
 				CMD_FC_WRITE_SYSLOG, 64); // One string parameter
-		Cmd.addParam(new CmdStrParam("Path/Filename", "/cf/cfe_es_syslog.log",
+		Cmd.addParam(new CmdStrParam("Path/Filename",  new ParameterDetails(true), "/cf/cfe_es_syslog.log",
 				64)); // Null string uses default, 64 = Max path/filename
 						// (OS_MAX_PATH_LEN)
 		Cmd.loadParamList();
@@ -70,7 +71,7 @@ public class EsApp extends FswApp {
 
 		Cmd = new CmdPkt(PREFIX_STR, "Write Err Log to a File", CMD_MID,
 				CMD_FC_WRITE_ERLOG, 64); // One string parameter
-		Cmd.addParam(new CmdStrParam("Path/Filename", "/cf/cfe_es_errlog.log",
+		Cmd.addParam(new CmdStrParam("Path/Filename",  new ParameterDetails(true), "/cf/cfe_es_errlog.log",
 				64)); // Null string uses default, 64 = Max path/filename
 						// (OS_MAX_PATH_LEN)
 		Cmd.loadParamList();
@@ -78,7 +79,7 @@ public class EsApp extends FswApp {
 
 		Cmd = new CmdPkt(PREFIX_STR, "Restart Application", CMD_MID,
 				CMD_FC_RESTART_APP, 20); // One string parameter
-		Cmd.addParam(new CmdStrParam("App Name", "EX_APP", 20)); // 20 = Max API
+		Cmd.addParam(new CmdStrParam("App Name",  new ParameterDetails(true), "EX_APP", 20)); // 20 = Max API
 																	// Name
 																	// (OS_MAX_API_NAME)
 		Cmd.loadParamList();

@@ -1,5 +1,6 @@
 package fsw;
 
+import gui.menu.prompts.ParameterDetails;
 import ccsds.CcsdsTlmPkt;
 
 public class ToApp extends FswApp
@@ -66,15 +67,15 @@ public class ToApp extends FswApp
       CmdList.set(CMD_FC_ENA_TLM,cmdPkt);
 */
       cmdPkt = new CmdPkt(PREFIX_STR, "Add Pkt", CMD_MID, CMD_FC_ADD_PKT, 7);
-      cmdPkt.addParam(new CmdIntParam("Message ID","2048", 2));  // // 3840 = 0xF00 (ExApp), 2048 = 0x800 (ES HK)
-      cmdPkt.addParam(new CmdIntParam("Pkt Size","50", 2));
-      cmdPkt.addParam(new CmdIntParam("SB QoS","0", 2));
-      cmdPkt.addParam(new CmdIntParam("Buffer Cnt","1", 1));
+      cmdPkt.addParam(new CmdIntParam("Message ID",  new ParameterDetails(true), "2048", 2));  // // 3840 = 0xF00 (ExApp), 2048 = 0x800 (ES HK)
+      cmdPkt.addParam(new CmdIntParam("Pkt Size",  new ParameterDetails(true), "50", 2));
+      cmdPkt.addParam(new CmdIntParam("SB QoS",  new ParameterDetails(true), "0", 2));
+      cmdPkt.addParam(new CmdIntParam("Buffer Cnt",  new ParameterDetails(true), "1", 1));
       cmdPkt.loadParamList();
       commands.set(CMD_FC_ADD_PKT, cmdPkt);
       
       cmdPkt = new CmdPkt(PREFIX_STR, "Rem Pkt", CMD_MID, CMD_FC_REM_PKT, 2); // One 2 byte parameter
-      cmdPkt.addParam(new CmdIntParam("Message ID","3840", 2));
+      cmdPkt.addParam(new CmdIntParam("Message ID",  new ParameterDetails(true), "3840", 2));
       cmdPkt.loadParamList();
       commands.set(CMD_FC_REM_PKT, cmdPkt);
       

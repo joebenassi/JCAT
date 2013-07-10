@@ -15,7 +15,6 @@ import org.xml.sax.SAXException;
 import applications.App;
 import applications.XMLParser;
 
-
 public final class PopulateAppsPrompt {
 	public static final void launch(final Shell shell,
 			final String version) throws ParserConfigurationException,

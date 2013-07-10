@@ -1,12 +1,5 @@
-/Images
-/app
+/gui
+/fsw
 /applications
 /ccsds
-/curval
-/fsw
-/gui
 /helpers
-/main
-/network
-/resources
-/udp

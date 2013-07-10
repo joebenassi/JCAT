@@ -1,5 +1,7 @@
 package helpers;
 
+import java.util.ArrayList;
+
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
@@ -22,21 +24,25 @@ public final class Updater {
 	 * Represents either GMT, UTC, SC, SequenceCount, or Unknown. Contains a
 	 * String <code>text</code> that holds the text representing the current
 	 * status of the DisplaySubject. For example, <code>text</code> for the
-	 * DisplaySubject <code>GMT</code> might hold
-	 * "<code>13-165-17:57:19.322</code>".
+	 * DisplaySubject <code>GMT</code> might hold "
+	 * <code>13-165-17:57:19.322</code>".
 	 * 
 	 * @author Joe Benassi
 	 * 
 	 */
-	static enum DisplaySubject {
-		GMT("TBD2"), UTC("TBD2"), SC("TBD2"), SequenceCount("TBD2"), Unknown(
+	enum DisplaySubject {
+		GMT("0"), UTC("0"), SC("0"), SequenceCount("0"), Unknown(
 				"ERROR");
 
+		private ArrayList<Text> textDisplayInstances = new ArrayList<Text>();
+		private ArrayList<Label> labelDisplayInstances = new ArrayList<Label>();
+		
 		/**
 		 * The text representing the current status of this. If this were
 		 * DisplaySubject.GMT, it might equal "13-165-17:57:19.322".
 		 */
 		private String text;
+		private Thread updaterThread;
 
 		/**
 		 * Represents either GMT, UTC, SC, SequenceCount, or Unknown. Contains a
@@ -46,11 +52,56 @@ public final class Updater {
 		 */
 		private DisplaySubject(String initText) {
 			setDisplayText(initText);
+			configureThread();
+			startUpdaterThread();
 		}
 
+		private final void configureThread()
+		{
+			updaterThread = new Thread(new Runnable() {
+				public void run() {
+					while (true) {
+						Display.getDefault().asyncExec(new Runnable() {
+							public void run() {
+								updateDisplays();
+							}
+						});
+						try {
+							Thread.sleep(sleepDuration);
+						} catch (Exception e) {
+						}
+					}
+				}
+			});
+			updaterThread.setDaemon(true);
+		}
+		
+		private final void startUpdaterThread()
+		{
+			updaterThread.start();
+		}
+		
+		public final void addDisplayInstance(Text t)
+		{
+			textDisplayInstances.add(t);
+		}
+		
+		public final void addDisplayInstance(Label l)
+		{
+			labelDisplayInstances.add(l);
+		}
+		
+		private final void updateDisplays()
+		{
+			for (int i = 0; i < textDisplayInstances.size(); i++)
+				textDisplayInstances.get(i).setText(text);
+			for (int i = 0; i < labelDisplayInstances.size(); i++)
+				labelDisplayInstances.get(i).setText(text);
+		}
+		
 		/**
-		 * Sets the text of its DisplaySubject. Used to update all
-		 * instances of display of its DisplaySubject.
+		 * Sets the text of its DisplaySubject. Used to update all instances of
+		 * display of its DisplaySubject.
 		 * 
 		 * @param text
 		 *            The text to output to all instances of display of its
@@ -58,16 +109,6 @@ public final class Updater {
 		 */
 		private final void setDisplayText(String text) {
 			this.text = text;
-		}
-
-		/**
-		 * Returns the text of its DisplaySubject. Used to update all
-		 * instances of display of its DisplaySubject.
-		 * 
-		 * @return
-		 */
-		private final String getDisplayText() {
-			return text;
 		}
 	}
 
@@ -148,28 +189,7 @@ public final class Updater {
 	 *            of.
 	 */
 	public final static void addUpdater(final Label label, String name) {
-		final DisplaySubject type = getDisplaySubject(name);
-		Thread t = new Thread(new Runnable() {
-			@Override
-			public void run() {
-				while (true) {
-					Display.getDefault().asyncExec(new Runnable() {
-						@Override
-						public void run() {
-							if (!label.getText().equals(type.getDisplayText())) {
-								label.setText(type.getDisplayText());
-							}
-						}
-					});
-					try {
-						Thread.sleep(sleepDuration);
-					} catch (Exception e) {
-					}
-				}
-			}
-		});
-		t.setDaemon(true);
-		t.start();
+		getDisplaySubject(name).addDisplayInstance(label);
 	}
 
 	/**
@@ -183,28 +203,7 @@ public final class Updater {
 	 *            The name of the DisplaySubject it should display the status
 	 *            of.
 	 */
-	public static void addUpdater(final Text text, String name) {
-		final DisplaySubject type = getDisplaySubject(name);
-		Thread t = new Thread(new Runnable() {
-			@Override
-			public void run() {
-				while (true) {
-					Display.getDefault().asyncExec(new Runnable() {
-						@Override
-						public void run() {
-							if (!text.getText().equals(type.getDisplayText())) {
-								text.setText(type.getDisplayText());
-							}
-						}
-					});
-					try {
-						Thread.sleep(sleepDuration);
-					} catch (Exception e) {
-					}
-				}
-			}
-		});
-		t.setDaemon(true);
-		t.start();
+	public final static void addUpdater(final Text text, String name) {
+		getDisplaySubject(name).addDisplayInstance(text);
 	}
 }

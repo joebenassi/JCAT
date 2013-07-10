@@ -1,5 +1,7 @@
 package fsw;
 
+import gui.menu.prompts.ParameterDetails;
+
 /*
 ** @todo - Add support for variable types, fields widths etc. Read-only?
 ** @author dmccomas
@@ -19,7 +21,8 @@ public abstract class CmdParam
 {
 
    public enum ParamType { UNDEF, UINT, INT, STR };
-
+   
+   private final ParameterDetails parameterDetails;
    protected String    Name;
    protected ParamType Type;
    protected String    Value;
@@ -29,8 +32,9 @@ public abstract class CmdParam
    /*
     * Constructor: Integer Parameter
     */
-   public CmdParam(String Name, ParamType  Type, String DefValue, int NumBytes)
+   public CmdParam(String Name, ParameterDetails parameterDetails, ParamType  Type, String DefValue, int NumBytes)
    {
+	  this.parameterDetails = parameterDetails;
       this.Name = Name;
       this.Type = Type;
       this.Value    = DefValue;
@@ -81,5 +85,9 @@ public abstract class CmdParam
    public int getNumBytes() {
       return NumBytes;
    }
+
+public ParameterDetails getParameterDetails() {
+	return parameterDetails;
+}
 
 } // End class CmdParam

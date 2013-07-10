@@ -1,5 +1,7 @@
 package fsw;
 
+import gui.menu.prompts.ParameterDetails;
+
 /*
 ** @todo - Think about adding Value also stored as an integer with a non string constructor
 ** @todo - More robust NumByte error handling
@@ -12,9 +14,9 @@ public class CmdIntParam extends CmdParam
       /*
        * Constructor: Integer Parameter
        */
-      public CmdIntParam(String Name, String DefValue, int NumBytes)
+      public CmdIntParam(String Name, ParameterDetails parameterDetails, String DefValue, int NumBytes)
       {
-         super (Name, ParamType.INT, DefValue, NumBytes);
+         super (Name, parameterDetails, ParamType.INT, DefValue, NumBytes);
          
       } // End CmdParam()
       
