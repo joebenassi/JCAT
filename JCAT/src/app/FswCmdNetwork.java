@@ -16,7 +16,7 @@ public class FswCmdNetwork
 
    private static PktWriter  PktOutput;
    
-   FswCmdNetwork()
+   public FswCmdNetwork()
    {
       PktOutput = new PktWriter(CiApp.IP_PORT);   
    }

@@ -40,7 +40,7 @@ public final class XMLParser {
 	 * @throws SAXException
 	 * @throws IOException
 	 */
-	public static final App[] getPackets(File[] files)
+	public static final App[] getApps(File[] files)
 			throws ParserConfigurationException, SAXException, IOException {
 		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory
 				.newInstance();
@@ -49,67 +49,21 @@ public final class XMLParser {
 		List<App> packets = new ArrayList<App>();
 
 		for (int i = 0; i < files.length; i++) {
-			Document temp = documentBuilder.parse(files[i]);
-			temp.getDocumentElement().normalize();
-			try{packets.add(getPacket(temp, i + 1, i));} catch(Throwable e){};
+			Document document = documentBuilder.parse(files[i]);
+			document.getDocumentElement().normalize();
+			try{
+				packets.add( new App(getName(document), getPrefix(document), getCommands(document, packets.size()), getTelemetry(document), i));
+			} catch (NullPointerException e)
+			{
+				System.out.println("IMPROPERLY LOADED APP: " + i);
+				try {System.out.print(":   " + getName(document) + ".");}
+				catch (Throwable e1)
+				{
+					System.out.println("th entered.");
+				}
+			}
 		}
 		return packets.toArray(new App[packets.size()]);
-	}
-
-	/**
-	 * Parses the input document for configuration details of an App, and
-	 * returns the App.
-	 * 
-	 * @param document
-	 *            The document to parse for configuration details of.
-	 * @param hotkey
-	 *            The number shown with "Ctrl" in the Menu as a hotkey for the
-	 *            App.
-	 * @param appID
-	 *            The unique ID given to the app.
-	 * @return The App configured by the input parameters.
-	 */
-	private static final App getPacket(Document document, int hotkey, int appID) {
-		boolean prefixError = false;
-		boolean telemetryError = false;
-		boolean nameError = false;
-		boolean commandError = false;
-		
-		String prefix = null;
-		Telemetry[] telemetry = null;
-		String name = null;
-		ArrayList<CmdPkt> commands = null;
-		
-		try{prefix = getPrefix(document);}
-		catch(NullPointerException e){prefixError = true;}
-
-		try{telemetry = getTelemetry(document);}
-		catch(NullPointerException e){telemetryError = true;}
-		
-		try{name = getName(document);}
-		catch(NullPointerException e){nameError = true;}
-
-		try{commands = getCommands(document);}
-		catch(Throwable e){commandError = true;}
-
-		if (prefixError || telemetryError || nameError || commandError)
-		{
-			ArrayList<String> errors = new ArrayList<String>();
-			
-			if (nameError) errors.add("Name initialization");
-			if (prefixError) errors.add("Prefix initialization");
-			if (telemetryError) errors.add("Telemetry configuration");
-			if (commandError) errors.add("Command configuration");
-			
-			System.out.println("ERROR IN XML:");
-			for (int i = 0; i < errors.size() - 1; i++)
-			{
-				System.out.print(" " + errors.get(i) + ",");
-			}
-			System.out.print(" " + errors.get(errors.size() - 1) + ".");
-			
-		}
-		return new App(name, prefix, commands, telemetry, appID);
 	}
 
 	/**
@@ -142,7 +96,7 @@ public final class XMLParser {
 	 * @return the array of Commands as defined in the input document
 	 */
 
-	private static final ArrayList<CmdPkt> getCommands(Document document) {
+	private static final ArrayList<CmdPkt> getCommands(Document document, int indexOfApp) {
 
 		final String prefix = getPrefix(document);
 		final Element firstTree = (Element) document.getElementsByTagName(
@@ -152,14 +106,12 @@ public final class XMLParser {
 		ArrayList<CmdPkt> commands = new ArrayList<CmdPkt>();
 
 		for (int i = 0; i < nodeList.getLength(); i++) {
-			commands.add(getCommand((Element) nodeList.item(i), prefix));
+			commands.add(getCommand((Element) nodeList.item(i), prefix, i, indexOfApp));
 		}
 		return commands;
 	}
 
 	/**
-	 * HARDCODED
-	 * 
 	 * @param commandElement
 	 *            The Element that represents the particular command within the
 	 *            XML document.
@@ -167,20 +119,33 @@ public final class XMLParser {
 	 *            The prefix for the App.
 	 * @return
 	 */
-	private static final CmdPkt getCommand(Element commandBase, String prefix) {
+	private static final CmdPkt getCommand(Element commandBase, String prefix, int indexOfCommand, int appID) {
 		final String appPrefix = prefix;
 		final String name = getFirstInstance("name", commandBase);
 
-		final int messageID = 101; // HARDCODED
-		final int funcCode = 101; // HARDCODED
-		final int dataLength = 5; // HARDCODED
+		final int messageID = appID; ///* SET MSG ID = APP ID (for now) */
+		final int funcCode = indexOfCommand;///* 0, 1th Cmd */
+
+		int dataLength = 0;
+		/*
+		 * param 1 = 20.
+		 * param 2 = 15.
+		 * 
+		 * dataLength = 35
+		 */
+		
+		ArrayList<CmdStrParam> parameters = getParameters(commandBase);
+		
+		for (CmdStrParam c : parameters)
+			dataLength += c.getNumBytes();
+		
 		CmdPkt command = new CmdPkt(appPrefix, name, messageID, funcCode,
 				dataLength);
-
-		for (CmdStrParam c : getParameters(commandBase))
+		
+		for (CmdStrParam c : parameters)
 			command.addParam(c);
-
-		command.loadParamList();
+		
+		//command.loadParamList(); <- this was causing the error @ 7/10/2013, 3:30pm
 		return command;
 	}
 
@@ -215,9 +180,15 @@ public final class XMLParser {
 		if (commandBase.getElementsByTagName("parameters").item(0) == null)
 			return new ArrayList<CmdStrParam>();
 
-		String defValue = "/cf/cfe_es_errlog.log";
-		int numBytes = 64;
+		String defValue = "/cf/cfe_es_errlog.log"; /* HARDCODE? */
+		int numBytes = 64; /* HARDCODE */
 
+		/** @todo HARDCODE number of numBytes for each parameter **/
+		/** @todo HARDCODE string vs int **/
+		/** @todo HARDCODE uint32/unit16/uint8/int8/int16/char **/
+		/** @todo HARDCODE defValue? **/
+		/** @todo REMOVE <data>somedata</data> from XMLs **/
+		
 		ArrayList<Element> elements = getParameterElements(commandBase);
 		ArrayList<CmdStrParam> parameters = new ArrayList<CmdStrParam>();
 

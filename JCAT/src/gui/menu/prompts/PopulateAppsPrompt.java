@@ -45,13 +45,12 @@ public final class PopulateAppsPrompt {
 			files[i] = new File(directory + fileNames[i]);
 		}
 
-		App[] packets;
+		App[] apps;
 
-		packets = XMLParser.getPackets(files);
+		apps = XMLParser.getApps(files);
 		
-		if (packets.length > 0) {
-			
-					MenuFiller.addMenu(shell, packets, version);
+		if (apps.length > 0) {
+					MenuFiller.addMenu(shell, apps, version);
 		}
 	}
 }

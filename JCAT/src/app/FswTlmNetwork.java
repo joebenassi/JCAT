@@ -22,7 +22,7 @@ public class FswTlmNetwork implements PktEventInterface
    private static ConcurrentLinkedQueue<CcsdsTlmPkt> TlmPktQ = new ConcurrentLinkedQueue<CcsdsTlmPkt>();
    private TlmPktDatabase TlmDatabase = null;
 
-   FswTlmNetwork(TlmPktDatabase Database)
+   public FswTlmNetwork(TlmPktDatabase Database)
    {
       PktInput = new PktReader(ToApp.IP_PORT, this);
       TlmDatabase = Database;
