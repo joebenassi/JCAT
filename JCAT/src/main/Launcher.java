@@ -33,7 +33,6 @@ public final class Launcher {
 	 * <code>new Launcher();</code>
 	 */
 	private Launcher() {
-
 		Display display = new Display();
 		final String version = "1.0.0";
 		Shell shell = new Shell(display, SWT.DIALOG_TRIM | SWT.CLIP_CHILDREN);

@@ -38,10 +38,10 @@ public class ToApp extends FswApp
 	   return new CmdPkt(PREFIX_STR, "No Op", CMD_MID, CMD_FC_NOOP, 0);
    }
    
-   public CmdPkt getAddPktCmdPkt()
+   public CmdPkt getAddPktCmdPkt(int MsgID)
    {
 	      CmdPkt cmdPkt = new CmdPkt(PREFIX_STR, "Add Pkt", CMD_MID, CMD_FC_ADD_PKT, 7);
-	      cmdPkt.addParam(new CmdIntParam("Message ID",  new ParameterDetails(true), "2048", 2));  // // 3840 = 0xF00 (ExApp), 2048 = 0x800 (ES HK)
+	      cmdPkt.addParam(new CmdIntParam("Message ID",  new ParameterDetails(true), "1", 2));  // // 3840 = 0xF00 (ExApp), 2048 = 0x800 (ES HK)
 	      cmdPkt.addParam(new CmdIntParam("Pkt Size",  new ParameterDetails(true), "50", 2));
 	      cmdPkt.addParam(new CmdIntParam("SB QoS",  new ParameterDetails(true), "0", 2));
 	      cmdPkt.addParam(new CmdIntParam("Buffer Cnt",  new ParameterDetails(true), "1", 1));

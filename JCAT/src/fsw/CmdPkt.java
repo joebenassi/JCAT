@@ -2,6 +2,8 @@ package fsw;
 
 import java.util.ArrayList;
 
+import main.Networker;
+
 import app.FswCmdNetwork;
 
 import ccsds.CcsdsCmdPkt;
@@ -53,8 +55,10 @@ public class CmdPkt {
 	} // End CmdPkt()
 
 	public void execute(String[] Paramvalues) {
-		FswCmdNetwork commandSender = null;
-		commandSender.sendCmd(CmdPkt);
+		if (Paramvalues.length == 0)
+		Networker.getNetworker().sendPkt(this);
+		//FswCmdNetwork commandSender = null;
+		//commandSender.sendCmd(CmdPkt);
 	}
 
 	public final String[] getParameterNames() {
