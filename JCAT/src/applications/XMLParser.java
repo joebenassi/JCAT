@@ -15,9 +15,10 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import fsw.CmdParam;
 import fsw.CmdPkt;
-import fsw.CmdStrParam;
 import gui.menu.prompts.ParameterDetails;
+import helpers.CmdParamGen;
 
 /**
  * IN DEVELOPMENT. WILL BE CHANGED.
@@ -134,15 +135,15 @@ public final class XMLParser {
 		 * dataLength = 35
 		 */
 		
-		ArrayList<CmdStrParam> parameters = getParameters(commandBase);
+		ArrayList<CmdParam> parameters = getParameters(commandBase);
 		
-		for (CmdStrParam c : parameters)
+		for (CmdParam c : parameters)
 			dataLength += c.getNumBytes();
 		
 		CmdPkt command = new CmdPkt(appPrefix, name, messageID, funcCode,
 				dataLength);
 		
-		for (CmdStrParam c : parameters)
+		for (CmdParam c : parameters)
 			command.addParam(c);
 		
 		//command.loadParamList(); <- this was causing the error @ 7/10/2013, 3:30pm
@@ -176,31 +177,27 @@ public final class XMLParser {
 	 * @param commandBase
 	 * @return
 	 */
-	private static final ArrayList<CmdStrParam> getParameters(Element commandBase) {
+	private static final ArrayList<CmdParam> getParameters(Element commandBase) {
 		if (commandBase.getElementsByTagName("parameters").item(0) == null)
-			return new ArrayList<CmdStrParam>();
-
-		String defValue = "/cf/cfe_es_errlog.log"; /* HARDCODE? */
-		int numBytes = 64; /* HARDCODE */
+			return new ArrayList<CmdParam>();
 
 		/** @todo HARDCODE number of numBytes for each parameter **/
 		/** @todo HARDCODE string vs int **/
-		/** @todo HARDCODE uint32/unit16/uint8/int8/int16/char **/
 		/** @todo HARDCODE defValue? **/
-		/** @todo REMOVE <data>somedata</data> from XMLs **/
 		
 		ArrayList<Element> elements = getParameterElements(commandBase);
-		ArrayList<CmdStrParam> parameters = new ArrayList<CmdStrParam>();
+		ArrayList<CmdParam> parameters = new ArrayList<CmdParam>();
 
 		for (int i = 0; i < elements.size(); i++) {
-
 			final String name = getFirstInstance("name", elements.get(i));
-
+			final String type = getFirstInstance("type", elements.get(i));
+			final String primitive = getFirstInstance("primitive", elements.get(i));
+			final String bytes = getFirstInstance("bytes", elements.get(i));
 			final ParameterDetails parameterDetails = getParameterDetails(elements
 					.get(i));
-
-			parameters.add(new CmdStrParam(name, parameterDetails, defValue,
-					numBytes));
+			final String defValue = "/cf/cfe_es_errlog.log";
+			
+			parameters.add(CmdParamGen.getCmdParam(name, type, primitive, bytes, parameterDetails, defValue));
 		}
 
 		return parameters;

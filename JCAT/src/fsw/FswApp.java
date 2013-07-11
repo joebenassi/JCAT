@@ -40,7 +40,7 @@ public abstract class FswApp {
 							// underscore)
 	private String Name; // Full application name (Mixed case)
 
-	protected ArrayList<CmdPkt> commands;
+	public ArrayList<CmdPkt> commands = new ArrayList<CmdPkt>(100);
 	protected ArrayList<Integer> telemetryIntegers; // TODO - Couple with CCSDS stream
 											// ID type
 	protected String[] TlmStrArray;
