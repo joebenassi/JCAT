@@ -7,47 +7,36 @@
 	<commands>
 		<command>
 			<name>CFE_SB_DISABLE_ROUTE_CC</name>
-			<data>somedata</data>
 		</command>
 		<command>
 			<name>CFE_SB_DISABLE_SUB_REPORTING_CC</name>
-			<data>somedata</data>
 		</command>
 		<command>
 			<name>CFE_SB_ENABLE_ROUTE_CC</name>
-			<data>somedata</data>
 		</command>
 		<command>
 			<name>CFE_SB_ENABLE_SUB_REPORTING_CC</name>
-			<data>somedata</data>
 		</command>
 		<command>
 			<name>CFE_SB_NOOP_CC</name>
-			<data>somedata</data>
 		</command>
 		<command>
 			<name>CFE_SB_RESET_CTRS_CC</name>
-			<data>somedata</data>
 		</command>
 		<command>
 			<name>CFE_SB_SEND_MAP_INFO_CC</name>
-			<data>somedata</data>
 		</command>
 		<command>
 			<name>CFE_SB_SEND_PIPE_INFO_CC</name>
-			<data>somedata</data>
 		</command>
 		<command>
 			<name>CFE_SB_SEND_PREV_SUBS_CC</name>
-			<data>somedata</data>
 		</command>
 		<command>
 			<name>CFE_SB_SEND_ROUTING_INFO_CC</name>
-			<data>somedata</data>
 		</command>
 		<command>
 			<name>CFE_SB_SEND_SB_STATS_CC</name>
-			<data>somedata</data>
 		</command>
 	</commands>
 	

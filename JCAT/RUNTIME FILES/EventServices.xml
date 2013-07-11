@@ -7,231 +7,264 @@
 	<commands>
 		<command>
 			<name>CFE_EVS_NO_OPERATION_CC</name>
-			<data>somedata</data>
 		</command>
 		<command>
 			<name>CFE_EVS_RESET_COUNTERS_CC</name>
-			<data>somedata</data>
 		</command>
 		<command>
 			<name>CFE_EVS_ENABLE_EVENT_TYPE_CC</name>
-			<data>somedata</data>
 			<parameters>
 				<inputparameter>
 					<name>BitMask</name>
 					<type>uint8</type>
+					<primitive>TBD</primitive>
+					<bytes>TBD</bytes>
 				</inputparameter>
 			</parameters>
 		</command>
 		<command>
 			<name>CFE_EVS_DISABLE_EVENT_TYPE_CC</name>
-			<data>somedata</data>
 			<parameters>
 				<inputparameter>
 					<name>BitMask</name>
 					<type>uint8</type>
+					<primitive>TBD</primitive>
+					<bytes>TBD</bytes>
 				</inputparameter>
 			</parameters>
 		</command>
 		<command>
 			<name>CFE_EVS_SET_EVENT_FORMAT_MODE_CC</name>
-			<data>somedata</data>
 			<parameters>
 				<inputparameter>
 					<name>Mode</name>
 					<type>uint8</type>
+					<primitive>TBD</primitive>
+					<bytes>TBD</bytes>
 				</inputparameter>
 			</parameters>
 		</command>
 		<command>
 			<name>CFE_EVS_ENABLE_APP_EVENT_TYPE_CC</name>
-			<data>somedata</data>
 			<parameters>
 				<inputparameter>
 					<name>AppName</name>
 					<type>uint8</type>
+					<primitive>TBD</primitive>
+					<bytes>TBD</bytes>
 				</inputparameter>
 				<inputparameter>
 					<name>BitMask</name>
 					<type>uint8</type>
+					<primitive>TBD</primitive>
+					<bytes>TBD</bytes>
 				</inputparameter>
 			</parameters>
 		</command>
 		<command>
 			<name>CFE_EVS_DISABLE_APP_EVENT_TYPE_CC</name>
-			<data>somedata</data>
 			<parameters>
 				<inputparameter>
 					<name>AppName</name>
 					<type>uint8</type>
+					<primitive>TBD</primitive>
+					<bytes>TBD</bytes>
 				</inputparameter>
 				<inputparameter>
 					<name>BitMask</name>
 					<type>uint8</type>
+					<primitive>TBD</primitive>
+					<bytes>TBD</bytes>
 				</inputparameter>
 			</parameters>
 		</command>
 		<command>
 			<name>CFE_EVS_ENABLE_APP_EVENTS_CC</name>
-			<data>somedata</data>
 			<parameters>
 				<inputparameter>
 					<name>AppName</name>
 					<type>uint8</type>
+					<primitive>TBD</primitive>
+					<bytes>TBD</bytes>
 				</inputparameter>
 			</parameters>
 		</command>
 		<command>
 			<name>CFE_EVS_DISABLE_APP_EVENTS_CC</name>
-			<data>somedata</data>
 			<parameters>
 				<inputparameter>
 					<name>AppName</name>
 					<type>uint8</type>
+					<primitive>TBD</primitive>
+					<bytes>TBD</bytes>
 				</inputparameter>
 			</parameters>
 		</command>
 		<command>
 			<name>CFE_EVS_RESET_APP_COUNTER_CC</name>
-			<data>somedata</data>
 			<parameters>
 				<inputparameter>
 					<name>AppName</name>
 					<type>uint8</type>
+					<primitive>TBD</primitive>
+					<bytes>TBD</bytes>
 				</inputparameter>
 			</parameters>
 		</command>
 		<command>
 			<name>CFE_EVS_SET_FILTER_CC</name>
-			<data>somedata</data>
 			<parameters>
 				<inputparameter>
 					<name>AppName</name>
 					<type>uint8</type>
+					<primitive>TBD</primitive>
+					<bytes>TBD</bytes>
 				</inputparameter>
 				<inputparameter>
 					<name>EventID</name>
 					<type>uint16</type>
+					<primitive>TBD</primitive>
+					<bytes>TBD</bytes>
 				</inputparameter>
 				<inputparameter>
 					<name>Mask</name>
 					<type>uint16</type>
+					<primitive>TBD</primitive>
+					<bytes>TBD</bytes>
 				</inputparameter>
 			</parameters>
 		</command>
 		<command>
 			<name>CFE_EVS_ENABLE_PORTS_CC</name>
-			<data>somedata</data>
 			<parameters>
 				<inputparameter>
 					<name>BitMask</name>
 					<type>uint8</type>
+					<primitive>TBD</primitive>
+					<bytes>TBD</bytes>
 				</inputparameter>
 			</parameters>
 		</command>
 		<command>
 			<name>CFE_EVS_DISABLE_PORTS_CC</name>
-			<data>somedata</data>
 			<parameters>
 				<inputparameter>
 					<name>BitMask</name>
 					<type>uint8</type>
+					<primitive>TBD</primitive>
+					<bytes>TBD</bytes>
 				</inputparameter>
 			</parameters>
 		</command>
 		<command>
 			<name>CFE_EVS_RESET_FILTER_CC</name>
-			<data>somedata</data>
 			<parameters>
 				<inputparameter>
 					<name>AppName</name>
 					<type>uint8</type>
+					<primitive>TBD</primitive>
+					<bytes>TBD</bytes>
 				</inputparameter>
 				<inputparameter>
 					<name>EventID</name>
 					<type>uint16</type>
+					<primitive>TBD</primitive>
+					<bytes>TBD</bytes>
 				</inputparameter>
 			</parameters>
 		</command>
 		<command>
 			<name>CFE_EVS_RESET_ALL_FILTERS_CC</name>
-			<data>somedata</data>
 			<parameters>
 				<inputparameter>
 					<name>AppName</name>
 					<type>uint8</type>
+					<primitive>TBD</primitive>
+					<bytes>TBD</bytes>
 				</inputparameter>
 			</parameters>
 		</command>
 		<command>
 			<name>CFE_EVS_ADD_EVENT_FILTER_CC</name>
-			<data>somedata</data>
 			<parameters>
 				<inputparameter>
 					<name>AppName</name>
 					<type>uint8</type>
+					<primitive>TBD</primitive>
+					<bytes>TBD</bytes>
 				</inputparameter>
 				<inputparameter>
 					<name>EventID</name>
 					<type>uint16</type>
+					<primitive>TBD</primitive>
+					<bytes>TBD</bytes>
 				</inputparameter>
 				<inputparameter>
 					<name>Mask</name>
 					<type>uint16</type>
+					<primitive>TBD</primitive>
+					<bytes>TBD</bytes>
 				</inputparameter>
 			</parameters>
 		</command>
 		<command>
 			<name>CFE_EVS_DELETE_EVENT_FILTER_CC</name>
-			<data>somedata</data>
 			<parameters>
 				<inputparameter>
 					<name>AppName</name>
 					<type>uint8</type>
+					<primitive>TBD</primitive>
+					<bytes>TBD</bytes>
 				</inputparameter>
 				<inputparameter>
 					<name>EventID</name>
 					<type>uint16</type>
+					<primitive>TBD</primitive>
+					<bytes>TBD</bytes>
 				</inputparameter>
 				<inputparameter>
 					<name>Mask</name>
 					<type>uint16</type>
+					<primitive>TBD</primitive>
+					<bytes>TBD</bytes>
 				</inputparameter>
 			</parameters>
 		</command>
 		<command>
 			<name>CFE_EVS_FILE_WRITE_APP_DATA_CC</name>
-			<data>somedata</data>
 			<parameters>
 				<inputparameter>
 					<name>AppDataFilename</name>
 					<type>uint8</type>
+					<primitive>TBD</primitive>
+					<bytes>TBD</bytes>
 				</inputparameter>
 			</parameters>
 		</command>
 		<command>
 			<name>CFE_EVS_FILE_WRITE_LOG_DATA_CC</name>
-			<data>somedata</data>
 			<parameters>
 				<inputparameter>
 					<name>LogFilename</name>
 					<type>uint8</type>
+					<primitive>TBD</primitive>
+					<bytes>TBD</bytes>
 				</inputparameter>
 			</parameters>
 		</command>
 		<command>
 			<name>CFE_EVS_SET_LOG_MODE_CC</name>
-			<data>somedata</data>
 			<parameters>
 				<inputparameter>
 					<name>Mode</name>
 					<type>uint8</type>
+					<primitive>TBD</primitive>
+					<bytes>TBD</bytes>
 				</inputparameter>
 			</parameters>
 		</command>
 		<command>
 			<name>CFE_EVS_CLEAR_LOG_CC</name>
-			<data>somedata</data>
 		</command>
 	</commands>
 	
