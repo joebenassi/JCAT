@@ -3,6 +3,8 @@
 <channel>
 	<name>Software Bus Services</name>
 	<prefix>SB</prefix>
+	<id>0x1803</id>	
+	<commandoffset>+0</commandoffset>
 
 	<commands>
 		<command>

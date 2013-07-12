@@ -2,18 +2,15 @@ package applications;
 
 import java.util.ArrayList;
 
-import fsw.CmdIntParam;
-import fsw.CmdParam;
-import fsw.CmdPkt;
-import gui.menu.prompts.CommandPrompt;
-import gui.menu.prompts.ParameterDetails;
-import gui.popup.PopupFiller;
-
-import main.Networker;
+import gui.popups.menu.CommandPrompt;
+import gui.popups.tlm.PopupFiller;
 
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
+
+import packets.cmd.CmdPkt;
+import packets.tlm.Telemetry;
 
 /**
  * IN DEVELOPMENT. SUBJECT TO CHANGE.
@@ -28,7 +25,6 @@ import org.eclipse.swt.widgets.Shell;
  * 
  */
 public final class App {
-	private final CmdPkt enableTlmPkt;
 	private final ArrayList<CmdPkt> commands;
 	private final Telemetry[] telemetry;
 	private final String name;
@@ -83,39 +79,6 @@ public final class App {
 		this.name = name;
 		this.commands = commands;
 		this.telemetry = telemetry;
-
-		
-		enableTlmPkt = new CmdPkt(prefix, "Add Pkt", appID, 2, 7);
-		enableTlmPkt.addParam(new CmdIntParam("Message ID",
-				new ParameterDetails(true), TLM_MID_HK + "", 2)); // ExApp.TLM_MID_PKT1:
-																	// 3840 =
-																	// 0xF00,
-																	// 0x0800 =
-																	// ES HK
-		enableTlmPkt.addParam(new CmdIntParam("Pkt Size", new ParameterDetails(
-				true), "50", 2));
-		enableTlmPkt.addParam(new CmdIntParam("SB QoS", new ParameterDetails(
-				true), "0", 2));
-		enableTlmPkt.addParam(new CmdIntParam("Buffer Cnt",
-				new ParameterDetails(true), "1", 1));
-		enableTlmPkt.loadParamList();
-
-		Networker.getNetworker().sendPkt(getEnableTlmPkt());
-		//Networker.getNetworker().enableNoOpFunctionality(appID);
-		// CmdPkt cmdPkt = new CmdPkt(PREFIX_STR, "Add Pkt", CMD_MID,
-		// CMD_FC_ADD_PKT, 7);
-		// cmdPkt.addParam(new CmdIntParam("Message ID", new
-		// ParameterDetails(true), "1", 2)); // // 3840 = 0xF00 (ExApp), 2048 =
-		// 0x800 (ES HK)
-		// cmdPkt.addParam(new CmdIntParam("Pkt Size", new
-		// ParameterDetails(true), "50", 2));
-		// cmdPkt.addParam(new CmdIntParam("SB QoS", new ParameterDetails(true),
-		// "0", 2));
-		// cmdPkt.addParam(new CmdIntParam("Buffer Cnt", new
-		// ParameterDetails(true), "1", 1));
-		// cmdPkt.loadParamList();
-		// CmdPkt appFunctionalityPkt;
-		// Networker.getNetworker().addAppFunctionality(appFunctionalityPkt);
 	}
 
 	/**
@@ -126,11 +89,6 @@ public final class App {
 	 */
 	public final int getAppID() {
 		return appID;
-	}
-
-	public final CmdPkt getEnableTlmPkt()
-	{
-		return enableTlmPkt;
 	}
 
 	/**

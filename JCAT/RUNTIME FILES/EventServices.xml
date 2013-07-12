@@ -3,6 +3,8 @@
 <channel>
 	<name>Event Service</name>
 	<prefix>EVS</prefix>
+	<id>0x1801</id>
+	<commandoffset>+1</commandoffset>
 
 	<commands>
 		<command>

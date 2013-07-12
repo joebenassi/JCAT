@@ -1,7 +1,5 @@
 package gui.mainpage;
 
-import helpers.ColorConstants;
-import helpers.FontConstants;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ShellAdapter;
@@ -14,6 +12,8 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 
 import resources.ResourceLoader;
+import utilities.ColorConstants;
+import utilities.FontConstants;
 
 public class MainPageFiller {
 	private static StatusWindowSash statusWindowSash;
@@ -44,8 +44,7 @@ public class MainPageFiller {
 		statusWindowSash = new StatusWindowSash(shell, sashBackgroundColor,
 				monospacedFont);
 
-		addEventMessage(firstEventMessage[0], firstEventMessage[1],
-				firstEventMessage[2], titleForegroundColor);
+		addEventMessage(firstEventMessage[0], firstEventMessage[1], titleForegroundColor);
 		addUserActivity(firstUserActivity[0], firstUserActivity[1],
 				titleForegroundColor);
 
@@ -58,8 +57,8 @@ public class MainPageFiller {
 	}
 
 	public final void addEventMessage(String time, String detail1,
-			String detail2, Color color) {
-		statusWindowSash.addEventMessage(time, detail1, detail2, color);
+			Color color) {
+		statusWindowSash.addEventMessage(time, detail1, color);
 	}
 
 	private final void addExitPrompt(final Shell shell) {

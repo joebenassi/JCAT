@@ -29,7 +29,7 @@ final class StatusWindowSash extends SashForm {
 		setLayout(new FillLayout());
 
 		eventWindow = new StatusWindow(this, backgroundColor, new int[] { 170,
-				500, 500 }, new String[] { "TIME", "DETAIL 1", "DETAIL 2" },
+				1000}, new String[] { "TIME", "EVENT" },
 				monospacedFont);
 		// eventWindow.addTextEntry("126:12:12-12:41",
 		// "EVENT STREAMING ENABLED...", )
@@ -42,9 +42,8 @@ final class StatusWindowSash extends SashForm {
 		userWindow.addTextEntry(new String[] { time, activity }, color);
 	}
 
-	final void addEventMessage(String time, String detail1, String detail2,
-			Color color) {
+	final void addEventMessage(String time, String detail1, Color color) {
 		eventWindow
-				.addTextEntry(new String[] { time, detail1, detail2 }, color);
+				.addTextEntry(new String[] { time, detail1}, color);
 	}
 }

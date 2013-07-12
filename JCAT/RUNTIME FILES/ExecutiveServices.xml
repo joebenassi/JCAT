@@ -3,7 +3,8 @@
 <channel>
 	<name>Executive Services</name>
 	<prefix>ES</prefix>
-
+	<id>0x1806</id>
+	<commandoffset>+0</commandoffset>
 	<commands>
 		<command>
 			<name>CFE_ES_NOOP_CC</name>

@@ -3,6 +3,8 @@
 <channel>
 	<name>Time Services</name>
 	<prefix>TIME</prefix>
+	<id>0x1805</id>
+	<commandoffset>+0</commandoffset>
 
 	<commands>
 		<command>

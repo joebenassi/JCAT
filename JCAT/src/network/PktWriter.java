@@ -4,78 +4,47 @@ package network;
 **
 */
 import java.util.Date;  
-import java.io.IOException;
 import java.net.*;
-
 
 public class PktWriter
 {
-
-   protected  int             MsgPort;
-   protected  long            MsgCount = 0;
-   protected  DatagramSocket  MsgSock;
-   protected  boolean         CreatedSocket = false;
-   protected  Date            CreationDate;
+	private String port = "1234";
+	private String ip = "127.000.000.001";
+	private long MsgCount = 0;
+	private final Date CreationDate = new Date();
  
-  
-   public PktWriter(int CmdPort)
-   {
-       this.MsgPort = CmdPort;
-       try
-       {
-           MsgSock = new DatagramSocket();
-           CreatedSocket = true;
-           CreationDate = new Date();
-           System.out.println("MsgWriter: Created socket");
-       } 
-       catch(IOException ex) 
-       {
-           System.err.println("MsgWriter: Error creating DatagramSocket");
-           ex.printStackTrace();
-           // A real application would return and not do a stack trace
-       }
-
-   } // End MsgWriter()
+   public PktWriter(){}
    
-   public void WriteCmdPkt(byte[] CmdData, int CmdLen)
+   public void WriteCmdPkt(byte[] CmdData, int dataL)
    {
-    
-      try
-      {
-      
-         DatagramPacket CmdDatagram = new DatagramPacket(CmdData, CmdLen,
-                                                         InetAddress.getLocalHost(),MsgPort);
-         MsgSock.send(CmdDatagram);
-         MsgCount++;
-         
-      } 
-      catch(Exception ex)
-      {
-         System.err.println("Msgwriter: Error writing datagram");
-         System.err.println(ex);
-         ex.printStackTrace();
-      }
-
-        
-   } // End WriteCmdPkt()
-
-   public String getStatus()
+	   try{sendPacket(CmdData);}
+	   catch (Throwable e)
+	   {
+		   System.out.println("ABORTED!");
+		   e.printStackTrace();
+	   }
+   }
+   
+   	private final void sendPacket(byte[] buf) throws Exception {
+		DatagramSocket socket = new DatagramSocket();
+		PE();
+		DatagramPacket out = null;
+		PE();
+		InetAddress address = InetAddress.getByName(ip);
+		PE();
+		int port = Integer.parseInt(this.port);
+		PE();
+		out = new DatagramPacket(buf, buf.length, address, port);
+		PE();
+		socket.send(out);
+		PE();
+		socket.close();
+		PE();
+		System.out.println("COMPLETED!");
+	}
+   
+   private final static void PE()
    {
-   
-      String Status = "MsgWriter Socket:\n";
-
-      if (CreatedSocket)
-      {
-      Status += "   Created: " + CreationDate.toString() + "\n" + 
-                "   Port: " + MsgSock.getLocalPort() + "\n" + 
-                "   Sent: " + MsgCount + "\n\n";
-      }
-      else
-      {
-         Status += "   Socket not created\n\n";
-      }
-      return Status;
-      
-   } // End getStatus()
-   
-} // End class MsgWriter
+	   System.out.println("SUCCESS!");
+   }
+}

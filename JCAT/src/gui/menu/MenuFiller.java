@@ -1,9 +1,9 @@
 package gui.menu;
 
-import gui.menu.prompts.AboutPrompt;
-import gui.menu.prompts.GettingStartedPrompt;
-import gui.menu.prompts.PopulateAppsPrompt;
-import gui.menu.prompts.RecieverPrompt;
+import gui.popups.menu.AboutPrompt;
+import gui.popups.menu.GettingStartedPrompt;
+import gui.popups.menu.PopulateAppsPrompt;
+import gui.popups.menu.RecieverPrompt;
 
 import java.io.IOException;
 

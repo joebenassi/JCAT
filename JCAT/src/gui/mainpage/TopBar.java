@@ -1,6 +1,5 @@
 package gui.mainpage;
 
-import helpers.Updater;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
@@ -10,6 +9,8 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
+
+import utilities.Updater;
 
 
 final class TopBar extends Composite {

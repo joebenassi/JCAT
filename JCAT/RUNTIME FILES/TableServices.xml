@@ -3,6 +3,8 @@
 <channel>
 	<name>Table Service</name>
 	<prefix>TBL</prefix>
+	<id>0x1804</id>
+	<commandoffset>+0</commandoffset>
 
 	<commands>
 		<command>

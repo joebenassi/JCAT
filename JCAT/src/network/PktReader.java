@@ -13,25 +13,20 @@ import java.net.*;
 
 public class PktReader implements Runnable
 {
-
-   private    PktEventInterface MsgEvent;
+	private PktEventInterface MsgEvent;
+	private int MsgPort = 1235;
+	private long MsgCount = 0;
+	private DatagramSocket MsgSock;
+	private boolean CreatedSocket = false;
+	private final Date CreationDate = new Date();
    
-   protected  int               MsgPort  = 0;
-   protected  long              MsgCount = 0;
-   protected  DatagramSocket    MsgSock;
-   protected  boolean           CreatedSocket = false;
-   protected  Date              CreationDate;
-   
-   public PktReader(int MsgPort, PktEventInterface MsgEvent)
+   public PktReader(PktEventInterface MsgEvent)
    {
        this.MsgEvent = MsgEvent; 
        try
        {
-           this.MsgPort = MsgPort;
-           this.MsgCount = 0;
            MsgSock = new DatagramSocket(MsgPort);
            CreatedSocket = true;
-           CreationDate = new Date();
            System.out.println("MsgReader: Created socket on port " + MsgPort);
        } 
        catch(IOException ex) 
