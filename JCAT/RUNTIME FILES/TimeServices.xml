@@ -3,7 +3,8 @@
 <channel>
 	<name>Time Services</name>
 	<prefix>TIME</prefix>
-	<id>0x1805</id>
+	<cmdmid>0x1805</cmdmid>
+	<tlmmid>0x0805</tlmmid>
 	<commandoffset>+0</commandoffset>
 
 	<commands>
@@ -151,13 +152,13 @@
 				<inputparameter>
 					<name>Seconds</name>
 					<type>uint32</type>
-					<primitive>TBD</primitive>
+					<primitive>int</primitive>
 					<bytes>TBD</bytes>
 				</inputparameter>
 				<inputparameter>
 					<name>MicroSeconds</name>
 					<type>uint32</type>
-					<primitive>TBD</primitive>
+					<primitive>int</primitive>
 					<bytes>TBD</bytes>
 				</inputparameter>
 			</parameters>
@@ -228,15 +229,42 @@
 		</command>
 	</commands>
 	
-	<telemetrynames>
-		<name>TlmHeader</name>
-		<name>CmdCounter</name>
-		<name>ErrCounter</name>
-		<name>ClockStateFlags</name>
-		<name>LeapSeconds</name>
-		<name>SecondsMET</name>
-		<name>SubsecsMET</name>
-		<name>SecondsSTCF</name>
-		<name>SubsecsSTCF</name>
-	</telemetrynames>
+	<telemetry>
+		<parameter>
+			<name>CmdCounter</name>
+			<type>uint8</type>
+		</parameter>
+		<parameter>
+			<name>ErrCounter</name>
+			<type>uint8</type>
+		</parameter>
+		<parameter>
+			<name>ClockStateFlags</name>
+			<type>uint16</type>
+		</parameter>
+		<parameter>
+			<name>ClockStateAPI</name>
+			<type>int16</type>
+		</parameter>
+		<parameter>
+			<name>LeapSeconds</name>
+			<type>int16</type>
+		</parameter>
+		<parameter>
+			<name>SecondsMET</name>
+			<type>uint32</type>
+		</parameter>
+		<parameter>
+			<name>SubsecsMET</name>
+			<type>uint32</type>
+		</parameter>
+		<parameter>
+			<name>SecondsSTCF</name>
+			<type>uint32</type>
+		</parameter>
+		<parameter>
+			<name>SubsecsSTCF</name>
+			<type>uint32</type>
+		</parameter>
+	</telemetry>
 </channel>

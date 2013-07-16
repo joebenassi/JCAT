@@ -76,7 +76,7 @@ public class GenericPrompt {
 	public static final Shell getDialogShell()
 	{
 		return new Shell(new Shell(Display.getCurrent()),
-				SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
+				SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL | SWT.ON_TOP);
 	}
 	
 	public static final void launchShell(final Shell dialog, String shellTitle,

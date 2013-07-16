@@ -12,6 +12,7 @@ import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
@@ -30,7 +31,7 @@ import utilities.FontConstants;
  * 
  */
 public class PopupFiller {
-	private final Shell POPUP = new Shell(SWT.SHELL_TRIM & ~(SWT.RESIZE)
+	private Shell POPUP = new Shell(SWT.SHELL_TRIM & ~(SWT.RESIZE)
 			| SWT.ON_TOP | SWT.BORDER);
 	private static final Font TEXTFONT = FontConstants.timeFont;
 	private static final Font POPUPTITLEFONT = FontConstants.popupTitleFont;
@@ -56,7 +57,6 @@ public class PopupFiller {
 	 */
 	public PopupFiller(final String POPUPNAME, final String[] ENTRYNAMES) {
 		developShell();
-
 		addRightBar(POPUPNAME, ENTRYNAMES);
 
 		FormData data = new FormData();

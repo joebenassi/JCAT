@@ -25,10 +25,6 @@ public class FswTlmNetwork implements PktEventInterface
    {
       PktInput = new PktReader(this);
       TlmDatabase = Database;
-
-      Thread PktInputThread = new Thread(PktInput);
-      PktInputThread.start();
-
    }
 
    /*
@@ -40,8 +36,6 @@ public class FswTlmNetwork implements PktEventInterface
     {
        
        CcsdsTlmPkt TlmPkt = new CcsdsTlmPkt(TlmData);
-       
-       System.out.println("addTlmMsg() - " + Integer.toHexString(TlmPkt.getStreamId()));
        TlmPktQ.add(TlmPkt);
        TlmDatabase.notifyObservers(TlmPkt.getStreamId());
        
@@ -65,11 +59,9 @@ public class FswTlmNetwork implements PktEventInterface
       return PktInput;
       
    } // End getMsgWriter()
-      
+   /*   
    public String getStatus()
    {
       return PktInput.getStatus();
-   }
-   
-   
+   }*/
 } // End class FswTlmNetwork

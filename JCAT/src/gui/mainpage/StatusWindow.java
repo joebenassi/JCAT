@@ -6,6 +6,7 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Table;
@@ -77,14 +78,25 @@ final class StatusWindow extends Composite {
 	 * @param color
 	 *            the color of all three columns' text for this entry
 	 */
-	public final void addTextEntry(String[] details, Color color) {
-		TableItem ti = new TableItem(table, SWT.NONE);
-		ti.setForeground(color);
-		ti.setText(details);
-		ti.setFont(dialogFont);
+	public final void addTextEntry(final String[] details, final Color color) {
+		Display.getDefault().syncExec(new Runnable(){
+			public void run()
+			{
+				TableItem ti = new TableItem(table, SWT.NONE);
+				ti.setForeground(color);
+				ti.setText(details);
+				ti.setFont(dialogFont);
+				scrollToBottom();
+			}
+		});		
 	}
 
 	private final void scrollToBottom() {
-		table.setTopIndex(table.getItemCount());
+		TableItem item;
+		if (table.getItemCount() > 0)
+		{
+			item = table.getItem(table.getItemCount() - 1);
+			table.showItem(item);
+		}
 	}
 }

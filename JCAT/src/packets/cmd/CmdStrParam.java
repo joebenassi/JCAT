@@ -11,24 +11,25 @@ public class CmdStrParam extends CmdParam
     * NumBytes is the maximum length of teh string
     * 
     */
-   public CmdStrParam(String Name, ParameterDetails parameterDetails, String DefValue, int NumBytes)
+   public CmdStrParam(String Name, boolean isInputParam, String[] options, String DefValue, int NumBytes)
    {
-      super (Name, parameterDetails, ParamType.STR, DefValue, NumBytes);
+      super (Name, isInputParam, options, ParamType.STR, DefValue, NumBytes);
       
    } // End CmdParam()
    
-   @Override
-protected byte[] loadByteArray() {
+protected void loadByteArray() {
       
       System.out.println("CmdStrParam::loadByteArray with NumBytes = " + NumBytes); 
 
+      //FIX ERROR BAD HERE GO TODO BYTE ARRAY
       // @todo - Add errror protection (null & invalid length)
       for (int i=0; i < Value.length(); i++) {
+    	  try{
           ByteArray[i] = (byte)(Value.codePointAt(i) & 0x0FF);  // Unicode equals ASCII
+    	  
           System.out.println("ByteArray["+i+"] = " + ByteArray[i]);
+    	  } catch (Throwable e){e.printStackTrace();};
       }
-      
-      return ByteArray;
       
    } // End loadByteArray()
 

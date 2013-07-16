@@ -1,5 +1,7 @@
 package gui.popups.menu;
 
+import main.Launcher;
+
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -9,7 +11,6 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 import packets.cmd.CmdPkt;
-import packets.cmd.ParameterDetails;
 import utilities.GenericPrompt;
 
 
@@ -61,7 +62,7 @@ public class CommandPrompt {
 					cmdPkt.execute(values);
 					dialog.close();
 				}
-				catch (Throwable e1) {System.out.println("ERROR WITH EXECUTION");};
+				catch (Throwable e1) {e1.printStackTrace(); System.out.println("ERROR WITH EXECUTION");};
 			}
 		};
 	}
@@ -70,16 +71,13 @@ public class CommandPrompt {
 		Scrollable[] texts = new Scrollable[cmdPkt.getParameterNames().length];
 
 		for (int i = 0; i < cmdPkt.getParameterNames().length; i++) {
-			ParameterDetails parameterDetails = cmdPkt.getParamList().get(i)
-					.getParameterDetails();
-			
 			GenericPrompt.addLabel(dialog, cmdPkt.getParameterNames()[i]);
 			
-			if (parameterDetails.isInputParameter())
+			if (cmdPkt.getParamList().get(i).isInputParam())
 				texts[i] = GenericPrompt.getText(dialog);
 			
 			else 
-				texts[i] = GenericPrompt.getCombo(dialog, parameterDetails.getOptions());
+				texts[i] = GenericPrompt.getCombo(dialog, cmdPkt.getParamList().get(i).getOptions());
 		}
 		return texts;	
 	}

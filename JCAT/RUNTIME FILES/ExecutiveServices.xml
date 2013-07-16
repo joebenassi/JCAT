@@ -3,7 +3,8 @@
 <channel>
 	<name>Executive Services</name>
 	<prefix>ES</prefix>
-	<id>0x1806</id>
+	<cmdmid>0x1806</cmdmid>
+	<tlmmid>0x0800</tlmmid>
 	<commandoffset>+0</commandoffset>
 	<commands>
 		<command>
@@ -18,8 +19,8 @@
 				<choiceparameter>
 					<name>RestartType</name>
 					<type>uint16</type>
-					<bytes>TBD</bytes>
-					<primitive>TBD</primitive>
+					<bytes>1</bytes>
+					<primitive>string</primitive>
 					<choice>CFE_ES_PROCESSOR_RESET</choice>
 					<choice>CFE_ES_POWERON_RESET</choice>
 				</choiceparameter>
@@ -85,8 +86,8 @@
 				<inputparameter>
 					<name>Application</name>
 					<type>uint8</type>
-					<bytes>TBD</bytes>
-					<primitive>TBD</primitive>
+					<bytes>20</bytes>
+					<primitive>string</primitive>
 				</inputparameter>
 			</parameters>
 		</command>
@@ -157,8 +158,8 @@
 				<choiceparameter>
 					<name>Mode</name>
 					<type>uint32</type>
-					<bytes>TBD</bytes>
-					<primitive>TBD</primitive>
+					<bytes>16</bytes>
+					<primitive>string</primitive>
 					<choice>CFE_ES_LOG_DISCARD</choice>
 					<choice>CFE_ES_LOG_OVERWRITE</choice>
 				</choiceparameter>
@@ -305,41 +306,146 @@
 		</command>
 	</commands>
 	
-	<telemetrynames>
-		<name>TlmHeader</name>
-		<name>CmdCounter</name>
-		<name>ErrCounter</name>
-		<name>CFECoreChecksum</name>
-		<name>CFEMajorVersion</name>
-		<name>CFEMinorVersion</name>
-		<name>CFESubMinorVersion</name>
-		<name>OSALMajorVersion</name>
-		<name>OSALMinorVersion</name>
-		<name>Padding1</name>
-		<name>Padding2</name>
-		<name>Padding3</name>
-		<name>SysLogBytesUsed</name>
-		<name>SysLogSize</name>
-		<name>SysLogEntries</name>
-		<name>SysLogMode</name>
-		<name>ERLogIndex</name>
-		<name>ERLogEntries</name>
-		<name>RegisteredCoreApps</name>
-		<name>RegisteredExternalApps</name>
-		<name>RegisteredTasks</name>
-		<name>RegisteredLibs</name>
-		<name>ResetType</name>
-		<name>ResetSubtype</name>
-		<name>ProcessorResets</name>
-		<name>MaxProcessorResets</name>
-		<name>BootSource</name>
-		<name>PerfState</name>
-		<name>PerfMode</name>
-		<name>PerfTriggerCount</name>
-		<name>PerfFilterMask</name>
-		<name>PerfDataStart</name>
-		<name>PerfDataEnd</name>
-		<name>PerfDataCount</name>
-		<name>PerfDataToWrite</name>
-	</telemetrynames>
+	<telemetry>
+		<parameter>
+			<name>CmdCounter</name>
+			<type>uint8</type>
+		</parameter>
+		<parameter>
+			<name>ErrCounter</name>
+			<type>uint8</type>
+		</parameter>
+		<parameter>
+			<name>CFECoreChecksum</name>
+			<type>uint16</type>
+		</parameter>
+		<parameter>
+			<name>CFEMajorVersion</name>
+			<type>uint8</type>
+		</parameter>
+		<parameter>
+			<name>CFEMinorVersion</name>
+			<type>uint8</type>
+		</parameter>	
+		<parameter>
+			<name>CFESubMinorVersion</name>
+			<type>uint8</type>
+		</parameter>
+		<parameter>
+			<name>OSALMajorVersion</name>
+			<type>uint8</type>
+		</parameter>
+		<parameter>
+			<name>OSALMinorVersion</name>
+			<type>uint8</type>
+		</parameter>
+		<parameter>
+			<name>Padding1</name>
+			<type>uint8</type>
+		</parameter>
+		<parameter>
+			<name>Padding2</name>
+			<type>uint8</type>
+		</parameter>
+		<parameter>
+			<name>Padding3</name>
+			<type>uint8</type>
+		</parameter>
+		<parameter>
+			<name>SysLogBytesUsed</name>
+			<type>uint32</type>
+		</parameter>
+		<parameter>
+			<name>SysLogSize</name>
+			<type>uint32</type>
+		</parameter>
+		<parameter>
+			<name>SysLogEntries</name>
+			<type>uint32</type>
+		</parameter>
+		<parameter>
+			<name>SysLogMode</name>
+			<type>uint32</type>
+		</parameter>
+		<parameter>
+			<name>ERLogIndex</name>
+			<type>uint32</type>
+		</parameter>
+		<parameter>
+			<name>ERLogEntries</name>
+			<type>uint32</type>
+		</parameter>
+		<parameter>
+			<name>RegisteredCoreApps</name>
+			<type>uint32</type>
+		</parameter>
+		<parameter>
+			<name>RegisteredExternalApps</name>
+			<type>uint32</type>
+		</parameter>
+		<parameter>
+			<name>RegisteredTasks</name>
+			<type>uint32</type>
+		</parameter>
+		<parameter>
+			<name>RegisteredLibs</name>
+			<type>uint32</type>
+		</parameter>
+		<parameter>
+			<name>ResetType</name>
+			<type>uint32</type>
+		</parameter>
+		<parameter>
+			<name>ResetSubtype</name>
+			<type>uint32</type>
+		</parameter>
+		<parameter>
+			<name>ProcessorResets</name>
+			<type>uint32</type>
+		</parameter>
+		<parameter>
+			<name>MaxProcessorResets</name>
+			<type>uint32</type>
+		</parameter>
+		<parameter>
+			<name>BootSource</name>
+			<type>uint32</type>
+		</parameter>
+		<parameter>
+			<name>PerfState</name>
+			<type>uint32</type>
+		</parameter>
+		<parameter>
+			<name>PerfMode</name>
+			<type>uint32</type>
+		</parameter>
+		<parameter>
+			<name>PerfTriggerCount</name>
+			<type>uint32</type>
+		</parameter>
+		<parameter>
+			<name>PerfFilterMask</name>
+			<type>uint32</type>
+		</parameter>
+		<parameter>
+			<name>PerfTriggerMask</name>
+			<type>uint32</type>
+		</parameter>
+		<parameter>
+			<name>PerfDataStart</name>
+			<type>uint32</type>
+		</parameter>
+		<parameter>
+			<name>PerfDataEnd</name>
+			<type>uint32</type>
+		</parameter>
+		<parameter>
+			<name>PerfDataCount</name>
+			<type>uint32</type>
+		</parameter>
+		<parameter>
+			<name>PerfDataToWrite</name>
+			<type>uint32</type>
+		</parameter>
+	</telemetry>
 </channel>

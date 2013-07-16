@@ -7,12 +7,10 @@ import packets.ccsds.*;
 
 public class TlmPktDatabase implements PktSource
 {
-
-   //private CcsdsTlmPkt[] pktDatabase; 
    private CcsdsTlmPkt[]  pktDatabase; 
    private ArrayList<PktObserver> observers  = new ArrayList<PktObserver>();
    
-   public TlmPktDatabase()
+  public TlmPktDatabase()
    {
       pktDatabase = new CcsdsTlmPkt[4096];
    }
@@ -27,11 +25,10 @@ public class TlmPktDatabase implements PktSource
    {
       pktDatabase[StreamId] = new CcsdsTlmPkt(ByteArray);
       notifyObservers(StreamId);
-         
    }
    
    @Override
-   public void registerObserver(PktObserver observer)
+  public void registerObserver(PktObserver observer)
    {
       observers.add(observer);
 
@@ -47,12 +44,7 @@ public class TlmPktDatabase implements PktSource
    @Override
    public void notifyObservers(int StreamId)
    {
-      System.out.println("Notifying Observers");
       for (PktObserver ob : observers)
-      {
          ob.update(StreamId);
-      }
   }
-
-   
-} // End TlmPktDatabase
+}

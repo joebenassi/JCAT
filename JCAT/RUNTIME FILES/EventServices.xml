@@ -3,7 +3,8 @@
 <channel>
 	<name>Event Service</name>
 	<prefix>EVS</prefix>
-	<id>0x1801</id>
+	<cmdmid>0x1801</cmdmid>
+	<tlmmid>0x0801</tlmmid>
 	<commandoffset>+1</commandoffset>
 
 	<commands>
@@ -270,19 +271,54 @@
 		</command>
 	</commands>
 	
-	<telemetrynames>
-		<name>TlmHeader</name>
-		<name>CommandCounter</name>
-		<name>CommandErrCounter</name>
-		<name>MessageFormatMode</name>
-		<name>MessageTruncCounter</name>
-		<name>UnregisteredAppCounter</name>
-		<name>OutputPort</name>
-		<name>LogFullFlag</name>
-		<name>LogMode</name>
-		<name>MessageSendCounter</name>
-		<name>LogOverflowCounter</name>
-		<name>MemPoolHandle</name>
-		<name>AppData</name>
-	</telemetrynames>
+	<telemetry>
+		<parameter>
+			<name>CommandCounter</name>
+			<type>uint8</type>
+		</parameter>
+		<parameter>
+			<name>CommandErrCounter</name>
+			<type>uint8</type>
+		</parameter>
+		<parameter>
+			<name>MessageFormatMode</name>
+			<type>uint8</type>
+		</parameter>
+		<parameter>
+			<name>MessageTruncCounter</name>
+			<type>uint8</type>
+		</parameter>
+		<parameter>
+			<name>UnregisteredAppCounter</name>
+			<type>uint8</type>
+		</parameter>
+		<parameter>
+			<name>OutputPort</name>
+			<type>uint8</type>
+		</parameter>
+		<parameter>
+			<name>LogFullFlag</name>
+			<type>uint8</type>
+		</parameter>
+		<parameter>
+			<name>LogMode</name>
+			<type>uint8</type>
+		</parameter>
+		<parameter>
+			<name>MessageSendCounter</name>
+			<type>uint16</type>
+		</parameter>
+		<parameter>
+			<name>LogOverflowCounter</name>
+			<type>uint16</type>
+		</parameter>
+		<parameter>
+			<name>MemPoolHandle</name>
+			<type>uint32</type>
+		</parameter>
+		<parameter>
+			<name>AppData</name>
+			<type>CFE_EVS_AppTlmData_t</type>
+		</parameter>
+	</telemetry>
 </channel>

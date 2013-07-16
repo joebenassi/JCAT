@@ -1,5 +1,8 @@
 package gui.popups.menu;
 
+import main.Launcher;
+import network.PktWriter;
+
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -37,22 +40,12 @@ public final class RecieverPrompt {
 		return new SelectionAdapter() {
 			@Override
 			public final void widgetSelected(SelectionEvent e) {
-				final String ip = texts[0].getText();
-				int port = 0;
-				boolean shouldClose = true;
-				try {
-					port = Integer.parseInt(texts[1].getText());
-				} catch (Throwable x) {
-					System.out.println("PORT DID NOT GO THROUGH");
-					shouldClose = false;
-				}
-
-				System.out.println(" DIDNT SET PORT ");
-					//PacketSender.set(ip, port);
-
-				if (shouldClose) {
-					dialog.close();
-				}
+				PktWriter.setIP(texts[0].getText());
+				PktWriter.setPort(texts[1].getText());
+				
+				Launcher.addUserActivity("Set output IP: " + texts[0].getText());
+				Launcher.addUserActivity("Set output port: " + texts[1].getText());
+				dialog.close();
 			}
 		};
 	}

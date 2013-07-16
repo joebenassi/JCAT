@@ -30,6 +30,7 @@ public final class Updater {
 	 * @author Joe Benassi
 	 * 
 	 */
+	
 	enum DisplaySubject {
 		GMT("0"), UTC("0"), SC("0"), SequenceCount("0"), Unknown(
 				"ERROR");

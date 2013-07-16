@@ -32,7 +32,6 @@ public class CmdPkt {
 		CmdPkt = new CcsdsCmdPkt(MsgId,
 				CcsdsCmdPkt.CCSDS_CMD_HDR_LEN + DataLen, FuncCode);
 		CmdPkt.ComputeChecksum();
-
 	} // End CmdPkt()
 
 	/*
@@ -51,17 +50,18 @@ public class CmdPkt {
 
 	} // End CmdPkt()
 
-	public void execute(String[] Paramvalues) {
-		if (Paramvalues.length == 0)
+	public void execute(String[] paramValues) 
+	{
+		for (int i = 0; i < paramValues.length; i++)
+			ParamList.get(i).setValue(paramValues[i]);
+		
+		loadParamList();
+		
 		Networker.getNetworker().sendPkt(this);
-		//FswCmdNetwork commandSender = null;
-		//commandSender.sendCmd(CmdPkt);
 	}
 
 	public final String[] getParameterNames() {
-
 		String[] parameterNames = new String[ParamList.size()];
-
 		for (int i = 0; i < ParamList.size(); i++) {
 			parameterNames[i] = ParamList.get(i).getName();
 		}
@@ -72,23 +72,23 @@ public class CmdPkt {
 	/*
 	 * Load command parameters from a byte array
 	 */
-	public CcsdsCmdPkt LoadParams(byte[] DataBuffer, int DataLen) {
+	//public CcsdsCmdPkt LoadParams(byte[] DataBuffer, int DataLen) {
+//
+	//	if (DataLen > 0) {
+	////		CmdPkt.LoadData(DataBuffer, DataLen);
+	//	}
 
-		if (DataLen > 0) {
-			CmdPkt.LoadData(DataBuffer, DataLen);
-		}
+	//	CmdPkt.ComputeChecksum();
 
-		CmdPkt.ComputeChecksum();
+	//	return CmdPkt;
 
-		return CmdPkt;
-
-	} // LoadParams()
+	//} // LoadParams()
 
 	/*
 	 * Replace CmdParam array list and load the data
 	 */
 
-	public CcsdsCmdPkt setParamList(ArrayList<CmdParam> paramList) {
+	/*public CcsdsCmdPkt setParamList(ArrayList<CmdParam> paramList) {
 
 		ParamList = paramList;
 
@@ -100,13 +100,12 @@ public class CmdPkt {
 	 * Load parameter data from the current parameter list
 	 */
 
-	public CcsdsCmdPkt loadParamList() {
+	public void loadParamList() {
 
 		byte[] CmdParamBuffer;
 		int CmdParamBufIndx = 0;
 
 		if (!ParamList.isEmpty()) {
-
 			ParamByteLen = 0;
 			for (int i = 0; i < ParamList.size(); i++) {
 				ParamByteLen += ParamList.get(i).getNumBytes();
@@ -139,13 +138,10 @@ public class CmdPkt {
 
 		CmdPkt.ComputeChecksum();
 
-		return CmdPkt;
-
 	} // loadParamList()
 
 	public CcsdsCmdPkt getCcsdsPkt() {
 		return CmdPkt;
-
 	} // getCcsdsPkt()
 
 	public String getAppPrefix() {
@@ -168,15 +164,15 @@ public class CmdPkt {
 
 	} // getParamList()
 
-	public boolean hasParam() {
-		return !ParamList.isEmpty();
+	//public boolean hasParam() {
+	//	return !ParamList.isEmpty();
 
-	} // hasParam()
+	//} // hasParam()
 
-	public void setParam(int paramNum, String paramValue) {
-		ParamList.get(paramNum).setValue(paramValue);
-
-	} // addParam()
+	//public void setParam(int paramNum, String paramValue) {
+	//	ParamList.get(paramNum).setValue(paramValue);
+//
+	//} // addParam()
 
 	/*
 	 * @todo - Can this be deleted? No references.

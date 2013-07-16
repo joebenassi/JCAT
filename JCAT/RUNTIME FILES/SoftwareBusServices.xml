@@ -3,18 +3,47 @@
 <channel>
 	<name>Software Bus Services</name>
 	<prefix>SB</prefix>
-	<id>0x1803</id>	
+	<cmdmid>0x1803</cmdmid>
+	<tlmmid>0x0803</tlmmid>	
 	<commandoffset>+0</commandoffset>
 
 	<commands>
 		<command>
 			<name>CFE_SB_DISABLE_ROUTE_CC</name>
+			<parameters>
+				<inputparameter>
+					<name>MsgId</name>
+					<type>CFE_SB_MsgId_t</type>
+					<bytes>TBD</bytes>
+					<primitive>TBD</primitive>
+				</inputparameter>
+				<inputparameter>
+					<name>Pipe</name>
+					<type>CFE_SB_PipeId_t</type>
+					<bytes>TBD</bytes>
+					<primitive>TBD</primitive>
+				</inputparameter>
+			</parameters>
 		</command>
 		<command>
 			<name>CFE_SB_DISABLE_SUB_REPORTING_CC</name>
 		</command>
 		<command>
 			<name>CFE_SB_ENABLE_ROUTE_CC</name>
+			<parameters>
+				<inputparameter>
+					<name>MsgId</name>
+					<type>CFE_SB_MsgId_t</type>
+					<bytes>TBD</bytes>
+					<primitive>TBD</primitive>
+				</inputparameter>
+				<inputparameter>
+					<name>Pipe</name>
+					<type>CFE_SB_PipeId_t</type>
+					<bytes>TBD</bytes>
+					<primitive>TBD</primitive>
+				</inputparameter>
+			</parameters>
 		</command>
 		<command>
 			<name>CFE_SB_ENABLE_SUB_REPORTING_CC</name>
@@ -27,36 +56,101 @@
 		</command>
 		<command>
 			<name>CFE_SB_SEND_MAP_INFO_CC</name>
+			<parameters>
+				<inputparameter>
+					<name>Filename</name>
+					<type>char</type>
+					<bytes>TBD</bytes>
+					<primitive>TBD</primitive>
+				</inputparameter>
+			</parameters>
 		</command>
 		<command>
 			<name>CFE_SB_SEND_PIPE_INFO_CC</name>
+			<parameters>
+				<inputparameter>
+					<name>Filename</name>
+					<type>char</type>
+					<bytes>TBD</bytes>
+					<primitive>TBD</primitive>
+				</inputparameter>
+			</parameters>
 		</command>
 		<command>
 			<name>CFE_SB_SEND_PREV_SUBS_CC</name>
 		</command>
 		<command>
 			<name>CFE_SB_SEND_ROUTING_INFO_CC</name>
+			<parameters>
+				<inputparameter>
+					<name>Filename</name>
+					<type>char</type>
+					<bytes>TBD</bytes>
+					<primitive>TBD</primitive>
+				</inputparameter>
+			</parameters>
 		</command>
 		<command>
 			<name>CFE_SB_SEND_SB_STATS_CC</name>
 		</command>
 	</commands>
 	
-	<telemetrynames>
-		<name>Hdr</name>
-		<name>CommandCnt</name>
-		<name>CmdErrCnt</name>
-		<name>NoSubscribersCnt</name>
-		<name>MsgSendErrCnt</name>
-		<name>MsgReceiveErrCnt</name>
-		<name>InternalErrCnt</name>
-		<name>CreatePipeErrCnt</name>
-		<name>SubscribeErrCnt</name>
-		<name>Spare</name>
-		<name>DupSubscriptionsCnt</name>
-		<name>Spare2Align</name>
-		<name>PopeOverflowErrCnt</name>
-		<name>MsgIDToPipeErrCnt</name>
-		<name>MemPoolHandle</name>
-	</telemetrynames>
+	<telemetry>
+		<parameter>
+			<name>CommandCnt</name>
+			<type>uint8</type>
+		</parameter>
+		<parameter>
+			<name>CmdErrCnt</name>
+			<type>uint8</type>
+		</parameter>
+		<parameter>
+			<name>NoSubscribersCnt</name>
+			<type>uint8</type>
+		</parameter>
+		<parameter>
+			<name>MsgSendErrCnt</name>
+			<type>uint8</type>
+		</parameter>
+		<parameter>
+			<name>MsgReceiveErrCnt</name>
+			<type>uint8</type>
+		</parameter>
+		<parameter>
+			<name>InternalErrCnt</name>
+			<type>uint8</type>
+		</parameter>
+		<parameter>
+			<name>CreatePipeErrCnt</name>
+			<type>uint8</type>
+		</parameter>
+		<parameter>
+			<name>SubscribeErrCnt</name>
+			<type>uint8</type>
+		</parameter>
+		<parameter>
+			<name>Spare</name>
+			<type>uint8</type>
+		</parameter>
+		<parameter>
+			<name>DupSubscriptionsCnt</name>
+			<type>uint8</type>
+		</parameter>
+		<parameter>
+			<name>Spare2Align</name>
+			<type>uint8</type>
+		</parameter>
+		<parameter>
+			<name>PopeOverflowErrCnt</name>
+			<type>uint16</type>
+		</parameter>
+		<parameter>
+			<name>MsgIDToPipeErrCnt</name>
+			<type>uint16</type>
+		</parameter>
+		<parameter>
+			<name>MemPoolHandle</name>
+			<type>CFE_ES_MemHandle_t</type>
+		</parameter>
+	</telemetry>
 </channel>

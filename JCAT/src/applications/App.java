@@ -5,12 +5,18 @@ import java.util.ArrayList;
 import gui.popups.menu.CommandPrompt;
 import gui.popups.tlm.PopupFiller;
 
+import main.Launcher;
+import network.Networker;
+
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
 
+import packets.ccsds.CcsdsTlmPkt;
 import packets.cmd.CmdPkt;
-import packets.tlm.Telemetry;
+import packets.tlm.TlmPkt;
+import utilities.TelemetryUpdater;
 
 /**
  * IN DEVELOPMENT. SUBJECT TO CHANGE.
@@ -26,14 +32,10 @@ import packets.tlm.Telemetry;
  */
 public final class App {
 	private final ArrayList<CmdPkt> commands;
-	private final Telemetry[] telemetry;
+	private final TlmPkt[] telemetry;
 	private final String name;
 	private final PopupFiller popupFiller;
-	private final int appID;
-	private static final int TLM_MID_HK = 0x0800; // what does this do? (Joe)
-	private ArrayList<Integer> TlmList; // what does this do? (Joe) // TODO -
-										// Couple with CCSDS stream ID
-										// type
+	private final int TlmAppID;
 
 	/**
 	 * This is a Command and Telemetry app configured with app-specific
@@ -64,21 +66,25 @@ public final class App {
 	 *            The ID specific to an App.
 	 */
 	public App(final String name, final String prefix,
-			final ArrayList<CmdPkt> commands, final Telemetry[] telemetry,
-			final int appID) {
+			final ArrayList<CmdPkt> commands, final TlmPkt[] telemetry,
+			final int TlmAppID) {
 		final String[] entryNames = new String[telemetry.length];
 
 		for (int i = 0; i < entryNames.length; i++) {
 			entryNames[i] = telemetry[i].getName();
 		}
-		TlmList = new ArrayList<Integer>();
-		TlmList.add(TLM_MID_HK);
-		popupFiller = new PopupFiller(name, entryNames);
 
-		this.appID = appID;
+		popupFiller = new PopupFiller(name, entryNames);
+		// System.out.println("NEW APP: " + name + ", " + TlmAppID);
+		this.TlmAppID = TlmAppID;
 		this.name = name;
 		this.commands = commands;
 		this.telemetry = telemetry;
+
+		// if (TelemetryUpdater.updateAtIntervals)
+		// TelemetryUpdater.addApp(this);
+		Networker.addApp(this);
+		Launcher.addUserActivity("APP ADDED: " + name);
 	}
 
 	/**
@@ -87,30 +93,20 @@ public final class App {
 	 * 
 	 * @return the ID of this particular App.
 	 */
-	public final int getAppID() {
-		return appID;
+	public final int getTlmAppID() {
+		return TlmAppID;
 	}
 
-	/**
-	 * Updates the GUI's displayed value of Telemetry[index]. Telemetry[index]
-	 * contains the real-time correct value, and the GUI updates its current
-	 * value to this when this method is executed.
-	 * 
-	 * @param index
-	 *            The index of the GUI to update to its correct, current value
-	 *            is defined in Telemetry[index].
-	 */
-	public final void updateTelemetry(final int index) {
-		popupFiller.getText(index).setText(telemetry[index].getValue());
+	public final String getTelemetryValue(int index) {
+		return telemetry[index].getValue();
 	}
 
-	/**
-	 * Updates the GUI to display the current telemetry data. This occurs
-	 * immediately, and will update each telemetry quality once.
-	 */
-	public final void updateTelemetry() {
-		for (int i = 0; i < telemetry.length; i++)
-			updateTelemetry(i);
+	public final Text getTelemetryText(int index) {
+		return popupFiller.getText(index);
+	}
+
+	public final int getTelemetryAmt() {
+		return telemetry.length;
 	}
 
 	/**
@@ -175,5 +171,13 @@ public final class App {
 				shell.setActive();
 			}
 		};
+	}
+
+	public final TlmPkt[] getTelemetry() {
+		return telemetry;
+	}
+
+	public final void ingest(CcsdsTlmPkt TlmPkt) {
+		TelemetryUpdater.updateTelemetry(TlmPkt, this);
 	}
 }

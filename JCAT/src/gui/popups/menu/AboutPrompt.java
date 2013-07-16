@@ -1,21 +1,88 @@
 package gui.popups.menu;
 
-import utilities.GenericTextPrompt;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.layout.FormAttachment;
+import org.eclipse.swt.layout.FormData;
+import org.eclipse.swt.layout.FormLayout;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
+
+import resources.ResourceLoader;
+import utilities.ColorConstants;
+import utilities.FontConstants;
 
 public final class AboutPrompt {
 	public static final void launchShell(final String version) {
 		String title = "JCAT";
-		String[] lines = new String[6];
+		String[] lines = new String[4];
 
 		lines[0] = "Java Command and Telemetry (JCAT)";
 		lines[1] = "Version " + version;
-		lines[2] = "";// Select all desired Apps using CTRL + 'click'. Press
-						// 'Open'";
-		lines[3] = "";
-		lines[4] = "Property of the National Aeronautics";
-		lines[5] = "and Space Administration (NASA)";
+		lines[2] = "";
+		lines[3] = "Property of NASA";
 
-		try{GenericTextPrompt.launchShell(title, lines);}
-		catch(Throwable e){};
+		final Label[] labels = new Label[lines.length];
+		
+		Shell shell = new Shell(Display.getCurrent(), SWT.DIALOG_TRIM);
+		FormLayout formLayout = new FormLayout();
+		formLayout.marginBottom = 10;
+		formLayout.marginTop = 10;
+		formLayout.marginLeft = 10;
+		formLayout.marginRight = 10;
+		formLayout.spacing = 5;
+		shell.setLayout(formLayout);
+		shell.setText(title);
+		shell.setImage(ResourceLoader.getJCATLogo());
+		FormData data = new FormData();
+		
+		final Image JCATLogo = ResourceLoader.getJCATLogo();
+		Label JCATLogoLabel = new Label(shell, SWT.NONE);
+		JCATLogoLabel.setImage(JCATLogo);
+		data = new FormData();
+		JCATLogoLabel.setLayoutData(data);
+
+		Label spacer = new Label(shell, SWT.NONE);
+		spacer.setBackground(ColorConstants.base);
+		data = new FormData();
+		data.width = 4;
+		data.left = new FormAttachment(JCATLogoLabel, 0);
+		data.top = new FormAttachment(0, -2);
+		data.bottom = new FormAttachment(100, 2);
+		spacer.setLayoutData(data);
+		
+		for (int i = 0; i < lines.length; i++)
+		{
+			labels[i] = new Label(shell, SWT.NONE);
+			labels[i].setText(lines[i]);
+			
+			data = new FormData();
+			if (i == 0)
+				labels[i].setFont(FontConstants.boldFont1);
+			else
+				labels[i].setFont(FontConstants.dialogFont2);
+			if (i > 0)
+				data.top = new FormAttachment(labels[i-1], -4);
+			if (i == lines.length - 1)
+				data.bottom = new FormAttachment(100, 0);
+				data.left = new FormAttachment(spacer, 0);
+			
+			data.right = new FormAttachment(100, 0);
+			labels[i].setLayoutData(data);
+			shell.pack();
+		}
+		
+		shell.pack();
+		shell.open();
+
+		shell.addDisposeListener(new DisposeListener() {
+			@Override
+			public void widgetDisposed(DisposeEvent arg0) {
+				JCATLogo.dispose();
+			}
+		});
 	}
 }

@@ -9,6 +9,8 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import network.Networker;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -17,11 +19,9 @@ import org.xml.sax.SAXException;
 
 import packets.cmd.CmdParam;
 import packets.cmd.CmdPkt;
-import packets.cmd.ParameterDetails;
-import packets.tlm.Telemetry;
+import packets.tlm.TlmPkt;
 
 import applications.App;
-
 
 /**
  * IN DEVELOPMENT. WILL BE CHANGED. Used to parse XML files for configuration
@@ -43,63 +43,100 @@ public final class XMLParser {
 	 * @throws SAXException
 	 * @throws IOException
 	 */
-	public static final App[] getApps(File[] files)
+	public static final App[] getApps(final File[] files)
 			throws ParserConfigurationException, SAXException, IOException {
+		long startTime = System.currentTimeMillis();
 		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory
 				.newInstance();
-		DocumentBuilder documentBuilder = documentBuilderFactory
+		final DocumentBuilder documentBuilder = documentBuilderFactory
 				.newDocumentBuilder();
-		List<App> packets = new ArrayList<App>();
+		final List<App> packets = new ArrayList<App>();
 
-		for (int i = 0; i < files.length; i++) {
-			Document document = documentBuilder.parse(files[i]);
-			document.getDocumentElement().normalize();
+		
+		//Thread t = new Thread(new Runnable() {
+		//	public void run() {
+				for (int i = 0; i < files.length; i++) {
+					try {
+						final Document document = documentBuilder
+								.parse(files[i]);
+						document.getDocumentElement().normalize();
 
-				try {
-					final String name = getInstance("name", document);
-					final String prefix = getInstance("prefix", document);
-				
-					packets.add(new App(name, prefix, getCommands(document),
-						getTelemetry(document), getID(document)));
-			} catch (NullPointerException e) {
-			}
+						final String name = getInstance("name", document);
+						final String prefix = getInstance("prefix", document);
+						final ArrayList<CmdPkt> commands = getCommands(document);
+						final TlmPkt[] telemetry = getTelemetry(document);
+						final int TlmMID = getTlmMID(document);
+						
+						App app = new App(name, prefix, getCommands(document),
+								getTelemetry(document), getTlmMID(document));
+						packets.add(app);
+					} catch (Throwable e) {
+					}
+				}
+			//		;
+			//	}
+			//}
+		//});
+		/*try {
+			t.join();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		t.start();
+
+		try {
+			Thread.sleep(1000);
+		} catch (Throwable e) {
+		}
+		;*/
+		Networker.getNetworker().launch();
+		// /if (TelemetryUpdater.updateAtIntervals)
+		// TelemetryUpdater.start();
+		long endTime = System.currentTimeMillis();
+		System.out.println("TIME TAKEN: " + (endTime - startTime));
 		return packets.toArray(new App[packets.size()]);
 	}
 
-	private static final int getID(Document document) {
-		final String IDString = getInstance("id", document);
+	private static final int getTlmMID(Document document) {
+		final String IDString = getInstance("tlmmid", document);
+		final String IDString2 = IDString.substring(2, IDString.length());
+
+		return Integer.parseInt(IDString2, 16);
+	}
+
+	private static final int getCmdMID(Document document) {
+		final String IDString = getInstance("cmdmid", document);
 
 		final String IDString2 = IDString.substring(2, IDString.length());
 		return Integer.parseInt(IDString2, 16);
 	}
 
-	private static final int getCommandOffset(Document document) throws Exception
-	{
+	private static final int getCommandOffset(Document document)
+			throws Exception {
 		final String COString = getInstance("commandoffset", document);
 		String modString;
 		int value = 0;
 
-		switch(COString.substring(0,2))
-		{
-			case "-": {
-				modString = COString.substring(1, COString.length());
-				value = Integer.parseInt(modString);
-				value *= -1;
-			}
-			case "+": {
-				modString = COString.substring(1, COString.length());
-				value = Integer.parseInt(modString);
-				value *= 1;
-			}
-			
-			default: {
-				modString = COString;
-				value = Integer.parseInt(modString);
-				value *= 1;
-			}
+		switch (COString.substring(0, 2)) {
+		case "-": {
+			modString = COString.substring(1, COString.length());
+			value = Integer.parseInt(modString);
+			value *= -1;
 		}
-		
+		case "+": {
+			modString = COString.substring(1, COString.length());
+			value = Integer.parseInt(modString);
+			value *= 1;
+		}
+
+		default: {
+			modString = COString;
+			value = Integer.parseInt(modString);
+			value *= 1;
+		}
+		}
+
 		return value;
 	}
 
@@ -117,11 +154,13 @@ public final class XMLParser {
 
 	private static final ArrayList<CmdPkt> getCommands(Document document) {
 
-		final int appID = getID(document);
+		final int CmdMID = getCmdMID(document);
 
 		int commandOffset = 0;
-		try {commandOffset = getCommandOffset(document);} 
-		catch (Exception e) {}
+		try {
+			commandOffset = getCommandOffset(document);
+		} catch (Exception e) {
+		}
 
 		final String prefix = getInstance("prefix", document);
 
@@ -134,7 +173,7 @@ public final class XMLParser {
 		for (int i = 0; i < nodeList.getLength(); i++) {
 			final int functCode = i + commandOffset;
 			commands.add(getCommand((Element) nodeList.item(i), prefix,
-					functCode, appID));
+					functCode, CmdMID));
 		}
 		return commands;
 	}
@@ -167,12 +206,13 @@ public final class XMLParser {
 		for (CmdParam c : parameters)
 			dataLength += c.getNumBytes();
 
-		System.out.println("ZERO = " + dataLength);
+		// System.out.println("ZERO = " + dataLength);
 		CmdPkt command = new CmdPkt(appPrefix, name, messageID, funcCode,
 				dataLength);
 
-		System.out.println(command.getAppPrefix() + ": FUNCTCODE: " + funcCode
-				+ ": NAME == " + command.getName());
+		// System.out.println(command.getAppPrefix() + ": FUNCTCODE: " +
+		// funcCode
+		// + ": NAME == " + command.getName());
 		for (CmdParam c : parameters)
 			command.addParam(c);
 
@@ -225,34 +265,26 @@ public final class XMLParser {
 			final String primitive = getFirstInstance("primitive",
 					elements.get(i));
 			final String bytes = getFirstInstance("bytes", elements.get(i));
-			final ParameterDetails parameterDetails = getParameterDetails(elements
-					.get(i));
+			boolean isInputParam = true;
+			String[] options = new String[0];
+
+			if (elements.get(i).getNodeName()
+					.equalsIgnoreCase("choiceparameter")) {
+				isInputParam = false;
+				NodeList choicesList = elements.get(i).getElementsByTagName(
+						"choice");
+
+				options = new String[choicesList.getLength()];
+
+				for (int j = 0; j < choicesList.getLength(); j++)
+					options[j] = choicesList.item(j).getTextContent();
+			}
 			final String defValue = "/cf/cfe_es_errlog.log";
 
-			parameters.add(CmdParamGen.getCmdParam(name, type, primitive,
-					bytes, parameterDetails, defValue));
+			parameters.add(ParamGen.getCmdParam(name, type, primitive, bytes,
+					isInputParam, options, defValue));
 		}
-
 		return parameters;
-	}
-
-	private static final ParameterDetails getParameterDetails(Element element) {
-		if (element.getNodeName().equals("inputparameter"))
-			return new ParameterDetails(true);
-
-		if (element.getNodeName().equals("choiceparameter")) {
-			NodeList choicesList = element.getElementsByTagName("choice");
-
-			String[] choices = new String[choicesList.getLength()];
-
-			for (int j = 0; j < choicesList.getLength(); j++)
-				choices[j] = choicesList.item(j).getTextContent();
-
-			return new ParameterDetails(false, choices);
-		}
-
-		return new ParameterDetails(false,
-				new String[] { "ERROR WTIH PARAMETERDETAILS" });
 	}
 
 	/**
@@ -262,45 +294,21 @@ public final class XMLParser {
 	 *            The Document to parse for configuration details.
 	 * @return The telemetry data array as defined in the input Document.
 	 */
-	private static final Telemetry[] getTelemetry(Document document) {
+	private static final TlmPkt[] getTelemetry(Document document) {
+		final Element firstTree = (Element) document.getElementsByTagName(
+				"telemetry").item(0);
+		final NodeList nodeList = firstTree.getElementsByTagName("parameter");
 
-		String[] telemetryNames = getParse(document, "telemetrynames", "name");
-		Telemetry[] telemetry = new Telemetry[telemetryNames.length];
-		for (int i = 0; i < telemetryNames.length; i++) {
-			telemetry[i] = new Telemetry(telemetryNames[i]);
-		}
-
-		return telemetry;
-	}
-
-	/**
-	 * Helper method; used to parse for second-order XML data. For example, if
-	 * My App contained a single "telemetrynames" entry, and that
-	 * "telemetrynames" entry contained an array of "name"'s, you would call
-	 * getParse(document, "telemetrynames", "name") to return that array of
-	 * "name"'s;
-	 * 
-	 * @param document
-	 *            The document to parse for configuration details.
-	 * @param first
-	 *            The name of the first entry to search.
-	 * @param second
-	 *            The name of the data intended to be returned.
-	 * @return the array of second-order XML data.
-	 */
-	private static final String[] getParse(Document document, String first,
-			String second) {
-		final Element firstTree = (Element) document
-				.getElementsByTagName(first).item(0);
-
-		final NodeList nodeList = firstTree.getElementsByTagName(second);
-
-		final String[] temp = new String[nodeList.getLength()];
+		ArrayList<TlmPkt> telemetry = new ArrayList<TlmPkt>();
 
 		for (int i = 0; i < nodeList.getLength(); i++) {
-			temp[i] = nodeList.item(i).getTextContent();
-		}
+			String name = getFirstInstance("name",
+					((Element) (nodeList.item(i))));
+			String dataType = getFirstInstance("type",
+					((Element) (nodeList.item(i))));
 
-		return temp;
+			telemetry.add(new TlmPkt(name, dataType));
+		}
+		return telemetry.toArray(new TlmPkt[telemetry.size()]);
 	}
 }

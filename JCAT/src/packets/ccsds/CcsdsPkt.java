@@ -1,96 +1,86 @@
 package packets.ccsds;
 
 /*
-** 
-** @author dmccomas
-**
-** @todo - Implement packet type
-*/
-public class CcsdsPkt 
-{
+ ** 
+ ** @author dmccomas
+ **
+ ** @todo - Implement packet type
+ */
+public class CcsdsPkt {
+	private static final int CCSDS_IDX_STREAM_ID = 0;
+	private static final int CCSDS_IDX_SEQ_COUNT = 2;
+	private static final int CCSDS_IDX_LENGTH = 4;
+	private static final int CCSDS_MSK_MSG_ID = 0x0000FFFF;
+	private static final int CCSDS_MSK_SEQ_CNT = 0x00003FFF;
+	private static final int CCSDS_LENGTH_ADJUST = 7;
+	//private static final int CCSDS_PRI_HDR_LENGTH = 6;
 
-   static final public int CCSDS_IDX_STREAM_ID  = 0;
-   static final public int CCSDS_IDX_SEQ_COUNT  = 2;
-   static final public int CCSDS_IDX_LENGTH     = 4;
-   static final public int CCSDS_PRI_HDR_LENGTH = 6;
-   
-   static final public int CCSDS_MSK_MSG_ID  = 0x0000FFFF;
-   static final public int CCSDS_MSK_SEQ_CNT = 0x00003FFF;
+	byte[] Packet;
 
-   static int CCSDS_LENGTH_ADJUST = 7;
+	public CcsdsPkt(int Length) {
+		Packet = new byte[Length];
 
-   byte[] Packet;
-   
-   public CcsdsPkt(int Length)
-   {
-      Packet = new byte[Length];
-      
-   } // End CcsdsPkt()
-   
-   public CcsdsPkt(int StreamId, int Length)
-   {
-      Packet = new byte[Length];
-      InitPkt(StreamId, Length);
-      
-   } // End CcsdsPkt()
+	} // End CcsdsPkt()
 
-   /*
-    * Length - Is the total packet length in bytes
-    */
-   public void InitPkt(int StreamId, int Length)
-   {
+	public CcsdsPkt(int StreamId, int Length) {
+		Packet = new byte[Length];
+		InitPkt(StreamId, Length);
 
-      for (int i=0; i < Length; i++)
-       {
-         Packet[i] = 0;
-       }
-       
-      Packet[CCSDS_IDX_STREAM_ID]   = new Integer(StreamId&0xFF).byteValue();
-      Packet[CCSDS_IDX_STREAM_ID+1] = new Integer((StreamId&0xFF00)>>8).byteValue();
-      Packet[CCSDS_IDX_SEQ_COUNT+1] = new Integer(0xC0).byteValue();
-      Packet[CCSDS_IDX_LENGTH]      = new Integer((Length-CCSDS_LENGTH_ADJUST)&0xFF).byteValue();
-      Packet[CCSDS_IDX_LENGTH+1]    = new Integer(((Length-CCSDS_LENGTH_ADJUST)&0xFF00)>>8).byteValue();
-      
-   } // End InitPkt()
+	} // End CcsdsPkt()
 
-   /*
-   ** Construct a packet from raw data stream
-   */
-   public CcsdsPkt(byte[] MsgData)
-   {
+	/*
+	 * Length - Is the total packet length in bytes
+	 */
+	public void InitPkt(int StreamId, int Length) {
 
-      Packet = MsgData;
-            
-   } // End CcsdsPkt()
+		for (int i = 0; i < Length; i++) {
+			Packet[i] = 0;
+		}
 
-   public int getTotalLength()
-   {
-      return (Packet[CCSDS_IDX_LENGTH] | (Packet[CCSDS_IDX_LENGTH+1] << 8)) + CCSDS_LENGTH_ADJUST;
+		Packet[CCSDS_IDX_STREAM_ID] = new Integer(StreamId & 0xFF).byteValue();
+		Packet[CCSDS_IDX_STREAM_ID + 1] = new Integer((StreamId & 0xFF00) >> 8)
+				.byteValue();
+		Packet[CCSDS_IDX_SEQ_COUNT + 1] = new Integer(0xC0).byteValue();
+		Packet[CCSDS_IDX_LENGTH] = new Integer(
+				(Length - CCSDS_LENGTH_ADJUST) & 0xFF).byteValue();
+		Packet[CCSDS_IDX_LENGTH + 1] = new Integer(
+				((Length - CCSDS_LENGTH_ADJUST) & 0xFF00) >> 8).byteValue();
 
-   }// End getTotalLength()
-      
-   public int getStreamId()
-   {
-      return ( (( (Packet[CCSDS_IDX_STREAM_ID] & 0x00FF) | (Packet[CCSDS_IDX_STREAM_ID+1] << 8)) & CCSDS_MSK_MSG_ID) );
+	} // End InitPkt()
 
-   }// End getStreamId()
+	/*
+	 * * Construct a packet from raw data stream
+	 */
+	public CcsdsPkt(byte[] MsgData) {
 
-   public int getSeqCount()
-   {
-      return ( (( (Packet[CCSDS_IDX_SEQ_COUNT] & 0x00FF) | (Packet[CCSDS_IDX_SEQ_COUNT+1] << 8)) & CCSDS_MSK_SEQ_CNT) );
+		Packet = MsgData;
 
-   }// End getSeqCount() 
+	} // End CcsdsPkt()
 
-   public int getLength()
-   {
-      return ( ( (Packet[CCSDS_IDX_LENGTH]    & 0x00FF) | (Packet[CCSDS_IDX_LENGTH+1] << 8)) + CCSDS_LENGTH_ADJUST);
+	public int getTotalLength() {
+		return (Packet[CCSDS_IDX_LENGTH] | (Packet[CCSDS_IDX_LENGTH + 1] << 8))
+				+ CCSDS_LENGTH_ADJUST;
 
-   }// End getLength()
+	}// End getTotalLength()
 
-   public byte[] getPacket()
-   {
-      return Packet;
+	public int getStreamId() {
+		return ((((Packet[CCSDS_IDX_STREAM_ID] & 0x00FF) | (Packet[CCSDS_IDX_STREAM_ID + 1] << 8)) & CCSDS_MSK_MSG_ID));
 
-   }// End getPacket()
+	}// End getStreamId()
+
+	public int getSeqCount() {
+		return ((((Packet[CCSDS_IDX_SEQ_COUNT] & 0x00FF) | (Packet[CCSDS_IDX_SEQ_COUNT + 1] << 8)) & CCSDS_MSK_SEQ_CNT));
+
+	}// End getSeqCount()
+
+	public int getLength() {
+		return (((Packet[CCSDS_IDX_LENGTH] & 0x00FF) | (Packet[CCSDS_IDX_LENGTH + 1] << 8)) + CCSDS_LENGTH_ADJUST);
+
+	}// End getLength()
+
+	public byte[] getPacket() {
+		return Packet;
+
+	}// End getPacket()
 
 } // End class CcsdsPkt

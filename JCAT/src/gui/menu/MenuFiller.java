@@ -9,6 +9,8 @@ import java.io.IOException;
 
 import javax.xml.parsers.ParserConfigurationException;
 
+import main.Launcher;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
@@ -18,7 +20,6 @@ import org.eclipse.swt.widgets.Shell;
 import org.xml.sax.SAXException;
 
 import applications.App;
-
 
 /**
  * This class populates the menu of the program.
@@ -35,9 +36,12 @@ public final class MenuFiller {
 	 * Telemetry menus are consequently empty. The second time this is called,
 	 * the option to Populate Apps in the File menu is absent.
 	 * 
-	 * @param shell The Shell to add the menu to.
-	 * @param Apps The Apps to add to the menu.
-	 * @param version The version of this program.
+	 * @param shell
+	 *            The Shell to add the menu to.
+	 * @param Apps
+	 *            The Apps to add to the menu.
+	 * @param version
+	 *            The version of this program.
 	 */
 	public static final void addMenu(final Shell shell, App[] Apps,
 			final String version) {
@@ -99,7 +103,7 @@ public final class MenuFiller {
 		});
 
 		final MenuItem receiverMenuItem = MenuHelper.createMenuItem(fileMenu,
-				SWT.PUSH, "A&dd Receiver\tCtrl+r", null, SWT.CTRL + 'R');
+				SWT.PUSH, "A&dd Receiver\tCtrl+o", null, SWT.CTRL + 'O');
 
 		receiverMenuItem.addListener(SWT.Selection, new Listener() {
 			@Override
@@ -126,6 +130,15 @@ public final class MenuFiller {
 				}
 			});
 		}
+
+		final MenuItem restartMenuItem = MenuHelper.createMenuItem(fileMenu,
+				SWT.PUSH, "R&estart\tCtrl+r", null, SWT.CTRL + 'R');
+		
+		restartMenuItem.addListener(SWT.Selection,  new Listener(){
+			public void handleEvent(Event e){
+				Launcher.restartApplication(shell);
+			}
+		});
 	}
 
 	/**

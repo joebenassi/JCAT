@@ -14,14 +14,14 @@ public class CmdIntParam extends CmdParam
       /*
        * Constructor: Integer Parameter
        */
-      public CmdIntParam(String Name, ParameterDetails parameterDetails, String DefValue, int NumBytes)
+      public CmdIntParam(String Name, boolean isInputParam, String[] options, String DefValue, int NumBytes)
       {
-         super (Name, parameterDetails, ParamType.INT, DefValue, NumBytes);
+         super (Name, isInputParam, options, ParamType.INT, DefValue, NumBytes);
          
       } // End CmdParam()
       
       @Override
-	protected byte[] loadByteArray() {
+	protected void loadByteArray() {
          
          switch (NumBytes){
          
@@ -57,9 +57,6 @@ public class CmdIntParam extends CmdParam
             System.out.println("CmdIntParam::loadByteArray - Unsupported datasize"); 
             
          } // End NumByte Switch
-
-         return ByteArray;
-         
       } // End loadByteArray()
 
 } // End CmdIntparam

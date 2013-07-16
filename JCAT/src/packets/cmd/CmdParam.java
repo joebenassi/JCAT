@@ -22,7 +22,9 @@ public abstract class CmdParam
 
    public enum ParamType { UNDEF, UINT, INT, STR };
    
-   private final ParameterDetails parameterDetails;
+   //private final ParameterDetails parameterDetails;
+   private final boolean isInputParam;
+   private final String[] options;
    protected String    Name;
    protected ParamType Type;
    protected String    Value;
@@ -32,15 +34,17 @@ public abstract class CmdParam
    /*
     * Constructor: Integer Parameter
     */
-   public CmdParam(String Name, ParameterDetails parameterDetails, ParamType  Type, String DefValue, int NumBytes)
+   public CmdParam(String Name, boolean isInputParam, String[] options, ParamType  Type, String DefValue, int NumBytes)
    {
-	  this.parameterDetails = parameterDetails;
+	   this.isInputParam = isInputParam;
+	   this.options = options;
+	  //this.parameterDetails = parameterDetails;
       this.Name = Name;
       this.Type = Type;
       this.Value    = DefValue;
       this.NumBytes = NumBytes;
       ByteArray = new byte[NumBytes];
-      loadByteArray();
+      //loadByteArray();
       
    } // End CmdParam()
    
@@ -60,7 +64,7 @@ public abstract class CmdParam
     *  Each subclass type must provide the conversions for the
     *  particular parameter type
     */
-   protected abstract byte[] loadByteArray();   // Load byte array using current Value. Intent is an internal helper function
+   protected abstract void loadByteArray();   // Load byte array using current Value. Intent is an internal helper function
   
 
    public byte[] getByteArray() {
@@ -69,10 +73,10 @@ public abstract class CmdParam
    
    } // End getByteArray
 
-   public byte[] setValue(String value) {
+   public void setValue(String value) {
       
       Value = value;
-      return loadByteArray();
+      loadByteArray();//loadByteArray();
       
    } // End setValue 
   
@@ -86,8 +90,13 @@ public abstract class CmdParam
       return NumBytes;
    }
 
-public ParameterDetails getParameterDetails() {
-	return parameterDetails;
-}
-
+   public boolean isInputParam()
+   {
+	   return isInputParam;
+   }
+   
+   public String[] getOptions()
+   {
+	   return options;
+   }
 } // End class CmdParam

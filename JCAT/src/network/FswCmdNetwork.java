@@ -19,10 +19,9 @@ public class FswCmdNetwork
       PktOutput = new PktWriter();
    }
    
-   public void sendCmd(CcsdsCmdPkt CmdPkt)
+   public void sendCmd(String name, CcsdsCmdPkt CmdPkt)
    {
-      
-      PktOutput.WriteCmdPkt(CmdPkt.GetPacket(), CmdPkt.getTotalLength());
+      PktOutput.WriteCmdPkt(name, CmdPkt.GetPacket(), CmdPkt.getTotalLength());
       
    } // End getPktWriter()
    

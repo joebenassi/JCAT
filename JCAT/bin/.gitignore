@@ -1,8 +1,9 @@
+/utilities
 /applications
-/curval
+/packets
+/network
 /gui
 /main
-/network
-/packets
+/curval
+/Images
 /resources
-/utilities
