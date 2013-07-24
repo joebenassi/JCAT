@@ -2,9 +2,28 @@
 
 <channel>
 	<name>Executive Services</name>
-	<prefix>ES</prefix>
-	<cmdmid>0x1806</cmdmid>
-	<tlmmid>0x0800</tlmmid>
+	<configs>
+		<config>
+			<name>CPU1</name>
+			<cmdmid>0x1806</cmdmid>
+			<tlmmid>0x0800</tlmmid>
+		</config>
+		<config>
+			<name>CPU2</name>
+			<cmdmid>0x1826</cmdmid>
+			<tlmmid>0x0820</tlmmid>
+		</config>
+		<config>
+			<name>CPU3</name>
+			<cmdmid>0x1846</cmdmid>
+			<tlmmid>0x0840</tlmmid>
+		</config>
+		<config>
+			<name>CPU4</name>
+			<cmdmid>0x1866</cmdmid>
+			<tlmmid>0x0860</tlmmid>
+		</config>
+	</configs>
 	<commandoffset>+0</commandoffset>
 	<commands>
 		<command>
@@ -19,10 +38,15 @@
 				<choiceparameter>
 					<name>RestartType</name>
 					<type>uint16</type>
-					<bytes>1</bytes>
-					<primitive>string</primitive>
-					<choice>CFE_ES_PROCESSOR_RESET</choice>
-					<choice>CFE_ES_POWERON_RESET</choice>
+					<const>OS_MAX_API_NAME</const>
+					<choice>
+						<name>CFE_ES_PROCESSOR_RESET</name>
+						<value>1</value>
+					</choice>
+					<choice>
+						<name>CFE_ES_POWERON_RESET</name>
+						<value>2</value>
+					</choice>
 				</choiceparameter>
 			</parameters>
 		</command>
@@ -32,8 +56,8 @@
 				<inputparameter>
 					<name>CmdString</name>
 					<type>uint8</type>
-					<bytes>TBD</bytes>
-					<primitive>TBD</primitive>
+					<const>CFE_ES_MAX_SHELL_CMD</const>
+					<primitive>string</primitive>
 				</inputparameter>
 			</parameters>
 		</command>
@@ -43,40 +67,40 @@
 				<inputparameter>
 					<name>Application</name>
 					<type>uint8</type>
-					<bytes>TBD</bytes>
-					<primitive>TBD</primitive>
+					<const>OS_MAX_API_NAME</const>
+					<primitive>string</primitive>
 				</inputparameter>
 				<inputparameter>
 					<name>AppEntryPoint</name>
 					<type>uint8</type>
-					<bytes>TBD</bytes>
-					<primitive>TBD</primitive>
+					<const>OS_MAX_API_NAME</const>
+					<primitive>string</primitive>
 				</inputparameter>
 				<inputparameter>
 					<name>AppFileName</name>
 					<type>uint8</type>
-					<bytes>TBD</bytes>
-					<primitive>TBD</primitive>
+					<const>OS_MAX_PATH_LEN</const>
+					<primitive>string</primitive>
 				</inputparameter>
 				<inputparameter>
 					<name>StackSize</name>
 					<type>uint32</type>
-					<bytes>TBD</bytes>
-					<primitive>TBD</primitive>
 				</inputparameter>
 				<choiceparameter>
 					<name>ExceptionAction</name>
 					<type>uint16</type>
-					<bytes>TBD</bytes>
-					<primitive>TBD</primitive>
-					<choice>CFE_ES_APP_EXCEPTION_RESTART_APP</choice>
-					<choice>CFE_ES_APP_EXCEPTION_PROC_RESTART</choice>
+					<choice>
+						<name>CFE_ES_APP_EXCEPTION_RESTART_APP</name>
+						<value>0</value>
+					</choice>
+					<choice>
+						<name>CFE_ES_APP_EXCEPTION_PROC_RESTART</name>
+						<value>1</value>
+					</choice>
 				</choiceparameter>
 				<inputparameter>
 					<name>Priority</name>
 					<type>uint16</type>
-					<bytes>TBD</bytes>
-					<primitive>TBD</primitive>
 				</inputparameter>
 			</parameters>
 		</command>
@@ -86,7 +110,7 @@
 				<inputparameter>
 					<name>Application</name>
 					<type>uint8</type>
-					<bytes>20</bytes>
+					<const>OS_MAX_API_NAME</const>
 					<primitive>string</primitive>
 				</inputparameter>
 			</parameters>
@@ -97,8 +121,8 @@
 				<inputparameter>
 					<name>Application</name>
 					<type>uint8</type>
-					<bytes>TBD</bytes>
-					<primitive>TBD</primitive>
+					<const>OS_MAX_API_NAME</const>
+					<primitive>string</primitive>
 				</inputparameter>
 			</parameters>
 		</command>
@@ -108,14 +132,14 @@
 				<inputparameter>
 					<name>Application</name>
 					<type>uint8</type>
-					<bytes>TBD</bytes>
-					<primitive>TBD</primitive>
+					<const>OS_MAX_API_NAME</const>
+					<primitive>string</primitive>
 				</inputparameter>
 				<inputparameter>
 					<name>AppFileName</name>
 					<type>uint8</type>
-					<bytes>TBD</bytes>
-					<primitive>TBD</primitive>
+					<const>OS_MAX_PATH_LEN</const>
+					<primitive>string</primitive>
 				</inputparameter>
 			</parameters>
 		</command>
@@ -125,8 +149,8 @@
 				<inputparameter>
 					<name>Application</name>
 					<type>uint8</type>
-					<bytes>TBD</bytes>
-					<primitive>TBD</primitive>
+					<const>OS_MAX_API_NAME</const>
+					<primitive>string</primitive>
 				</inputparameter>
 			</parameters>
 		</command>
@@ -136,21 +160,13 @@
 				<inputparameter>
 					<name>QueryAllFileName</name>
 					<type>uint8</type>
-					<bytes>TBD</bytes>
-					<primitive>TBD</primitive>
+					<const>OS_MAX_PATH_LEN</const>
+					<primitive>string</primitive>
 				</inputparameter>
 			</parameters>
 		</command>
 		<command>
 			<name>CFE_ES_CLEAR_SYSLOG_CC</name>
-			<parameters>
-				<inputparameter>
-					<name>QueryAllFileName</name>
-					<type>uint8</type>
-					<bytes>TBD</bytes>
-					<primitive>TBD</primitive>
-				</inputparameter>
-			</parameters>
 		</command>
 		<command>
 			<name>CFE_ES_WRITE_SYSLOG_CC</name>
@@ -158,10 +174,15 @@
 				<choiceparameter>
 					<name>Mode</name>
 					<type>uint32</type>
-					<bytes>16</bytes>
-					<primitive>string</primitive>
-					<choice>CFE_ES_LOG_DISCARD</choice>
-					<choice>CFE_ES_LOG_OVERWRITE</choice>
+					<choicex>CFE_ES_LOG_DISCARD</choicex>
+					<choice>
+						<name>CFE_ES_LOG_DISCARD</name>
+						<value>0</value>
+					</choice>
+					<choice>
+						<name>CFE_ES_LOG_OVERWRITE</name>
+						<value>1</value>
+					</choice>
 				</choiceparameter>
 			</parameters>
 		</command>
@@ -174,8 +195,8 @@
 				<inputparameter>
 					<name>ERLogFileName</name>
 					<type>char</type>
-					<bytes>TBD</bytes>
-					<primitive>TBD</primitive>
+					<const>OS_MAX_PATH_LEN</const>
+					<primitive>string</primitive>
 				</inputparameter>
 			</parameters>
 		</command>
@@ -188,8 +209,8 @@
 				<inputparameter>
 					<name>DataFileName</name>
 					<type>char</type>
-					<bytes>TBD</bytes>
-					<primitive>TBD</primitive>
+					<const>OS_MAX_PATH_LEN</const>
+					<primitive>string</primitive>
 				</inputparameter>
 			</parameters>
 		</command>
@@ -199,14 +220,10 @@
 				<inputparameter>
 					<name>FilterMaskNum</name>
 					<type>uint32</type>
-					<bytes>TBD</bytes>
-					<primitive>TBD</primitive>
 				</inputparameter>
 				<inputparameter>
 					<name>FilterMask</name>
 					<type>uint32</type>
-					<bytes>TBD</bytes>
-					<primitive>TBD</primitive>
 				</inputparameter>
 			</parameters>
 		</command>
@@ -216,14 +233,10 @@
 				<inputparameter>
 					<name>TriggerMaskNum</name>
 					<type>uint32</type>
-					<bytes>TBD</bytes>
-					<primitive>TBD</primitive>
 				</inputparameter>
 				<inputparameter>
 					<name>TriggerMask</name>
 					<type>uint32</type>
-					<bytes>TBD</bytes>
-					<primitive>TBD</primitive>
 				</inputparameter>
 			</parameters>
 		</command>
@@ -233,10 +246,15 @@
 				<choiceparameter>
 					<name>Mode</name>
 					<type>uint32</type>
-					<bytes>TBD</bytes>
-					<primitive>TBD</primitive>
-					<choice>CFE_ES_LOG_DISCARD</choice>
-					<choice>CFE_ES_LOG_OVERWRITE</choice>
+					<choicex>CFE_ES_LOG_DISCARD</choicex>
+					<choice>
+						<name>CFE_ES_LOG_DISCARD</name>
+						<value>0</value>
+					</choice>
+					<choice>
+						<name>CFE_ES_LOG_OVERWRITE</name>
+						<value>1</value>
+					</choice>
 				</choiceparameter>
 			</parameters>
 		</command>
@@ -249,8 +267,6 @@
 				<inputparameter>
 					<name>MaxPRCount</name>
 					<type>uint16</type>
-					<bytes>TBD</bytes>
-					<primitive>TBD</primitive>
 				</inputparameter>
 			</parameters>
 		</command>
@@ -260,8 +276,8 @@
 				<inputparameter>
 					<name>CdsName</name>
 					<type>char</type>
-					<bytes>TBD</bytes>
-					<primitive>TBD</primitive>
+					<const>CFE_ES_CDS_MAX_FULL_NAME_LEN</const>
+					<primitive>string</primitive>
 				</inputparameter>
 			</parameters>
 		</command>
@@ -271,14 +287,12 @@
 				<inputparameter>
 					<name>Application</name>
 					<type>uint8</type>
-					<bytes>TBD</bytes>
-					<primitive>TBD</primitive>
+					<const>OS_MAX_API_NAME</const>
+					<primitive>string</primitive>
 				</inputparameter>
 				<inputparameter>
 					<name>PoolHandle</name>
 					<type>uint32</type>
-					<bytes>TBD</bytes>
-					<primitive>TBD</primitive>
 				</inputparameter>
 			</parameters>
 		</command>
@@ -288,8 +302,8 @@
 				<inputparameter>
 					<name>DumpFilename</name>
 					<type>char</type>
-					<bytes>TBD</bytes>
-					<primitive>TBD</primitive>
+					<const>OS_MAX_PATH_LEN</const>
+					<primitive>string</primitive>
 				</inputparameter>
 			</parameters>
 		</command>
@@ -299,8 +313,8 @@
 				<inputparameter>
 					<name>QueryAllFileName</name>
 					<type>uint8</type>
-					<bytes>TBD</bytes>
-					<primitive>TBD</primitive>
+					<const>OS_MAX_PATH_LEN</const>
+					<primitive>string</primitive>
 				</inputparameter>
 			</parameters>
 		</command>

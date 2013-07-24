@@ -2,11 +2,29 @@
 
 <channel>
 	<name>Event Service</name>
-	<prefix>EVS</prefix>
-	<cmdmid>0x1801</cmdmid>
-	<tlmmid>0x0801</tlmmid>
-	<commandoffset>+1</commandoffset>
-
+	<configs>
+		<config>
+			<name>CPU1</name>
+			<cmdmid>0x1801</cmdmid>
+			<tlmmid>0x0801</tlmmid>
+		</config>
+		<config>
+			<name>CPU2</name>
+			<cmdmid>0x1821</cmdmid>
+			<tlmmid>0x0821</tlmmid>
+		</config>
+		<config>
+			<name>CPU3</name>
+			<cmdmid>0x1841</cmdmid>
+			<tlmmid>0x0841</tlmmid>
+		</config>
+		<config>
+			<name>CPU4</name>
+			<cmdmid>0x1861</cmdmid>
+			<tlmmid>0x0861</tlmmid>
+		</config>
+	</configs>
+	<commandoffset>+0</commandoffset>
 	<commands>
 		<command>
 			<name>CFE_EVS_NO_OPERATION_CC</name>
@@ -19,9 +37,8 @@
 			<parameters>
 				<inputparameter>
 					<name>BitMask</name>
-					<type>uint8</type>
-					<primitive>TBD</primitive>
-					<bytes>TBD</bytes>
+					<type>uint16</type>
+					<primitive>string</primitive>
 				</inputparameter>
 			</parameters>
 		</command>
@@ -30,9 +47,7 @@
 			<parameters>
 				<inputparameter>
 					<name>BitMask</name>
-					<type>uint8</type>
-					<primitive>TBD</primitive>
-					<bytes>TBD</bytes>
+					<type>uint16</type>
 				</inputparameter>
 			</parameters>
 		</command>
@@ -42,8 +57,6 @@
 				<inputparameter>
 					<name>Mode</name>
 					<type>uint8</type>
-					<primitive>TBD</primitive>
-					<bytes>TBD</bytes>
 				</inputparameter>
 			</parameters>
 		</command>
@@ -53,14 +66,12 @@
 				<inputparameter>
 					<name>AppName</name>
 					<type>uint8</type>
-					<primitive>TBD</primitive>
-					<bytes>TBD</bytes>
+					<const>OS_MAX_API_NAME</const>
+					<primitive>string</primitive>
 				</inputparameter>
 				<inputparameter>
 					<name>BitMask</name>
 					<type>uint8</type>
-					<primitive>TBD</primitive>
-					<bytes>TBD</bytes>
 				</inputparameter>
 			</parameters>
 		</command>
@@ -70,14 +81,12 @@
 				<inputparameter>
 					<name>AppName</name>
 					<type>uint8</type>
-					<primitive>TBD</primitive>
-					<bytes>TBD</bytes>
+					<const>OS_MAX_API_NAME</const>
+					<primitive>string</primitive>
 				</inputparameter>
 				<inputparameter>
 					<name>BitMask</name>
 					<type>uint8</type>
-					<primitive>TBD</primitive>
-					<bytes>TBD</bytes>
 				</inputparameter>
 			</parameters>
 		</command>
@@ -87,8 +96,8 @@
 				<inputparameter>
 					<name>AppName</name>
 					<type>uint8</type>
-					<primitive>TBD</primitive>
-					<bytes>TBD</bytes>
+					<const>OS_MAX_API_NAME</const>					
+					<primitive>string</primitive>
 				</inputparameter>
 			</parameters>
 		</command>
@@ -98,8 +107,8 @@
 				<inputparameter>
 					<name>AppName</name>
 					<type>uint8</type>
-					<primitive>TBD</primitive>
-					<bytes>TBD</bytes>
+					<const>OS_MAX_API_NAME</const>					
+					<primitive>string</primitive>
 				</inputparameter>
 			</parameters>
 		</command>
@@ -109,8 +118,8 @@
 				<inputparameter>
 					<name>AppName</name>
 					<type>uint8</type>
-					<primitive>TBD</primitive>
-					<bytes>TBD</bytes>
+					<const>OS_MAX_API_NAME</const>					
+					<primitive>string</primitive>
 				</inputparameter>
 			</parameters>
 		</command>
@@ -120,20 +129,16 @@
 				<inputparameter>
 					<name>AppName</name>
 					<type>uint8</type>
-					<primitive>TBD</primitive>
-					<bytes>TBD</bytes>
+					<const>OS_MAX_API_NAME</const>					
+					<primitive>string</primitive>
 				</inputparameter>
 				<inputparameter>
 					<name>EventID</name>
 					<type>uint16</type>
-					<primitive>TBD</primitive>
-					<bytes>TBD</bytes>
 				</inputparameter>
 				<inputparameter>
 					<name>Mask</name>
 					<type>uint16</type>
-					<primitive>TBD</primitive>
-					<bytes>TBD</bytes>
 				</inputparameter>
 			</parameters>
 		</command>
@@ -143,8 +148,6 @@
 				<inputparameter>
 					<name>BitMask</name>
 					<type>uint8</type>
-					<primitive>TBD</primitive>
-					<bytes>TBD</bytes>
 				</inputparameter>
 			</parameters>
 		</command>
@@ -154,8 +157,6 @@
 				<inputparameter>
 					<name>BitMask</name>
 					<type>uint8</type>
-					<primitive>TBD</primitive>
-					<bytes>TBD</bytes>
 				</inputparameter>
 			</parameters>
 		</command>
@@ -165,14 +166,12 @@
 				<inputparameter>
 					<name>AppName</name>
 					<type>uint8</type>
-					<primitive>TBD</primitive>
-					<bytes>TBD</bytes>
+					<const>OS_MAX_API_NAME</const>					
+					<primitive>string</primitive>
 				</inputparameter>
 				<inputparameter>
 					<name>EventID</name>
 					<type>uint16</type>
-					<primitive>TBD</primitive>
-					<bytes>TBD</bytes>
 				</inputparameter>
 			</parameters>
 		</command>
@@ -182,8 +181,8 @@
 				<inputparameter>
 					<name>AppName</name>
 					<type>uint8</type>
-					<primitive>TBD</primitive>
-					<bytes>TBD</bytes>
+					<const>OS_MAX_API_NAME</const>					
+					<primitive>string</primitive>
 				</inputparameter>
 			</parameters>
 		</command>
@@ -193,20 +192,16 @@
 				<inputparameter>
 					<name>AppName</name>
 					<type>uint8</type>
-					<primitive>TBD</primitive>
-					<bytes>TBD</bytes>
+					<const>OS_MAX_API_NAME</const>					
+					<primitive>string</primitive>
 				</inputparameter>
 				<inputparameter>
 					<name>EventID</name>
 					<type>uint16</type>
-					<primitive>TBD</primitive>
-					<bytes>TBD</bytes>
 				</inputparameter>
 				<inputparameter>
 					<name>Mask</name>
 					<type>uint16</type>
-					<primitive>TBD</primitive>
-					<bytes>TBD</bytes>
 				</inputparameter>
 			</parameters>
 		</command>
@@ -216,20 +211,16 @@
 				<inputparameter>
 					<name>AppName</name>
 					<type>uint8</type>
-					<primitive>TBD</primitive>
-					<bytes>TBD</bytes>
+					<const>OS_MAX_API_NAME</const>					
+					<primitive>string</primitive>
 				</inputparameter>
 				<inputparameter>
 					<name>EventID</name>
 					<type>uint16</type>
-					<primitive>TBD</primitive>
-					<bytes>TBD</bytes>
 				</inputparameter>
 				<inputparameter>
 					<name>Mask</name>
 					<type>uint16</type>
-					<primitive>TBD</primitive>
-					<bytes>TBD</bytes>
 				</inputparameter>
 			</parameters>
 		</command>
@@ -239,8 +230,8 @@
 				<inputparameter>
 					<name>AppDataFilename</name>
 					<type>uint8</type>
-					<primitive>TBD</primitive>
-					<bytes>TBD</bytes>
+					<const>OS_MAX_PATH_LEN</const>
+					<primitive>string</primitive>
 				</inputparameter>
 			</parameters>
 		</command>
@@ -250,8 +241,8 @@
 				<inputparameter>
 					<name>LogFilename</name>
 					<type>uint8</type>
-					<primitive>TBD</primitive>
-					<bytes>TBD</bytes>
+					<const>OS_MAX_PATH_LEN</const>
+					<primitive>string</primitive>
 				</inputparameter>
 			</parameters>
 		</command>
@@ -261,8 +252,6 @@
 				<inputparameter>
 					<name>Mode</name>
 					<type>uint8</type>
-					<primitive>TBD</primitive>
-					<bytes>TBD</bytes>
 				</inputparameter>
 			</parameters>
 		</command>

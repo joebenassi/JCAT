@@ -2,11 +2,29 @@
 
 <channel>
 	<name>Time Services</name>
-	<prefix>TIME</prefix>
-	<cmdmid>0x1805</cmdmid>
-	<tlmmid>0x0805</tlmmid>
+	<configs>
+		<config>
+			<name>CPU1</name>
+			<cmdmid>0x1805</cmdmid>
+			<tlmmid>0x0805</tlmmid>
+		</config>
+		<config>
+			<name>CPU2</name>
+			<cmdmid>0x1825</cmdmid>
+			<tlmmid>0x0825</tlmmid>
+		</config>
+		<config>
+			<name>CPU3</name>
+			<cmdmid>0x1845</cmdmid>
+			<tlmmid>0x0845</tlmmid>
+		</config>
+		<config>
+			<name>CPU4</name>
+			<cmdmid>0x1865</cmdmid>
+			<tlmmid>0x0865</tlmmid>
+		</config>
+	</configs>
 	<commandoffset>+0</commandoffset>
-
 	<commands>
 		<command>
 			<name>CFE_TIME_NOOP_CC</name>
@@ -23,8 +41,6 @@
 				<choiceparameter>
 					<name>TimeSource</name>
 					<type>int16</type>
-					<primitive>TBD</primitive>
-					<bytes>TBD</bytes>
 					<choice>CFE_TIME_USE_INTERN</choice>
 					<choice>CFE_TIME_USE_EXTERN</choice>
 				</choiceparameter>
@@ -36,8 +52,6 @@
 				<choiceparameter>
 					<name>ClockState</name>
 					<type>int16</type>
-					<primitive>TBD</primitive>
-					<bytes>TBD</bytes>
 					<choice>CFE_TIME_INVALID</choice>
 					<choice>CFE_TIME_VALID</choice>
 					<choice>CFE_TIME_FLYWHEEL</choice>
@@ -50,14 +64,10 @@
 				<inputparameter>
 					<name>Seconds</name>
 					<type>uint32</type>
-					<primitive>TBD</primitive>
-					<bytes>TBD</bytes>
 				</inputparameter>
 				<inputparameter>
 					<name>MicroSeconds</name>
 					<type>uint32</type>
-					<primitive>TBD</primitive>
-					<bytes>TBD</bytes>
 				</inputparameter>
 			</parameters>
 		</command>
@@ -67,14 +77,10 @@
 				<inputparameter>
 					<name>Seconds</name>
 					<type>uint32</type>
-					<primitive>TBD</primitive>
-					<bytes>TBD</bytes>
 				</inputparameter>
 				<inputparameter>
 					<name>MicroSeconds</name>
 					<type>uint32</type>
-					<primitive>TBD</primitive>
-					<bytes>TBD</bytes>
 				</inputparameter>
 			</parameters>
 		</command>
@@ -84,14 +90,10 @@
 				<inputparameter>
 					<name>Seconds</name>
 					<type>uint32</type>
-					<primitive>TBD</primitive>
-					<bytes>TBD</bytes>
 				</inputparameter>
 				<inputparameter>
 					<name>MicroSeconds</name>
 					<type>uint32</type>
-					<primitive>TBD</primitive>
-					<bytes>TBD</bytes>
 				</inputparameter>
 			</parameters>
 		</command>
@@ -101,14 +103,10 @@
 				<inputparameter>
 					<name>Seconds</name>
 					<type>uint32</type>
-					<primitive>TBD</primitive>
-					<bytes>TBD</bytes>
 				</inputparameter>
 				<inputparameter>
 					<name>MicroSeconds</name>
 					<type>uint32</type>
-					<primitive>TBD</primitive>
-					<bytes>TBD</bytes>
 				</inputparameter>
 			</parameters>
 		</command>
@@ -118,14 +116,10 @@
 				<inputparameter>
 					<name>Seconds</name>
 					<type>uint32</type>
-					<primitive>TBD</primitive>
-					<bytes>TBD</bytes>
 				</inputparameter>
 				<inputparameter>
 					<name>MicroSeconds</name>
 					<type>uint32</type>
-					<primitive>TBD</primitive>
-					<bytes>TBD</bytes>
 				</inputparameter>
 			</parameters>
 		</command>
@@ -135,14 +129,10 @@
 				<inputparameter>
 					<name>Seconds</name>
 					<type>uint32</type>
-					<primitive>TBD</primitive>
-					<bytes>TBD</bytes>
 				</inputparameter>
 				<inputparameter>
 					<name>MicroSeconds</name>
 					<type>uint32</type>
-					<primitive>TBD</primitive>
-					<bytes>TBD</bytes>
 				</inputparameter>
 			</parameters>
 		</command>
@@ -152,14 +142,10 @@
 				<inputparameter>
 					<name>Seconds</name>
 					<type>uint32</type>
-					<primitive>int</primitive>
-					<bytes>TBD</bytes>
 				</inputparameter>
 				<inputparameter>
 					<name>MicroSeconds</name>
 					<type>uint32</type>
-					<primitive>int</primitive>
-					<bytes>TBD</bytes>
 				</inputparameter>
 			</parameters>
 		</command>
@@ -169,14 +155,10 @@
 				<inputparameter>
 					<name>Seconds</name>
 					<type>uint32</type>
-					<primitive>TBD</primitive>
-					<bytes>TBD</bytes>
 				</inputparameter>
 				<inputparameter>
 					<name>MicroSeconds</name>
 					<type>uint32</type>
-					<primitive>TBD</primitive>
-					<bytes>TBD</bytes>
 				</inputparameter>
 			</parameters>
 		</command>
@@ -186,14 +168,10 @@
 				<inputparameter>
 					<name>Seconds</name>
 					<type>uint32</type>
-					<primitive>TBD</primitive>
-					<bytes>TBD</bytes>
 				</inputparameter>
 				<inputparameter>
 					<name>MicroSeconds</name>
 					<type>uint32</type>
-					<primitive>TBD</primitive>
-					<bytes>TBD</bytes>
 				</inputparameter>
 			</parameters>
 		</command>
@@ -203,14 +181,10 @@
 				<inputparameter>
 					<name>Seconds</name>
 					<type>uint32</type>
-					<primitive>TBD</primitive>
-					<bytes>TBD</bytes>
 				</inputparameter>
 				<inputparameter>
 					<name>MicroSeconds</name>
 					<type>uint32</type>
-					<primitive>TBD</primitive>
-					<bytes>TBD</bytes>
 				</inputparameter>
 			</parameters>
 		</command>
@@ -220,8 +194,6 @@
 				<choiceparameter>
 					<name>ToneSource</name>
 					<type>int16</type>
-					<primitive>TBD</primitive>
-					<bytes>TBD</bytes>
 					<choice>CFE_TIME_TONE_PRI</choice>
 					<choice>CFE_TIME_TONE_RED</choice>
 				</choiceparameter>

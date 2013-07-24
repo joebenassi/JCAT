@@ -1,7 +1,5 @@
 package gui.popups.menu;
 
-import gui.menu.MenuFiller;
-
 import java.io.File;
 import java.io.IOException;
 
@@ -12,15 +10,12 @@ import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.xml.sax.SAXException;
 
-import utilities.XMLParser;
-
-import applications.App;
-
-public final class PopulateAppsPrompt {
+public final class NavAppXMLPrompt {
 	public static final void launch(final Shell shell,
 			final String version) throws ParserConfigurationException,
 			SAXException, IOException {
 		FileDialog dialog = new FileDialog(shell, SWT.MULTI | SWT.OPEN);
+		dialog.setText("Select App Profiles");
 		dialog.setFilterExtensions(new String[] { "*.xml" });
 		dialog.setFilterPath("c:\\temp");
 
@@ -33,6 +28,7 @@ public final class PopulateAppsPrompt {
 	private static final void populateApps(final Shell shell,
 			final String fullFilePath, final String[] fileNames, final String version) throws ParserConfigurationException,
 			SAXException, IOException {
+		
 		String directory;
 		if (fullFilePath != null) {
 			directory = fullFilePath.substring(0, fullFilePath.length()
@@ -46,12 +42,6 @@ public final class PopulateAppsPrompt {
 			files[i] = new File(directory + fileNames[i]);
 		}
 
-		App[] apps;
-
-		apps = XMLParser.getApps(files);
-		
-		if (apps.length > 0) {
-					MenuFiller.addMenu(shell, apps, version);
-		}
+		ChooseConfigsPrompt.launch(files, shell);
 	}
 }

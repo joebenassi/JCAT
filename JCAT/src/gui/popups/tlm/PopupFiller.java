@@ -12,12 +12,14 @@ import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
+import resources.ResourceLoader;
+
 import utilities.ColorConstants;
 import utilities.FontConstants;
+import utilities.ShellDisposer;
 
 /**
  * This creates a Shell containing a UniversalBox, a LeftBar, and App-specific
@@ -33,15 +35,16 @@ import utilities.FontConstants;
 public class PopupFiller {
 	private Shell POPUP = new Shell(SWT.SHELL_TRIM & ~(SWT.RESIZE)
 			| SWT.ON_TOP | SWT.BORDER);
-	private static final Font TEXTFONT = FontConstants.timeFont;
-	private static final Font POPUPTITLEFONT = FontConstants.popupTitleFont;
-	private static Color backgroundColor = ColorConstants.baseGray52;
-	private static Color textColor = ColorConstants.text;
-	private static Color textBoxColor = ColorConstants.base;
-	private static Color borderColor = ColorConstants.baseGray20;
+	private static final Font TEXTFONT = FontConstants.bodyFont;
+	private static final Font POPUPTITLEFONT = FontConstants.titleFont;
+	private static Color backgroundColor = ColorConstants.lightPageBackground;
+	private static Color textColor = ColorConstants.textColor;
+	private static Color textBoxColor = ColorConstants.textBoxColor;
+	private static Color borderColor = ColorConstants.borderColor;
 	private static Color[] panelColors = ColorConstants.panelColors;
 	private static final int offSet = -37;
 	private EntryBox entryBox;
+	private UniversalBox universalBox;
 
 	/**
 	 * This creates a Shell containing a UniversalBox, a LeftBar, and
@@ -80,6 +83,8 @@ public class PopupFiller {
 			}
 		});
 
+		POPUP.setImage(ResourceLoader.getSmallJCATLogo());
+		ShellDisposer.queueForDisposal(POPUP);
 		FormLayout formLayout = new FormLayout();
 		formLayout.marginWidth = 10;
 		formLayout.marginHeight = 10;
@@ -115,10 +120,10 @@ public class PopupFiller {
 		data = new GridData(SWT.LEFT, SWT.NONE, true, false);
 		data.horizontalIndent = 15;
 
-		UniversalBox.addUniversalBox(rightBar, backgroundColor, textColor,
-				textBoxColor, borderColor, data);
+		universalBox = new UniversalBox(rightBar, backgroundColor, textColor,
+				textBoxColor, borderColor, TEXTFONT, data);
 
-		data = new GridData(SWT.END, SWT.NONE, true, false);
+		data = new GridData(SWT.LEFT, SWT.NONE, true, false);
 		data.horizontalIndent = 15;
 
 		entryBox = new EntryBox(rightBar, data, borderColor, backgroundColor,
@@ -158,5 +163,9 @@ public class PopupFiller {
 	 */
 	public final boolean isDisposed() {
 		return POPUP.isDisposed();
+	}
+
+	public void setTime(String[] time) {
+		universalBox.setTimeText(time);
 	}
 }

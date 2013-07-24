@@ -7,7 +7,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 
-final class LeftBar extends Composite {
+public final class LeftBar extends Composite {
 	/**
 	 * Adds a Composite within the input Composite, displaying colored, vertical
 	 * lines. There are (colors.length) lines.

@@ -1,9 +1,10 @@
 package utilities;
 
+import gui.popups.menu.NavConstantXMLPrompt;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -17,8 +18,10 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import packets.cmd.CmdParam;
 import packets.cmd.CmdPkt;
+import packets.parameters.ChoiceOption;
+import packets.parameters.CmdParam;
+import packets.parameters.ScalarConstant;
 import packets.tlm.TlmPkt;
 
 import applications.App;
@@ -43,77 +46,74 @@ public final class XMLParser {
 	 * @throws SAXException
 	 * @throws IOException
 	 */
-	public static final App[] getApps(final File[] files)
-			throws ParserConfigurationException, SAXException, IOException {
-		long startTime = System.currentTimeMillis();
+
+	public static final void addConstants(File f) {
 		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory
 				.newInstance();
-		final DocumentBuilder documentBuilder = documentBuilderFactory
-				.newDocumentBuilder();
-		final List<App> packets = new ArrayList<App>();
-
-		
-		//Thread t = new Thread(new Runnable() {
-		//	public void run() {
-				for (int i = 0; i < files.length; i++) {
-					try {
-						final Document document = documentBuilder
-								.parse(files[i]);
-						document.getDocumentElement().normalize();
-
-						final String name = getInstance("name", document);
-						final String prefix = getInstance("prefix", document);
-						final ArrayList<CmdPkt> commands = getCommands(document);
-						final TlmPkt[] telemetry = getTelemetry(document);
-						final int TlmMID = getTlmMID(document);
-						
-						App app = new App(name, prefix, getCommands(document),
-								getTelemetry(document), getTlmMID(document));
-						packets.add(app);
-					} catch (Throwable e) {
-					}
-				}
-			//		;
-			//	}
-			//}
-		//});
-		/*try {
-			t.join();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		t.start();
-
 		try {
-			Thread.sleep(1000);
+			final DocumentBuilder documentBuilder = documentBuilderFactory
+					.newDocumentBuilder();
+
+			Document doc = documentBuilder.parse(f);
+			doc.getDocumentElement().normalize();
+
+			final NodeList nodeList = doc.getElementsByTagName("const");
+			for (int i = 0; i < nodeList.getLength(); i++) {
+				try {
+					Element e = (Element) nodeList.item(i);
+					String name = e.getElementsByTagName("name").item(0)
+							.getTextContent();
+					String value = e.getElementsByTagName("value").item(0)
+							.getTextContent();
+
+					ScalarConstant.addConstant(name, value);
+				} catch (Throwable e1) {
+				}
+			}
+			
+			final NodeList nodes = doc.getElementsByTagName("config");
+			for (int i = 0; i < nodes.getLength(); i++) {
+				try {
+					Element e = (Element) nodes.item(i);
+					String name = e.getElementsByTagName("name").item(0)
+							.getTextContent();
+					String msgid = e.getElementsByTagName("msgid").item(0)
+							.getTextContent();
+
+					Networker.addConfig(name, msgid);
+				} catch (Throwable e1) {
+				}
+			}
 		} catch (Throwable e) {
 		}
-		;*/
-		Networker.getNetworker().launch();
-		// /if (TelemetryUpdater.updateAtIntervals)
-		// TelemetryUpdater.start();
-		long endTime = System.currentTimeMillis();
-		System.out.println("TIME TAKEN: " + (endTime - startTime));
-		return packets.toArray(new App[packets.size()]);
 	}
 
-	private static final int getTlmMID(Document document) {
-		final String IDString = getInstance("tlmmid", document);
-		final String IDString2 = IDString.substring(2, IDString.length());
+	public static final App getApp(Document document, int CmdID, int TlmID,
+			String config) {
+		final String name = getInstance("name", document);
 
-		return Integer.parseInt(IDString2, 16);
+		return new App(name + " [" + config + "]", getCommands(
+				document, CmdID), getTelemetry(document), TlmID);
 	}
 
-	private static final int getCmdMID(Document document) {
-		final String IDString = getInstance("cmdmid", document);
+	public static ArrayList<String> getConfigNames(Document document) {
+		final Element firstTree = (Element) document.getElementsByTagName(
+				"configs").item(0);
+		final NodeList nodeList = firstTree.getElementsByTagName("config");
 
-		final String IDString2 = IDString.substring(2, IDString.length());
-		return Integer.parseInt(IDString2, 16);
+		ArrayList<String> configNames = new ArrayList<String>();
+
+		for (int i = 0; i < nodeList.getLength(); i++) {
+			Element e = (Element) nodeList.item(i);
+			configNames.add(e.getElementsByTagName("name").item(0)
+					.getTextContent());
+		}
+
+		return configNames;
 	}
 
 	private static final int getCommandOffset(Document document)
-			throws Exception {
+			{
 		final String COString = getInstance("commandoffset", document);
 		String modString;
 		int value = 0;
@@ -140,6 +140,24 @@ public final class XMLParser {
 		return value;
 	}
 
+	public static final int[] getIDs(Document document, int configNum) {
+		final Element firstTree = (Element) document.getElementsByTagName(
+				"configs").item(0);
+		final NodeList nodeList = firstTree.getElementsByTagName("config");
+
+		int[] IDs = new int[2];
+		Element e = (Element) nodeList.item(configNum);
+		String cmdmid = e.getElementsByTagName("cmdmid").item(0)
+				.getTextContent();
+		String tlmmid = e.getElementsByTagName("tlmmid").item(0)
+				.getTextContent();
+
+		IDs[0] = Integer.parseInt(cmdmid.substring(2), 16);
+		IDs[1] = Integer.parseInt(tlmmid.substring(2), 16);
+
+		return IDs;
+	}
+
 	private static final String getInstance(String tag, Document document) {
 		return document.getElementsByTagName(tag).item(0).getTextContent();
 	}
@@ -149,20 +167,15 @@ public final class XMLParser {
 	 * 
 	 * @param document
 	 *            The document to parse for App configuration details
+	 * @param cmdMID
 	 * @return the array of Commands as defined in the input document
 	 */
 
-	private static final ArrayList<CmdPkt> getCommands(Document document) {
-
-		final int CmdMID = getCmdMID(document);
-
+	private static final ArrayList<CmdPkt> getCommands(Document document,
+			int CmdMID) {
 		int commandOffset = 0;
-		try {
-			commandOffset = getCommandOffset(document);
-		} catch (Exception e) {
-		}
-
-		final String prefix = getInstance("prefix", document);
+		
+		commandOffset = getCommandOffset(document);
 
 		final Element firstTree = (Element) document.getElementsByTagName(
 				"commands").item(0);
@@ -172,7 +185,7 @@ public final class XMLParser {
 
 		for (int i = 0; i < nodeList.getLength(); i++) {
 			final int functCode = i + commandOffset;
-			commands.add(getCommand((Element) nodeList.item(i), prefix,
+			commands.add(getCommand((Element) nodeList.item(i),
 					functCode, CmdMID));
 		}
 		return commands;
@@ -182,52 +195,41 @@ public final class XMLParser {
 	 * @param commandElement
 	 *            The Element that represents the particular command within the
 	 *            XML document.
-	 * @param prefix
-	 *            The prefix for the App.
 	 * @return
 	 */
-	private static final CmdPkt getCommand(Element commandBase, String prefix,
+	private static final CmdPkt getCommand(Element commandBase,
 			int funcCode, int appID) {
-		final String appPrefix = prefix;
 		final String name = getFirstInstance("name", commandBase);
 
-		final int messageID = appID; // /* SET MSG ID = APP ID (for now) */
-		// final int funcCode = fcode;///* 0, 1th Cmd */
-
+		final int messageID = appID;
 		int dataLength = 0;
-		/*
-		 * param 1 = 20. param 2 = 15.
-		 * 
-		 * dataLength = 35
-		 */
 
 		ArrayList<CmdParam> parameters = getParameters(commandBase);
 
 		for (CmdParam c : parameters)
 			dataLength += c.getNumBytes();
 
-		// System.out.println("ZERO = " + dataLength);
-		CmdPkt command = new CmdPkt(appPrefix, name, messageID, funcCode,
+		CmdPkt command = new CmdPkt(name, messageID, funcCode,
 				dataLength);
 
-		// System.out.println(command.getAppPrefix() + ": FUNCTCODE: " +
-		// funcCode
-		// + ": NAME == " + command.getName());
 		for (CmdParam c : parameters)
 			command.addParam(c);
 
-		// command.loadParamList(); <- this was causing the error @ 7/10/2013,
-		// 3:30pm
 		return command;
 	}
 
 	private static final String getFirstInstance(String type, Element element) {
-		return element.getElementsByTagName(type).item(0).getTextContent();
+		try {
+			return element.getElementsByTagName(type).item(0).getTextContent();
+		} catch (Throwable ex) {
+			return "DNE";
+		}
 	}
 
 	private static final ArrayList<Element> getParameterElements(
 			Element commandBase) {
 		ArrayList<Element> elements = new ArrayList<Element>();
+
 		NodeList nodeList = (NodeList) commandBase
 				.getElementsByTagName("parameters").item(0).getChildNodes();
 
@@ -241,20 +243,10 @@ public final class XMLParser {
 
 		return elements;
 	}
-
-	/**
-	 * HARDCODED
-	 * 
-	 * @param commandBase
-	 * @return
-	 */
+	
 	private static final ArrayList<CmdParam> getParameters(Element commandBase) {
 		if (commandBase.getElementsByTagName("parameters").item(0) == null)
 			return new ArrayList<CmdParam>();
-
-		/** @todo HARDCODE number of numBytes for each parameter **/
-		/** @todo HARDCODE string vs int **/
-		/** @todo HARDCODE defValue? **/
 
 		ArrayList<Element> elements = getParameterElements(commandBase);
 		ArrayList<CmdParam> parameters = new ArrayList<CmdParam>();
@@ -262,27 +254,59 @@ public final class XMLParser {
 		for (int i = 0; i < elements.size(); i++) {
 			final String name = getFirstInstance("name", elements.get(i));
 			final String type = getFirstInstance("type", elements.get(i));
-			final String primitive = getFirstInstance("primitive",
-					elements.get(i));
-			final String bytes = getFirstInstance("bytes", elements.get(i));
-			boolean isInputParam = true;
-			String[] options = new String[0];
 
+			final String constant = getFirstInstance("const", elements.get(i));
+			if (!constant.equals("DNE"))
+				try {
+					if (!ScalarConstant.hasConstant(constant))
+						NavConstantXMLPrompt.launch();
+				} catch (ParserConfigurationException | SAXException
+						| IOException e1) {
+					e1.printStackTrace();
+				}
+
+			final String bytes = ScalarConstant.getValue(constant);
+
+			final String primitive = getFirstInstance("primitive", // may have
+					elements.get(i));
+
+			boolean isInputParam = true;
 			if (elements.get(i).getNodeName()
-					.equalsIgnoreCase("choiceparameter")) {
+					.equalsIgnoreCase("choiceparameter"))
 				isInputParam = false;
+
+			if (!isInputParam) {
 				NodeList choicesList = elements.get(i).getElementsByTagName(
 						"choice");
 
-				options = new String[choicesList.getLength()];
+				ArrayList<ChoiceOption> choiceOptions = new ArrayList<ChoiceOption>();
+				
+				for (int j = 0; j < choicesList.getLength(); j++) {
+					try {
+						final String choiceName = ((Element) choicesList
+								.item(j)).getElementsByTagName("name").item(0)
+								.getTextContent();
+						final String choiceValue = ((Element) choicesList
+								.item(j)).getElementsByTagName("value").item(0)
+								.getTextContent();
+						choiceOptions.add(new ChoiceOption(choiceName,
+								choiceValue));
+					} catch (Throwable e) {
+					}
+					;
+				}
 
-				for (int j = 0; j < choicesList.getLength(); j++)
-					options[j] = choicesList.item(j).getTextContent();
-			}
-			final String defValue = "/cf/cfe_es_errlog.log";
-
-			parameters.add(ParamGen.getCmdParam(name, type, primitive, bytes,
-					isInputParam, options, defValue));
+				ChoiceOption[] choiceArray = new ChoiceOption[choiceOptions
+						.size()];
+				choiceOptions.toArray(choiceArray);
+				parameters
+						.add(ParamGen
+								.getCmdParam(name, type, primitive, bytes,
+										isInputParam, choiceArray));
+			} else
+				parameters.add(ParamGen.getCmdParam(name, type, primitive,
+						bytes, isInputParam,
+						new ChoiceOption[0]));
 		}
 		return parameters;
 	}
@@ -310,5 +334,9 @@ public final class XMLParser {
 			telemetry.add(new TlmPkt(name, dataType));
 		}
 		return telemetry.toArray(new TlmPkt[telemetry.size()]);
+	}
+	
+	public static String getName(Document document) {
+		return document.getElementsByTagName("name").item(0).getTextContent();
 	}
 }

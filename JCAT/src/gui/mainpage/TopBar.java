@@ -1,5 +1,6 @@
 package gui.mainpage;
 
+import main.Launcher;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
@@ -8,26 +9,23 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 
-import utilities.Updater;
-
-
 final class TopBar extends Composite {
-	// private final Image nasaImage;
 	private static Label time1;
-	private static Label time2;
+	//private static Label time2;
 
 	final static void addTopBar(Composite parent, String title,
 			Color backgroundColor, Color foregroundColor, Font titleFont,
-			Font timeFont, Image nasaLogo)// , Image nasaLogo)
+			Font timeFont, Image JCATLogo)
 	{
 		new TopBar(parent, title, backgroundColor, foregroundColor, titleFont,
-				timeFont, nasaLogo);
+				timeFont, JCATLogo);
 	}
 
 	private TopBar(Composite comp, String title, Color backgroundColor,
-			Color foregroundColor, Font titleFont, Font timeFont, Image nasaLogo) {
+			Color foregroundColor, Font titleFont, Font timeFont, Image JCATLogo) {
 		super(comp, SWT.NONE);
 
 		GridData gridData = new GridData();
@@ -35,10 +33,10 @@ final class TopBar extends Composite {
 		gridData.horizontalAlignment = SWT.FILL;
 		setLayoutData(gridData);
 
-		setLayout(new GridLayout(3, false));
+		setLayout(new GridLayout(4, false));
 
 		setBackground(backgroundColor);
-		addImage(this, nasaLogo);
+		addImage(this, JCATLogo);
 		addTitle(this, title, backgroundColor, foregroundColor, titleFont);
 		addTimeBox(this, backgroundColor, foregroundColor, timeFont);
 	}
@@ -70,6 +68,27 @@ final class TopBar extends Composite {
 		title.setLayoutData(gridData);
 	}
 
+	public static final void addTimeUpdater(final Label label) {
+		final int instanceNum = Launcher.getInstanceNum();
+		Thread t = new Thread(new Runnable() {
+			public void run() {
+				while (instanceNum == Launcher.getInstanceNum()) {
+					try {
+						Thread.sleep(1000);
+					} catch (Throwable e) {
+					}
+					Display.getDefault().syncExec(new Runnable() {
+						public void run() {
+							label.setText(Launcher.getTime());
+						}
+					});
+				}
+			}
+		});
+		t.setDaemon(true);
+		t.start();
+	}
+
 	private static final void addTimeBox(Composite composite,
 			Color backgroundColor, Color foregroundColor, Font timeFont) {
 		Composite timeBox = new Composite(composite, SWT.NONE);
@@ -77,25 +96,24 @@ final class TopBar extends Composite {
 		timeBox.setBackground(backgroundColor);
 
 		Label timeType1 = new Label(timeBox, SWT.NONE);
-		timeType1.setText("GMT: ");
+		timeType1.setText("JCAT TIME: ");
 		timeType1.setForeground(foregroundColor);
 		timeType1.setBackground(backgroundColor);
 		time1 = new Label(timeBox, SWT.NONE);
-		Updater.addUpdater(time1, "GMT");
 		time1.setText("               ");
 		time1.setForeground(foregroundColor);
 		time1.setBackground(backgroundColor);
 		time1.setFont(timeFont);
-		Label timeType2 = new Label(timeBox, SWT.NONE);
-		timeType2.setText("S/C UTC: ");
-		timeType2.setForeground(foregroundColor);
-		timeType2.setBackground(backgroundColor);
-		time2 = new Label(timeBox, SWT.NONE);
-		Updater.addUpdater(time2, "UTC");
-		time2.setText("               ");
-		time2.setForeground(foregroundColor);
-		time2.setBackground(backgroundColor);
-		time2.setFont(timeFont);
+		addTimeUpdater(time1);
+		/*
+		 * Label timeType2 = new Label(timeBox, SWT.NONE);
+		 * timeType2.setText("S/C UTC: ");
+		 * timeType2.setForeground(foregroundColor);
+		 * timeType2.setBackground(backgroundColor); time2 = new Label(timeBox,
+		 * SWT.NONE); time2.setText("               ");
+		 * time2.setForeground(foregroundColor);
+		 * time2.setBackground(backgroundColor); time2.setFont(timeFont);
+		 */
 		GridData gridData = new GridData();
 		gridData.horizontalAlignment = GridData.HORIZONTAL_ALIGN_END;
 		timeBox.setLayoutData(gridData);

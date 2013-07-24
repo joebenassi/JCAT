@@ -2,12 +2,13 @@ package applications;
 
 import java.util.ArrayList;
 
-import gui.popups.menu.CommandPrompt;
+import gui.popups.menu.InputCmdParamPrompt;
 import gui.popups.tlm.PopupFiller;
 
 import main.Launcher;
 import network.Networker;
 
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
@@ -65,9 +66,8 @@ public final class App {
 	 * @param appID
 	 *            The ID specific to an App.
 	 */
-	public App(final String name, final String prefix,
-			final ArrayList<CmdPkt> commands, final TlmPkt[] telemetry,
-			final int TlmAppID) {
+	public App(final String name, final ArrayList<CmdPkt> commands,
+			final TlmPkt[] telemetry, final int TlmAppID) {
 		final String[] entryNames = new String[telemetry.length];
 
 		for (int i = 0; i < entryNames.length; i++) {
@@ -75,14 +75,12 @@ public final class App {
 		}
 
 		popupFiller = new PopupFiller(name, entryNames);
-		// System.out.println("NEW APP: " + name + ", " + TlmAppID);
+
 		this.TlmAppID = TlmAppID;
 		this.name = name;
 		this.commands = commands;
 		this.telemetry = telemetry;
 
-		// if (TelemetryUpdater.updateAtIntervals)
-		// TelemetryUpdater.addApp(this);
 		Networker.addApp(this);
 		Launcher.addUserActivity("APP ADDED: " + name);
 	}
@@ -97,6 +95,14 @@ public final class App {
 		return TlmAppID;
 	}
 
+	public final void setTime(final String[] time) {
+		Display.getDefault().syncExec(new Runnable() {
+			public void run() {
+				popupFiller.setTime(time);
+			}
+		});
+	}
+
 	public final String getTelemetryValue(int index) {
 		return telemetry[index].getValue();
 	}
@@ -107,6 +113,12 @@ public final class App {
 
 	public final int getTelemetryAmt() {
 		return telemetry.length;
+	}
+
+	public final void executeCommand(int index, String[] parameters) {
+		// System.out.println("EXECUTING COMMAND " + index + " OF " +
+		// (commands.size() - 1));
+		commands.get(index).execute(parameters);
 	}
 
 	/**
@@ -145,9 +157,8 @@ public final class App {
 			@Override
 			public void handleEvent(Event e) {
 				try {
-					CommandPrompt.launchShell(commands.get(index));
+					InputCmdParamPrompt.launchShell(commands.get(index));
 				} catch (Exception e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
@@ -165,7 +176,6 @@ public final class App {
 	 */
 	public final Listener getTelemetryListener(final Shell shell) {
 		return new Listener() {
-			@Override
 			public void handleEvent(Event e) {
 				popupFiller.launchPopup();
 				shell.setActive();

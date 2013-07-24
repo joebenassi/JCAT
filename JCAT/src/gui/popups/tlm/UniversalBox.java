@@ -3,14 +3,13 @@ package gui.popups.tlm;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
-
-import utilities.Updater;
 
 /**
  * This is to be displayed in every App's popup window.
@@ -39,15 +38,17 @@ final class UniversalBox extends Composite {
 			return name;
 		}
 	}
-
-	/**
-	 * The width of the GMT, SC, and UTC Texts
-	 */
-	private static final int fieldMinimumWidth1 = 180;
 	/**
 	 * The width of the SequenceCount Text
 	 */
-	private static final int fieldMinimumWidth2 = fieldMinimumWidth1 - 61;
+	private static final int fieldMinimumWidth2 = 140;
+	/**
+	 * The width of the GMT, SC, and UTC Texts
+	 */
+	private static final int fieldMinimumWidth1 = fieldMinimumWidth2 + 79;
+
+	private Text timeText;
+
 	private static final int verticalSpacing = -5;
 
 	/**
@@ -68,12 +69,13 @@ final class UniversalBox extends Composite {
 	 *            The color of the border of this.
 	 * @param layoutData
 	 *            The layout data to assign to this.
+	 * @param data 
 	 */
 	public static final void addUniversalBox(Composite parent,
 			Color backgroundColor, Color textColor, Color textBoxColor,
-			Color borderColor, Object layoutData) {
+			Color borderColor, Font font, Object layoutData) {
 		new UniversalBox(parent, backgroundColor, textColor, textBoxColor,
-				borderColor, layoutData);
+				borderColor, font, layoutData);
 	}
 
 	/**
@@ -95,8 +97,8 @@ final class UniversalBox extends Composite {
 	 * @param layoutData
 	 *            The layout data to assign to this.
 	 */
-	private UniversalBox(Composite parent, Color backgroundColor,
-			Color textColor, Color textBoxColor, Color borderColor,
+	UniversalBox(Composite parent, Color backgroundColor,
+			Color textColor, Color textBoxColor, Color borderColor, Font font, 
 			Object layoutData) {
 		/* ADDING BORDER */
 		super(parent, SWT.NONE);
@@ -116,8 +118,8 @@ final class UniversalBox extends Composite {
 		gridLayout.verticalSpacing = verticalSpacing;
 		internal.setLayout(gridLayout);
 
-		addTopContent(internal, backgroundColor, textColor, textBoxColor);
-		addBottomContent(internal, backgroundColor, textColor, textBoxColor);
+		addTopContent(internal, backgroundColor, textColor, textBoxColor, font);
+		addBottomContent(internal, backgroundColor, textColor, textBoxColor, font);
 	}
 
 	/**
@@ -136,7 +138,7 @@ final class UniversalBox extends Composite {
 	 *            The color of the background of the various Texts (textboxes).
 	 */
 	private static final void addBottomContent(Composite internal,
-			Color backgroundColor, Color textColor, Color textBoxColor) {
+			Color backgroundColor, Color textColor, Color textBoxColor, Font font) {
 		Composite bottomComposite = new Composite(internal, SWT.NONE);
 		bottomComposite.setBackground(backgroundColor);
 		bottomComposite.setLayout(new GridLayout(2, false));
@@ -145,9 +147,9 @@ final class UniversalBox extends Composite {
 
 		for (int i = 0; i < bottomChildren.length; i++) {
 			addLabel(bottomComposite, bottomChildren[i].getName(),
-					backgroundColor, textColor);
+					backgroundColor, textColor, font);
 			addText(false, bottomComposite, textColor, textBoxColor,
-					bottomChildren[i].getName());
+					bottomChildren[i].getName(), font);
 		}
 	}
 
@@ -165,19 +167,19 @@ final class UniversalBox extends Composite {
 	 * @param textBoxColor
 	 *            The color of the background of the various Texts (textboxes).
 	 */
-	private static final void addTopContent(Composite internal,
-			Color backgroundColor, Color textColor, Color textBoxColor) {
+	private final void addTopContent(Composite internal,
+			Color backgroundColor, Color textColor, Color textBoxColor, Font font) {
 		Composite topComposite = new Composite(internal, SWT.NONE);
 		topComposite.setBackground(backgroundColor);
 		topComposite.setLayout(new GridLayout(2, false));
 
-		Child[] topChildren = new Child[] { Child.GMT, Child.SC, Child.UTC };
+		Child[] topChildren = new Child[] { Child.GMT};//, Child.SC};//, Child.UTC };
 
 		for (int i = 0; i < topChildren.length; i++) {
 			addLabel(topComposite, topChildren[i].getName(), backgroundColor,
-					textColor);
-			addText(true, topComposite, textColor, textBoxColor,
-					topChildren[i].getName());
+					textColor, font);
+			timeText = addText(true, topComposite, textColor, textBoxColor,
+					topChildren[i].getName(), font);
 		}
 	}
 
@@ -197,8 +199,9 @@ final class UniversalBox extends Composite {
 	 *            Texts, and Composites.
 	 */
 	private static final void addLabel(Composite parent, String name,
-			Color backgroundColor, Color textColor) {
+			Color backgroundColor, Color textColor, Font font) {
 		Label label = new Label(parent, SWT.NONE);
+		label.setFont(font);
 		label.setText(name + ": ");
 		label.setBackground(backgroundColor);
 		label.setForeground(textColor);
@@ -218,9 +221,10 @@ final class UniversalBox extends Composite {
 	 * @param name
 	 *            The name representing the content. Should be "GMT", "SC",
 	 *            "UTC", or "Sequence Count".
+	 * @param font 
 	 */
-	private static final void addText(final boolean isTopContent,
-			Composite parent, Color textColor, Color textBoxColor, String name) {
+	private static final Text addText(final boolean isTopContent,
+			Composite parent, Color textColor, Color textBoxColor, String name, Font font) {
 		GridData fieldGridData = new GridData(GridData.FILL_HORIZONTAL);
 		if (isTopContent)
 			fieldGridData.minimumWidth = fieldMinimumWidth1;
@@ -228,11 +232,33 @@ final class UniversalBox extends Composite {
 			fieldGridData.minimumWidth = fieldMinimumWidth2;
 
 		Text temp = new Text(parent, SWT.NONE);
+		temp.setFont(font);
 		temp.setBackground(textBoxColor);
 		temp.setEditable(false);
 		temp.setText("        ");
-		Updater.addUpdater(temp, name);
 		temp.setLayoutData(fieldGridData);
 		temp.setForeground(textColor);
+		
+		return temp;
+	}
+	
+	public final void setTimeText(String[] time) {
+		final int MSECLENGTH = 6;
+		int sec = Integer.parseInt(time[0]);
+		int min = sec / 60;
+		sec = sec % 60;
+		int hrs = min / 60;
+		min = min %60;
+		int days = hrs / 24;
+		hrs = hrs % 24;
+
+		String msec = time[0];
+		while (msec.length() < MSECLENGTH){
+			msec = "0" + msec;
+		}
+		
+		final String display = days + ":" + hrs + ":" + min + ":" + sec + "." + msec;
+		System.out.println("UNIVERSALBOX TIME: " + display);
+		timeText.setText(display);
 	}
 }

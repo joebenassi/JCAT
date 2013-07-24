@@ -15,15 +15,17 @@ import resources.ResourceLoader;
 import utilities.ColorConstants;
 import utilities.FontConstants;
 
-public final class AboutPrompt {
+public final class ShowAboutPopup {
 	public static final void launchShell(final String version) {
 		String title = "JCAT";
-		String[] lines = new String[4];
+		String[] lines = new String[6];
 
 		lines[0] = "Java Command and Telemetry (JCAT)";
 		lines[1] = "Version " + version;
 		lines[2] = "";
-		lines[3] = "Property of NASA";
+		lines[3] = "Created by NASA to aid cFE App";
+		lines[4] = "development for both NASA and ";
+		lines[5] = "non-NASA developers.";
 
 		final Label[] labels = new Label[lines.length];
 		
@@ -36,17 +38,17 @@ public final class AboutPrompt {
 		formLayout.spacing = 5;
 		shell.setLayout(formLayout);
 		shell.setText(title);
-		shell.setImage(ResourceLoader.getJCATLogo());
+		shell.setImage(ResourceLoader.getSmallJCATLogo());
 		FormData data = new FormData();
 		
-		final Image JCATLogo = ResourceLoader.getJCATLogo();
+		final Image JCATLogo = ResourceLoader.getBigJCATLogo();
 		Label JCATLogoLabel = new Label(shell, SWT.NONE);
 		JCATLogoLabel.setImage(JCATLogo);
 		data = new FormData();
 		JCATLogoLabel.setLayoutData(data);
 
 		Label spacer = new Label(shell, SWT.NONE);
-		spacer.setBackground(ColorConstants.base);
+		spacer.setBackground(ColorConstants.textBoxColor);
 		data = new FormData();
 		data.width = 4;
 		data.left = new FormAttachment(JCATLogoLabel, 0);
@@ -61,9 +63,9 @@ public final class AboutPrompt {
 			
 			data = new FormData();
 			if (i == 0)
-				labels[i].setFont(FontConstants.boldFont1);
+				labels[i].setFont(FontConstants.headerFont);
 			else
-				labels[i].setFont(FontConstants.dialogFont2);
+				labels[i].setFont(FontConstants.bodyFont);
 			if (i > 0)
 				data.top = new FormAttachment(labels[i-1], -4);
 			if (i == lines.length - 1)

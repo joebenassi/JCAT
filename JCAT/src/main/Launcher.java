@@ -3,11 +3,12 @@ package main;
 import gui.mainpage.MainPageFiller;
 import gui.menu.MenuFiller;
 
-import network.PktReader;
+import network.Networker;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ShellAdapter;
 import org.eclipse.swt.events.ShellEvent;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
@@ -16,7 +17,7 @@ import resources.ResourceLoader;
 
 import utilities.ColorConstants;
 import utilities.FontConstants;
-import utilities.Updater;
+import utilities.ShellDisposer;
 
 /**
  * @author Joe Benassi
@@ -26,10 +27,10 @@ import utilities.Updater;
  */
 public final class Launcher {
 	private static Display display = new Display();
-	private static Shell shell = new Shell(display, SWT.DIALOG_TRIM
-			| SWT.CLIP_CHILDREN);
 	private static boolean shouldRestart = true;
-	public static MainPageFiller mainPageFiller = new MainPageFiller(shell);
+	public static MainPageFiller mainPageFiller;// = new MainPageFiller(shell);
+	private static volatile int instanceNum = 0;
+	private static long initTime = 0;
 
 	/**
 	 * The main method to execute the program. Creates the main page and the
@@ -39,49 +40,50 @@ public final class Launcher {
 	 *            the main method argument
 	 */
 	public static final void main(String[] args) {
-		addShellExitBehavior(shell);
-		new Launcher();
+		startup(new Shell(display, SWT.DIALOG_TRIM | SWT.CLIP_CHILDREN));
 	}
 
 	/**
 	 * Identical to <code>main()</code>. <code>main</code> calls
 	 * <code>new Launcher();</code>
 	 */
-	private Launcher() {
-		startup(shell);
-		awaitShutdown(shell);
-	}
-
-	public final static void startup(Shell s) {
+	public final static void startup(final Shell s) {
+		initTime = System.currentTimeMillis();
+		Networker.startNetworker();
+		mainPageFiller = new MainPageFiller(s);
+		addShellExitBehavior(s);
 		final String version = "1.0.0";
 		MenuFiller.addMenu(s, null, version);
-
-		s.setImage(ResourceLoader.getJCATLogo());
+		s.setImages(new Image[] { ResourceLoader.getSmallJCATLogo(),
+				ResourceLoader.getMedJCATLogo() });
 		s.open();
-		updateTime();
 
 		addUserActivity("JCAT startup successful");
-	}
 
-	public static final void awaitShutdown(Shell s) {
-		while (!s.isDisposed())
-			if (!Display.getCurrent().readAndDispatch())
-				shutdown();
+		while (!display.isDisposed()) {
+			try {
+				boolean bool1 = !display.readAndDispatch();
+				if (bool1)
+					shutdown();
+			} catch (Throwable e) {
+			}
+		}
 	}
 
 	public static final void shutdown() {
-		if (!shouldRestart)
-		{
-			Display.getCurrent().sleep();
-
+		if (!shouldRestart) {
 			ColorConstants.disposeColors();
 			FontConstants.disposeFonts();
-
-		try {
-			Display.getCurrent().dispose();
-			} catch (Throwable e) {
-		}
+			ShellDisposer.disposePopups();
 			System.out.println("MAIN THREAD ENDED!");
+			Shell[] shells = Display.getCurrent().getShells();
+			for (Shell s : shells)
+				s.dispose();
+			try {
+				Display.getCurrent().sleep();
+				Display.getCurrent().dispose();
+			} catch (Throwable e1) {
+			}
 		}
 	}
 
@@ -91,77 +93,60 @@ public final class Launcher {
 			public final void shellClosed(ShellEvent e) {
 				e.doit = false;
 
-				int style = SWT.APPLICATION_MODAL | SWT.YES | SWT.NO;
+				int style = SWT.APPLICATION_MODAL | SWT.YES | SWT.NO
+						| SWT.ON_TOP | SWT.ICON_WARNING;
 				MessageBox messageBox = new MessageBox(shell, style);
-				messageBox.setText("Confirmation of Exit");
-				messageBox.setMessage("End your current session?");
+				messageBox.setText("Confirm Quit");
+				messageBox.setMessage("Are you sure you want to exit JCAT?");
 				e.doit = messageBox.open() == SWT.YES;
 				if (e.doit) {
-					ColorConstants.disposeColors();
-					FontConstants.disposeFonts();
-
-					try {
-						Display.getCurrent().sleep();
-						Display.getCurrent().dispose();
-					} catch (Throwable e1) {
-					}
-					System.out.println("MAIN THREAD ENDED!");
-					if (ColorConstants.base.isDisposed())
-						System.out.println("COLORS DISPOSED!");
-					if (FontConstants.dialogFont.isDisposed())
-						System.out.println("FONTS DISPOSED!");
+					shouldRestart = false;
+					shutdown();
 				}
 			}
 		});
 	}
-	
+
 	public final static void restartApplication(Shell s) {
-		s.setVisible(false);
-		PktReader.end();
-		Shell shell2 = new Shell(display, SWT.DIALOG_TRIM
-				| SWT.CLIP_CHILDREN);
-		addShellExitBehavior(shell2);
-		mainPageFiller = new MainPageFiller(shell2);
-		startup(shell2);
-		awaitShutdown(shell2);
+		instanceNum++;
+		s.setVisible(false); // s.dispose();
+		startup(new Shell(display, SWT.DIALOG_TRIM | SWT.CLIP_CHILDREN));
 	}
 
-	public static final void addEvent(String eventMessage) {
-		mainPageFiller.addEventMessage("SOMETIME", eventMessage,
-				ColorConstants.text);
+	public static final void addEvent(String time, String config, String msgStr) {
+		mainPageFiller.addEventMessage(time, config, msgStr,
+				ColorConstants.textColor);
 	}
 
 	public static final void addUserActivity(String userActivityMessage) {
-		mainPageFiller.addUserActivity("SOMETIME", userActivityMessage,
-				ColorConstants.text);
+		mainPageFiller.addUserActivity(getTime(), userActivityMessage,
+				ColorConstants.textColor);
 	}
 
-	/**
-	 * Updates the UTC, GMT, SC, and SequenceCount values to arbitrary,
-	 * hardcoded values. These updates are reflected throughout the program
-	 */
-	private static void updateTime() {
-		Thread updater = new Thread(new Runnable() {
-			private int currentVal = 0;
+	public static final int getInstanceNum() {
+		return instanceNum;
+	}
 
-			@Override
-			public void run() {
-				while (true) {
-					try {
-						Thread.sleep(1000);
-					} catch (Throwable e) {
-					}
+	public static final String getTime() {
+		long time = getLongTime();
+		int intTime = 0;
+		if (time < Integer.MAX_VALUE)
+			intTime = (int) time;
 
-					currentVal++;
-					Updater.setUTCValue(currentVal + "");
-					Updater.setGMTValue(2 * currentVal + "");
-					Updater.setSCValue(3 * currentVal + "");
-					Updater.setSequenceCountValue(4 * currentVal + "");
-				}
-			}
-		});
+		int sec = intTime / 1000;
+		intTime = intTime % 1000;
+		int min = sec / 60;
+		sec = sec % 60;
+		int hrs = min / 60;
+		min = min % 60;
+		int days = hrs / 24;
+		hrs = hrs % 24;
 
-		updater.setDaemon(true);
-		updater.start();
+		String output = days + "-" + hrs + ":" + min + ":" + sec;
+		return output;
+	}
+
+	public static final long getLongTime() {
+		return System.currentTimeMillis() - initTime;
 	}
 }

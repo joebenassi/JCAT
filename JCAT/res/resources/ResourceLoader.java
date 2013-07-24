@@ -1,26 +1,39 @@
 package resources;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
 
 public class ResourceLoader {
 	static ResourceLoader rl = new ResourceLoader();
-	
-	public static final Image getJCATLogo()
-	{
-		return getImage("JCATLogo");
+
+	public static final Image getMedJCATLogo() {
+		return getImage("JCATLogoMed.png");
 	}
 	
-	public static final Image getNASALogo()
-	{
+	public static final Image getSmallJCATLogo() {
+		return getImage("JCATLogoSmall.png");
+	}
+	
+	public static final Image getBigJCATLogo() {
+		return getImage("JCATLogoBig.png");
+	}
+
+	public static final Image getNASALogo() {
 		return getImage("NasaLogo.png");
 	}
-	
+
+	public static final Image getLargeJCATLogo() {
+		return getImage("JCATLogoLarge.png");
+	}
 	/**
-	 * Returns the image that has the file name fileName, fileName.png, or fileName.jpg
-	 * @param fileName the name of the file
+	 * Returns the image that has the file name fileName, fileName.png, or
+	 * fileName.jpg
+	 * 
+	 * @param fileName
+	 *            the name of the file
 	 * @return the image with that name
 	 */
 	public static final Image getImage(String fileName) {
@@ -49,7 +62,21 @@ public class ResourceLoader {
 		return image;
 	}
 
-	public static File getXML(String fileName) {
-		return new File("XMLs/" + fileName);
+	public static final File[] getCFEFiles()
+	{
+		return getXMLsFromFolder();
+	}
+	
+	public static final File[] getXMLsFromFolder()
+	{
+		String folderPath = rl.getClass().getResource("/XMLs/").getFile();
+		File folder = new File(folderPath);
+		File[] files = folder.listFiles();
+		ArrayList<File> fileArray = new ArrayList<File>();
+		for (int i = 0; i < files.length; i++)
+			if (files[i].isFile())
+				fileArray.add(files[i]);
+		
+		return fileArray.toArray(new File[fileArray.size()]);
 	}
 }

@@ -1,25 +1,15 @@
 package utilities;
 
-import packets.cmd.CmdParam;
+import packets.parameters.ChoiceOption;
+import packets.parameters.CmdParam;
+import packets.parameters.DataType;
 
 public class ParamGen {
 	public static final CmdParam getCmdParam(String name, String type,
-			String primitive, String bytes, boolean isInputParam, String[] options,
-			String defValue) {
+			String primitive, String bytes, boolean isInputParam,
+			ChoiceOption[] choiceArray) {
 		
-
-		return PrimitiveType.getCmdParam(type, name, isInputParam, options,
-				defValue, getTotalBytes(bytes, type));
-	}
-	
-	private static final int getTotalBytes(String bytes, String type) {
-		int bytesInt = 21;// 24;//32
-		try {
-			bytesInt = Integer.parseInt(bytes);
-			System.out.println("BYTES: " + bytes);
-		} catch (Throwable e) {
-		}
-
-		return DataType.getDataType(type).getBytes() * bytesInt;
+		return DataType.getDataType(type, primitive, bytes)
+				.getCmdParam(name, isInputParam, choiceArray);
 	}
 }

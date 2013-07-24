@@ -1,6 +1,6 @@
 package packets.tlm;
 
-import utilities.DataType;
+import packets.parameters.DataType;
 
 /**
  * IN DEVELOPMENT. SUBJECT TO CHANGE/REMOVAL.
@@ -27,7 +27,7 @@ public class TlmPkt {
 	public TlmPkt(String name, String dataTypeName) {
 		this.name = name;
 		value = "To Be Determined";
-		dataType = DataType.getDataType(dataTypeName); //CHANGE THIS ERROR BAD FIX
+		dataType = DataType.getDataType(dataTypeName, "string", "1"); /* TODO change this?? */
 	}
 
 	/**

@@ -1,15 +1,16 @@
 package gui.menu;
 
-import gui.popups.menu.AboutPrompt;
-import gui.popups.menu.GettingStartedPrompt;
-import gui.popups.menu.PopulateAppsPrompt;
-import gui.popups.menu.RecieverPrompt;
+import gui.popups.menu.ShowAboutPopup;
+import gui.popups.menu.IOPrompt;
+import gui.popups.menu.HelpPopup;
+import gui.popups.menu.NavAppXMLPrompt;
 
 import java.io.IOException;
 
 import javax.xml.parsers.ParserConfigurationException;
 
 import main.Launcher;
+import network.Networker;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Event;
@@ -45,15 +46,17 @@ public final class MenuFiller {
 	 */
 	public static final void addMenu(final Shell shell, App[] Apps,
 			final String version) {
+		if (shell.getMenuBar()!= null){
+			//shell.
+		}
 		shell.setMenuBar(MenuHelper.createMenu(shell, SWT.BAR
 				| SWT.LEFT_TO_RIGHT));
-		shell.getMenuBar().setVisible(false);
-
+		shell.getMenuBar().setVisible(true);
 		addFileMenu(shell, Apps, version);
 		addCommandMenu(shell, Apps);
 		addTelemetryMenu(shell, Apps);
+		addConfigureMenu(shell);
 		addHelpMenu(shell, version);
-		shell.getMenuBar().setVisible(true);
 	}
 
 	/**
@@ -92,36 +95,16 @@ public final class MenuFiller {
 	 */
 	private static final void fillFileMenu(final Shell shell,
 			final Menu fileMenu, final App[] apps, final String version) {
-		final MenuItem exitMenuItem = MenuHelper.createMenuItem(fileMenu,
-				SWT.PUSH, "E&xit\tCtrl+x", null, SWT.CTRL + 'X');
-
-		exitMenuItem.addListener(SWT.Selection, new Listener() {
-			@Override
-			public void handleEvent(Event e) {
-				shell.close();
-			}
-		});
-
-		final MenuItem receiverMenuItem = MenuHelper.createMenuItem(fileMenu,
-				SWT.PUSH, "A&dd Receiver\tCtrl+o", null, SWT.CTRL + 'O');
-
-		receiverMenuItem.addListener(SWT.Selection, new Listener() {
-			@Override
-			public void handleEvent(Event e) {
-				RecieverPrompt.launchShell();
-			}
-		});
-
 		if (apps == null) {
-			final MenuItem populateAppsMenuItem = MenuHelper.createMenuItem(
-					fileMenu, SWT.PUSH, "P&opulate Apps\tCtrl+p", null,
-					SWT.CTRL + 'P');
+			final MenuItem importAppsMenuItem = MenuHelper.createMenuItem(
+					fileMenu, SWT.PUSH, "I&mport App Profiles\tCtrl+I", null,
+					SWT.CTRL + 'I');
 
-			populateAppsMenuItem.addListener(SWT.Selection, new Listener() {
+			importAppsMenuItem.addListener(SWT.Selection, new Listener() {
 				@Override
 				public void handleEvent(Event e) {
 					try {
-						PopulateAppsPrompt.launch(shell, version);
+						NavAppXMLPrompt.launch(shell, version);
 
 					} catch (ParserConfigurationException | SAXException
 							| IOException e1) {
@@ -131,72 +114,44 @@ public final class MenuFiller {
 			});
 		}
 
+		final MenuItem enableTelemetryMenuItem = MenuHelper.createMenuItem(fileMenu,
+				SWT.PUSH, "E&nable Telemetry", null, SWT.NONE);
+
+		if (apps == null) enableTelemetryMenuItem.setEnabled(false);
+		enableTelemetryMenuItem.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event e) {
+				Networker.enableToLabTelemetry();
+			}
+		});
+		/*
+		final MenuItem enableAppTelemetry = MenuHelper.createMenuItem(fileMenu,
+				SWT.PUSH, "E&nable App Telemetry", null, SWT.NONE);
+
+		if (apps == null) enableAppTelemetry.setEnabled(false);
+		enableAppTelemetry.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event e) {
+				Networker.configTOLab();
+			}
+		});
+		*/
 		final MenuItem restartMenuItem = MenuHelper.createMenuItem(fileMenu,
-				SWT.PUSH, "R&estart\tCtrl+r", null, SWT.CTRL + 'R');
-		
-		restartMenuItem.addListener(SWT.Selection,  new Listener(){
-			public void handleEvent(Event e){
+				SWT.PUSH, "R&estart\tCtrl+R", null, SWT.CTRL + 'R');
+
+		restartMenuItem.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event e) {
 				Launcher.restartApplication(shell);
 			}
 		});
-	}
 
-	/**
-	 * Adds the Telemetry menu to the primary MenuBar. This menu will be empty
-	 * if there are no Apps.
-	 * 
-	 * @param shell
-	 *            The Shell to contain the Telemetry menu.
-	 * @param apps
-	 *            The Apps to be contained.
-	 */
-	private static final void addTelemetryMenu(final Shell shell,
-			final App[] apps) {
-		final MenuItem telemetryMenuItem = MenuHelper.createMenuItem(
-				shell.getMenuBar(), SWT.CASCADE, "&Telemetry", null, -1);
-		final Menu telemetryMenu = MenuHelper.createMenu(shell, SWT.DROP_DOWN,
-				telemetryMenuItem, true);
+		final MenuItem exitMenuItem = MenuHelper.createMenuItem(fileMenu,
+				SWT.PUSH, "E&xit\tCtrl+X", null, SWT.CTRL + 'X');
 
-		if (apps != null)
-			fillTelemetryMenu(shell, telemetryMenu, apps);
-	}
-
-	/**
-	 * Populates the Telemetry menu with Apps. The Telemetry menu will be empty
-	 * if there are no Apps, as is the case upon startup.
-	 * 
-	 * @param shell
-	 *            The Shell to contain the Telemetry menu.
-	 * @param telemetryMenu
-	 *            The menu to add to.
-	 * @param apps
-	 *            The Apps to add.
-	 */
-	private static final void fillTelemetryMenu(final Shell shell,
-			final Menu telemetryMenu, final App[] apps) {
-
-		final char[] hotkeys = new char[] { '1', '2', '3', '4', '5', '6', '7',
-				'8', '9' };
-		int accel;
-
-		for (int i = 0; i < apps.length; i++) {
-			if (i < 9)
-				accel = SWT.CTRL + hotkeys[i];
-			else
-				accel = SWT.NONE;
-
-			String appMenuName = apps[i].getName().substring(0, 1)
-					+ "&"
-					+ apps[i].getName()
-							.substring(1, apps[i].getName().length())
-					+ "\tCtrl+" + (i + 1);
-
-			final MenuItem menuItem = MenuHelper.createMenuItem(telemetryMenu,
-					SWT.CASCADE, appMenuName, null, accel);
-
-			menuItem.addListener(SWT.Selection,
-					apps[i].getTelemetryListener(shell));
-		}
+		exitMenuItem.addListener(SWT.Selection, new Listener() {
+			@Override
+			public void handleEvent(Event e) {
+				shell.close();
+			}
+		});
 	}
 
 	/**
@@ -211,6 +166,8 @@ public final class MenuFiller {
 	private static final void addCommandMenu(final Shell shell, final App[] apps) {
 		MenuItem commandMenuItem = MenuHelper.createMenuItem(
 				shell.getMenuBar(), SWT.CASCADE, "&Command", null, -1);
+		if (apps == null)
+			commandMenuItem.setEnabled(false);
 		Menu commandMenu = MenuHelper.createMenu(shell, SWT.DROP_DOWN,
 				commandMenuItem, true);
 
@@ -246,6 +203,109 @@ public final class MenuFiller {
 						app.getCommandListener(i));
 			}
 		}
+	}
+
+	/**
+	 * Adds the Telemetry menu to the primary MenuBar. This menu will be empty
+	 * if there are no Apps.
+	 * 
+	 * @param shell
+	 *            The Shell to contain the Telemetry menu.
+	 * @param apps
+	 *            The Apps to be contained.
+	 */
+	private static final void addTelemetryMenu(final Shell shell,
+			final App[] apps) {
+		final MenuItem telemetryMenuItem = MenuHelper.createMenuItem(
+				shell.getMenuBar(), SWT.CASCADE, "&Telemetry", null, -1);
+		if (apps == null)
+			telemetryMenuItem.setEnabled(false);
+		final Menu telemetryMenu = MenuHelper.createMenu(shell, SWT.DROP_DOWN,
+				telemetryMenuItem, true);
+
+		if (apps != null)
+			fillTelemetryMenu(shell, telemetryMenu, apps);
+	}
+
+	/**
+	 * Populates the Telemetry menu with Apps. The Telemetry menu will be empty
+	 * if there are no Apps, as is the case upon startup.
+	 * 
+	 * @param shell
+	 *            The Shell to contain the Telemetry menu.
+	 * @param telemetryMenu
+	 *            The menu to add to.
+	 * @param apps
+	 *            The Apps to add.
+	 */
+	private static final void fillTelemetryMenu(final Shell shell,
+			final Menu telemetryMenu, final App[] apps) {
+
+		final char[] hotkeys = new char[] { '1', '2', '3', '4', '5', '6', '7',
+				'8', '9' };
+		int accel;
+
+		for (int i = 0; i < apps.length; i++) {
+			String displayedAccel = "";
+			if (i < 9) {
+				accel = SWT.CTRL + hotkeys[i];
+				displayedAccel = "\tCtrl+" + (i + 1);
+			} else
+				accel = SWT.NONE;
+
+			String appMenuName = apps[i].getName().substring(0, 1)
+					+ "&"
+					+ apps[i].getName()
+							.substring(1, apps[i].getName().length())
+					+ displayedAccel;
+
+			final MenuItem menuItem = MenuHelper.createMenuItem(telemetryMenu,
+					SWT.CASCADE, appMenuName, null, accel);
+
+			menuItem.addListener(SWT.Selection,
+					apps[i].getTelemetryListener(shell));
+		}
+	}
+
+	public static final void addConfigureMenu(final Shell shell) {
+		MenuItem configureMenuItem = MenuHelper.createMenuItem(
+				shell.getMenuBar(), SWT.CASCADE, "&Configure", null, -1);
+
+		Menu configureMenu = MenuHelper.createMenu(shell, SWT.DROP_DOWN,
+				configureMenuItem, true);
+
+		fillConfigureMenu(shell, configureMenu);
+	}
+
+	public static final void fillConfigureMenu(final Shell shell,
+			final Menu configureMenu) {
+		final MenuItem outputMenuItem = MenuHelper.createMenuItem(
+				configureMenu, SWT.PUSH, "O&utput\tCtrl+O", null,
+				SWT.CTRL + 'O');
+
+		outputMenuItem.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event e) {
+				IOPrompt.launchOutputPrompt();
+			}
+		});
+
+		final MenuItem inputMenuItem = MenuHelper.createMenuItem(configureMenu,
+				SWT.PUSH, "I&nput\tCtrl+N", null, SWT.CTRL + 'N');
+
+		inputMenuItem.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event e) {
+				IOPrompt.launchInputPrompt();
+			}
+		});
+		/*
+		final MenuItem colorSchemeMenuItem = MenuHelper.createMenuItem(
+				configureMenu, SWT.PUSH, "C&olor Scheme", null, SWT.NONE);
+
+		colorSchemeMenuItem.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event e) {
+				// TODO
+			}
+		});*/
 	}
 
 	/**
@@ -287,17 +347,86 @@ public final class MenuFiller {
 		gettingStartedMenuItem.addListener(SWT.Selection, new Listener() {
 			@Override
 			public void handleEvent(Event e) {
-				GettingStartedPrompt.launchShell();
+				HelpPopup.GettingStarted.launch();
 			}
 		});
+
+		final MenuItem importingNewAppsMenuItem = MenuHelper.createMenuItem(
+				helpMenu, SWT.PUSH, "I&mporting New Apps", null, SWT.NONE);
+
+		importingNewAppsMenuItem.addListener(SWT.Selection, new Listener() {
+			@Override
+			public void handleEvent(Event e) {
+				HelpPopup.ImportingNewApps.launch();
+			}
+		});
+
+		final MenuItem commonProblemsMenuItem = MenuHelper.createMenuItem(
+				helpMenu, SWT.CASCADE, "C&ommon Problems", null, SWT.NONE);
+
+		Menu commonProblemsMenu = MenuHelper.createMenu(shell, SWT.DROP_DOWN,
+				commonProblemsMenuItem, true);
+
+		fillCommonProblemsMenu(shell, commonProblemsMenu);
 
 		final MenuItem aboutMenuItem = MenuHelper.createMenuItem(helpMenu,
 				SWT.PUSH, "A&bout JCAT", null, SWT.NONE);
 
 		aboutMenuItem.addListener(SWT.Selection, new Listener() {
-			@Override
 			public void handleEvent(Event e) {
-				AboutPrompt.launchShell(version);
+				ShowAboutPopup.launchShell(version);
+			}
+		});
+	}
+
+	private static final void fillCommonProblemsMenu(final Shell shell,
+			final Menu commonProblemsMenu) {
+		final MenuItem importAppsMenuItem = MenuHelper.createMenuItem(
+				commonProblemsMenu, SWT.PUSH, "A&pps Not Importing", null,
+				SWT.NONE);
+
+		importAppsMenuItem.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event e) {
+				HelpPopup.AppsNotImporting.launch();
+			}
+		});
+
+		final MenuItem eventWindowMenuItem = MenuHelper.createMenuItem(
+				commonProblemsMenu, SWT.PUSH, "E&mpty Event Window", null,
+				SWT.NONE);
+
+		eventWindowMenuItem.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event e) {
+				HelpPopup.EmptyEventWindow.launch();
+			}
+		});
+
+		final MenuItem commandMenuItem = MenuHelper
+				.createMenuItem(commonProblemsMenu, SWT.PUSH,
+						"C&ommand Errors", null, SWT.NONE);
+
+		commandMenuItem.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event e) {
+				HelpPopup.CommandErrors.launch();
+			}
+		});
+
+		final MenuItem noTelemetryMenuItem = MenuHelper.createMenuItem(
+				commonProblemsMenu, SWT.PUSH, "N&o Telemetry", null, SWT.NONE);
+
+		noTelemetryMenuItem.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event e) {
+				HelpPopup.NoTelemetry.launch();
+			}
+		});
+
+		final MenuItem freezesMenuItem = MenuHelper.createMenuItem(
+				commonProblemsMenu, SWT.PUSH, "P&rogram Freezes", null,
+				SWT.NONE);
+
+		freezesMenuItem.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event e) {
+				HelpPopup.ProgramFreezes.launch();
 			}
 		});
 	}

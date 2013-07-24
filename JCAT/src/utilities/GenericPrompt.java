@@ -21,12 +21,15 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
+import resources.ResourceLoader;
+
 /**
  * IN DEVELOPMENT. SUBJECT TO CHANGE.
+ * 
  * @author Joe
- *
+ * 
  */
-public class GenericPrompt {	
+public class GenericPrompt {
 	public static final void addLabel(Shell dialog, String text) {
 		Label label = new Label(dialog, SWT.NONE);
 		label.setText(text);
@@ -36,7 +39,7 @@ public class GenericPrompt {
 		gridData.horizontalIndent = 5;
 		label.setLayoutData(gridData);
 	}
-	
+
 	public static final void addFirstLine(Shell dialog, String text) {
 		Label label = new Label(dialog, SWT.NONE);
 
@@ -55,46 +58,45 @@ public class GenericPrompt {
 		});
 
 	}
-	
-	public static final Text getText(Shell dialog)
-	{
+
+	public static final Text getText(Shell dialog) {
 		Text text = new Text(dialog, SWT.BORDER);
 		text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
 		return text;
 	}
-	
-	public static final Combo getCombo(Shell dialog, String[] options)
-	{
+
+	public static final Combo getCombo(Shell dialog, String[] options) {
 		Combo combo = new Combo(dialog, SWT.READ_ONLY);
 		combo.setItems(options);
 		combo.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
 		return combo;
 	}
-	
-	public static final Shell getDialogShell()
-	{
-		return new Shell(new Shell(Display.getCurrent()),
-				SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL | SWT.ON_TOP);
+
+	public static final Shell getDialogShell() {
+		Shell s = new Shell(new Shell(Display.getCurrent()), SWT.DIALOG_TRIM
+				| SWT.APPLICATION_MODAL | SWT.ON_TOP | SWT.BORDER_DASH);
+		s.setImage(ResourceLoader.getSmallJCATLogo());
+		return s;
 	}
-	
+
 	public static final void launchShell(final Shell dialog, String shellTitle,
-			SelectionListener selectionListener) 
-	{
+			SelectionListener selectionListener) {
 		dialog.setText(shellTitle);
 		dialog.setLayout(new GridLayout(2, false));
 
 		dialog.pack();
 		Composite composite = new Composite(dialog, SWT.NONE);
-		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
-		
+		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2,
+				1));
+
 		FormLayout formLayout = new FormLayout();
 		formLayout.marginWidth = 6;
 		formLayout.marginHeight = 5;
 		formLayout.spacing = 10;
 		composite.setLayout(formLayout);
-		
+
 		Button cancel = new Button(composite, SWT.PUSH);
 		cancel.setText("Cancel");
 		cancel.addSelectionListener(new SelectionAdapter() {
@@ -108,14 +110,15 @@ public class GenericPrompt {
 		cancel.setLayoutData(formData);
 
 		Button ok = new Button(composite, SWT.PUSH);
-		ok.setText("OK");
+		ok.setText("Send");
 		ok.addSelectionListener(selectionListener);
-		
+
 		formData = new FormData();
 		formData.right = new FormAttachment(100, 0);
 		formData.width = dialog.getSize().x / 3;
 		ok.setLayoutData(formData);
 		ok.setFocus();
+
 		dialog.pack();
 		dialog.open();
 		while (true)

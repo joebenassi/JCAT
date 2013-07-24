@@ -1,14 +1,6 @@
 package network;
 
-/*
- ** MsgReader
- **
- ** @todo
- **   -# Add argument and/or config file
- **   -# Add XML processing for command definitions
- **   -# Would be best to read in cFE headers like osconfig.h to get #defines
- */
-//import java.util.Date;
+/*TODO read in cFE headers like osconfig.h to get #defines*/
 import java.io.IOException;
 import java.net.*;
 
@@ -16,62 +8,94 @@ import main.Launcher;
 
 public class PktReader {
 	private PktEventInterface MsgEvent;
-	private int MsgPort = 1235;
 	private static DatagramSocket MsgSock;
-	private static boolean shouldEnd = false;
+	private static int port = 1235;
 
 	public PktReader(PktEventInterface MsgEvent) {
 		this.MsgEvent = MsgEvent;
-		shouldEnd = false;
 		try {
 			if (MsgSock == null)
-			MsgSock = new DatagramSocket(MsgPort);
+				MsgSock = new DatagramSocket(port);
 		} catch (IOException ex) {
-			System.err.println("Error creating DatagramSocket on port "
-					+ MsgPort);
+			System.err.println("Error creating DatagramSocket on port " + port);
 			ex.printStackTrace();
 		}
 
 		startThread();
 	}
 
-	public static void end()
-	{
-		shouldEnd = true;
-	}
-	
-	private void startThread()
-	{
-		shouldEnd = false;
+	private void startThread() {
 		System.out.println("THREAD STARTED PKTREADER");
 		byte[] DataBuffer = new byte[1024];
-		final DatagramPacket DataPacket = new DatagramPacket(DataBuffer,1024);
-	 
-		final Thread t = new Thread(
-			  new Runnable(){
-				  public void run(){
-					  while(!shouldEnd){
-						 try {
-				               //Thread.yield(); // Platform independent friendly threading - Doesn't throw interrupt exception
-				               Thread.sleep(10);
-				           } catch (InterruptedException e) {}
-						 
-				            try 
-				            {
-				               MsgSock.receive(DataPacket);
-				               //MsgCount++;
-				               MsgEvent.addTlmPkt(DataPacket.getData()); // @todo - Do I need length?
-				            }
-				            catch(Exception ex) 
-				            {
-				               Launcher.addUserActivity("Class PktReader:  Error reading text from the server");
-				               ex.printStackTrace();
-				            }
-					  }
-					 // MsgSock = null;
-				  }
-			  });
+		final DatagramPacket DataPacket = new DatagramPacket(DataBuffer, 1024);
+
+		final int myInstanceNum = Launcher.getInstanceNum();
+		final Thread t = new Thread(new Runnable() {
+			public void run() {
+				System.out.println("PKTREADER: Thread running");
+				while (myInstanceNum == Launcher.getInstanceNum()) {
+					try {
+						/* TODO Thread.yield(); // Platform independent friendly */
+						Thread.sleep(10);
+					} catch (InterruptedException e) {}
+
+					try {
+						MsgSock.receive(DataPacket);
+						MsgEvent.addTlmPkt(DataPacket.getData()); 
+						
+					} catch (Exception ex) {
+						Launcher.addUserActivity("PKTREADER:  Error reading text from the server");
+						ex.printStackTrace();
+					}
+				}
+			}
+		});
 		t.setDaemon(true);
 		t.start();
-   }
+	}
+
+	public static void main(String[] args) {
+		String first = "abc.d.efg.hi";
+		System.out.println("EXPECTED: abc.d00.efg.hi0");
+		System.out.println("RESULT : " + addZeroes(first));
+	}
+
+	public static String addZeroes(String s) {
+		String[] components = new String[]{"","","",""};
+		
+		int index = 0;
+		for (int i = 0; i < s.length(); i++){
+			if (s.charAt(i) == ".".charAt(0))
+				index++;
+			else {
+				components[index] += s.charAt(i);
+			}
+		}
+
+		String output = "";
+		
+		for (int i = 0; i < 4; i++){
+			while (components[i].length() != 3) {
+				components[i] = "0" + components[i];
+			}
+			output += components[i];
+			if (i < 4-1) output += ".";
+		}
+		return output;
+	}
+
+	public static String getIP() {
+		String s = "Cannot Access";
+
+		try {
+			s = InetAddress.getLocalHost().getHostAddress();
+			s = addZeroes(s);
+		} catch (Throwable e) {
+		}
+		return s;
+	}
+
+	public static final String getPort() {
+		return port + "";
+	}
 }

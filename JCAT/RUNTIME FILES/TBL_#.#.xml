@@ -2,11 +2,29 @@
 
 <channel>
 	<name>Table Service</name>
-	<prefix>TBL</prefix>
-	<cmdmid>0x1804</cmdmid>
-	<tlmmid>0x0804</tlmmid>
+	<configs>
+		<config>
+			<name>CPU1</name>
+			<cmdmid>0x1804</cmdmid>
+			<tlmmid>0x0804</tlmmid>
+		</config>
+		<config>
+			<name>CPU2</name>
+			<cmdmid>0x1824</cmdmid>
+			<tlmmid>0x0824</tlmmid>
+		</config>
+		<config>
+			<name>CPU3</name>
+			<cmdmid>0x1844</cmdmid>
+			<tlmmid>0x0844</tlmmid>
+		</config>
+		<config>
+			<name>CPU4</name>
+			<cmdmid>0x1864</cmdmid>
+			<tlmmid>0x0864</tlmmid>
+		</config>
+	</configs>
 	<commandoffset>+0</commandoffset>
-
 	<commands>
 		<command>
 			<name>CFE_TBL_NOOP_CC</name>
@@ -20,8 +38,8 @@
 				<inputparameter>
 					<name>LoadFilename</name>
 					<type>char</type>
-					<primitive>TBD</primitive>
-					<bytes>TBD</bytes>
+					<const>OS_MAX_PATH_LEN</const>
+					<primitive>string</primitive>
 				</inputparameter>
 			</parameters>
 		</command>
@@ -31,22 +49,20 @@
 				<choiceparameter>
 					<name>ActiveTblFlag</name>
 					<type>uint16</type>
-					<primitive>TBD</primitive>
-					<bytes>TBD</bytes>
 					<choice>CFE_TBL_INACTIVE_BUFFER</choice>
 					<choice>CFE_TBL_ACTIVE_BUFFER</choice>
 				</choiceparameter>
 				<inputparameter>
 					<name>TableName</name>
 					<type>char</type>
-					<primitive>TBD</primitive>
-					<bytes>TBD</bytes>
+					<const>CFE_TBL_MAX_FULL_NAME_LEN</const>
+					<primitive>string</primitive>
 				</inputparameter>
 				<inputparameter>
 					<name>DumpFilename</name>
 					<type>char</type>
-					<primitive>TBD</primitive>
-					<bytes>TBD</bytes>
+					<const>OS_MAX_PATH_LEN</const>
+					<primitive>string</primitive>
 				</inputparameter>
 			</parameters>
 		</command>
@@ -56,16 +72,14 @@
 				<choiceparameter>
 					<name>ActiveTblFlag</name>
 					<type>uint16</type>
-					<primitive>TBD</primitive>
-					<bytes>TBD</bytes>
 					<choice>CFE_TBL_INACTIVE_BUFFER</choice>
 					<choice>CFE_TBL_ACTIVE_BUFFER</choice>
 				</choiceparameter>
 				<inputparameter>
 					<name>TableName</name>
 					<type>char</type>
-					<primitive>TBD</primitive>
-					<bytes>TBD</bytes>
+					<const>CFE_TBL_MAX_FULL_NAME_LEN</const>
+					<primitive>string</primitive>
 				</inputparameter>
 			</parameters>
 		</command>
@@ -75,8 +89,8 @@
 				<inputparameter>
 					<name>TableName</name>
 					<type>char</type>
-					<primitive>TBD</primitive>
-					<bytes>TBD</bytes>
+					<const>CFE_TBL_MAX_FULL_NAME_LEN</const>
+					<primitive>string</primitive>
 				</inputparameter>
 			</parameters>
 		</command>
@@ -86,8 +100,8 @@
 				<inputparameter>
 					<name>DumpFilename</name>
 					<type>char</type>
-					<primitive>TBD</primitive>
-					<bytes>TBD</bytes>
+					<const>OS_MAX_PATH_LEN</const>
+					<primitive>string</primitive>
 				</inputparameter>
 			</parameters>
 		</command>
@@ -97,8 +111,8 @@
 				<inputparameter>
 					<name>TableName</name>
 					<type>char</type>
-					<primitive>TBD</primitive>
-					<bytes>TBD</bytes>
+					<const>CFE_TBL_MAX_FULL_NAME_LEN</const>
+					<primitive>string</primitive>
 				</inputparameter>
 			</parameters>
 		</command>
@@ -108,8 +122,8 @@
 				<inputparameter>
 					<name>TableName</name>
 					<type>char</type>
-					<primitive>TBD</primitive>
-					<bytes>TBD</bytes>
+					<const>CFE_TBL_MAX_FULL_NAME_LEN</const>
+					<primitive>string</primitive>
 				</inputparameter>
 			</parameters>
 		</command>
@@ -119,8 +133,8 @@
 				<inputparameter>
 					<name>TableName</name>
 					<type>char</type>
-					<primitive>TBD</primitive>
-					<bytes>TBD</bytes>
+					<const>CFE_TBL_MAX_FULL_NAME_LEN</const>
+					<primitive>string</primitive>
 				</inputparameter>
 			</parameters>
 		</command>

@@ -2,6 +2,8 @@ package gui.mainpage;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseWheelListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.layout.FillLayout;
@@ -9,6 +11,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.Scale;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
@@ -40,6 +43,13 @@ final class StatusWindow extends Composite {
 
 		setResizeListener(parent);
 		scrollToBottom();
+		
+		parent.addMouseWheelListener(new MouseWheelListener() {
+		    public void mouseScrolled(final MouseEvent e) {
+		        Scale src = (Scale)e.getSource();
+		        src.setSelection(src.getSelection() - e.count );
+		    }
+		});
 	}
 
 	private final TableColumn createTableColumn(int style, String title,

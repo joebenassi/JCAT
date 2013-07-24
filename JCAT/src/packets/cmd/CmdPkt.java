@@ -3,6 +3,7 @@ package packets.cmd;
 import java.util.ArrayList;
 
 import packets.ccsds.CcsdsCmdPkt;
+import packets.parameters.CmdParam;
 import network.Networker;
 
 /*
@@ -12,20 +13,20 @@ import network.Networker;
  */
 public class CmdPkt {
 
-	private String AppPrefix;
+	//private String AppPrefix;
 	private String Name;
 	private ArrayList<CmdParam> ParamList = new ArrayList<CmdParam>();
 	private int ParamByteLen; // Total number of bytes in ParamList
-
+	
 	private CcsdsCmdPkt CmdPkt;
 
 	/*
 	 * * Constructor - No command parameters
 	 */
-	public CmdPkt(String AppPrefix, String Name, int MsgId, int FuncCode,
+	public CmdPkt(String Name, int MsgId, int FuncCode,
 			int DataLen) {
 
-		this.AppPrefix = AppPrefix;
+		//this.AppPrefix = AppPrefix;
 		this.Name = Name;
 		ParamByteLen = 0; // Will be computed as parameters added
 
@@ -37,10 +38,10 @@ public class CmdPkt {
 	/*
 	 * * Constructor - With command parameters in a byte array
 	 */
-	public CmdPkt(String AppPrefix, String Name, Integer MsgId,
+	public CmdPkt(String Name, Integer MsgId,
 			Integer FuncCode, byte[] DataBuf, int DataLen) {
 
-		this.AppPrefix = AppPrefix;
+		//this.AppPrefix = AppPrefix;
 		this.Name = Name;
 		ParamByteLen = DataLen;
 
@@ -53,11 +54,40 @@ public class CmdPkt {
 	public void execute(String[] paramValues) 
 	{
 		for (int i = 0; i < paramValues.length; i++)
-			ParamList.get(i).setValue(paramValues[i]);
-		
+		{
+			System.out.println(paramValues[i] + "<-- Param Value CMDPKT");
+			if (ParamList.get(i).isInputParam())
+				ParamList.get(i).setValue(paramValues[i]);
+			else 
+			{
+				CmdParam relevant = ParamList.get(i);
+				String input = paramValues[i];
+				
+				for (int j = 0; j < relevant.getChoiceOptions().length; j++)
+				{
+					if (input.equals(relevant.getChoiceOptions()[j].getName()))
+					{
+						relevant.setValue(relevant.getChoiceOptions()[j].getValue());
+						ParamList.set(i, relevant);
+					}
+				}
+				
+				//String value = ParamList.get(i).getChoiceOptions()[i].getValue();
+
+			}
+			//if (!ParamList.get(i).isInputParam())
+			//{
+				
+			//}
+				//String value = paramValues[i].substring(paramValues[i].length() - 1, paramValues[i].length());
+				//ParamList.get(i).setValue(value);
+				//System.out.println("INPUT PARAM: " + value);
+		}
+		System.out.println("CmdPkt: Command Executed!");
 		loadParamList();
 		
-		Networker.getNetworker().sendPkt(this);
+		//Networker.getNetworker();
+		Networker.sendPkt(this);
 	}
 
 	public final String[] getParameterNames() {
@@ -104,12 +134,15 @@ public class CmdPkt {
 
 		byte[] CmdParamBuffer;
 		int CmdParamBufIndx = 0;
-
+		
 		if (!ParamList.isEmpty()) {
+		
 			ParamByteLen = 0;
 			for (int i = 0; i < ParamList.size(); i++) {
 				ParamByteLen += ParamList.get(i).getNumBytes();
 			}
+			
+			System.out.println("CmdPkt: " + Name + " has " + ParamByteLen + " Bytes of Parameters");
 			CmdParamBuffer = new byte[ParamByteLen];
 			System.out
 					.println("CmdPkt::loadParamList() - Creating parameter list with byte length "
@@ -144,10 +177,9 @@ public class CmdPkt {
 		return CmdPkt;
 	} // getCcsdsPkt()
 
-	public String getAppPrefix() {
-		return AppPrefix;
+	//public String getAppPrefix() {
+	//	return AppPrefix;
 
-	} // getAppPrefix()
 
 	public String getName() {
 		return Name;
@@ -182,6 +214,9 @@ public class CmdPkt {
 	 * - Number of bytes in each parameter* ParamCnt - Number of parameters
 	 */
 	byte[] createCmdByteArray(String CmdParam, int ParamBytes[], int ParamCnt) {
+		System.out.println("CmdPkt: Param Amt: " + ParamCnt);
+		System.out.println("CmdPkt: Param Bytes: " + ParamBytes[0]);
+		
 		byte[] DataBuffer = null;
 
 		String[] Param = CmdParam.split(",");

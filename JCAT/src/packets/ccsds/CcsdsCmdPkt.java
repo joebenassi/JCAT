@@ -37,7 +37,12 @@ public class CcsdsCmdPkt extends CcsdsPkt {
 		byte Checksum = new Integer(0xFF).byteValue();
 
 		for (int i = 0; i < PktLen; i++) {
-			Checksum ^= Packet[i];
+			try{
+			Checksum ^= Packet[i];}
+			catch (Throwable ex){
+				System.out.println("CCSDSCMDPKT: PacketArrayLength: " + Packet.length);
+				System.out.println("CCSDSCMDPKT: Index i: " + i);
+			}
 		}
 		Packet[CCSDS_IDX_CMD_HDR] = new Integer((Checksum & 0xFF)).byteValue();
 

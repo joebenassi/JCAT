@@ -28,22 +28,25 @@ final class StatusWindowSash extends SashForm {
 		this.setLayoutData(gridData);
 		setLayout(new FillLayout());
 
-		eventWindow = new StatusWindow(this, backgroundColor, new int[] { 170,
-				1000}, new String[] { "TIME", "EVENT" },
+		eventWindow = new StatusWindow(this, backgroundColor, new int[] { 170, 120,
+				800}, new String[] { "TIME", "SOURCE", "EVENT" },
 				monospacedFont);
-		// eventWindow.addTextEntry("126:12:12-12:41",
-		// "EVENT STREAMING ENABLED...", )
 
-		userWindow = new StatusWindow(this, backgroundColor, new int[] { 170,
-				1000 }, new String[] { "Time", "Entry" }, monospacedFont);
+		userWindow = new StatusWindow(this, backgroundColor, new int[] { 170, 120, 
+				800 }, new String[] { "TIME", "SOURCE", "ENTRY" }, monospacedFont);
 	}
 
 	final void addUserActivity(String time, String activity, Color color) {
-		userWindow.addTextEntry(new String[] { time, activity }, color);
+		userWindow.addTextEntry(new String[] { time, "JCAT", activity }, color);
 	}
 
-	final void addEventMessage(String time, String detail1, Color color) {
+	final void addEventMessage(String time, String config, String msgStr, Color color) {
 		eventWindow
-				.addTextEntry(new String[] { time, detail1}, color);
+				.addTextEntry(new String[] { time, config, msgStr}, color);
+	}
+
+	public void addUserActivity(String time, String header, String activity,
+			Color color) {
+		userWindow.addTextEntry(new String[]{time, header, activity}, color);
 	}
 }

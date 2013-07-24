@@ -1,5 +1,7 @@
 package packets.ccsds;
 
+import utilities.EndianCorrector;
+
 /*
  ** 
  ** @author dmccomas
@@ -58,8 +60,14 @@ public class CcsdsPkt {
 	} // End CcsdsPkt()
 
 	public int getTotalLength() {
-		return (Packet[CCSDS_IDX_LENGTH] | (Packet[CCSDS_IDX_LENGTH + 1] << 8))
-				+ CCSDS_LENGTH_ADJUST;
+		byte first = EndianCorrector.getValueOut(Packet, CCSDS_IDX_LENGTH);
+		byte second = EndianCorrector.getValueOut(Packet, CCSDS_IDX_LENGTH + 1);
+		byte[] init = new byte[]{first, second};
+		EndianCorrector.fixParameterOut(init);
+		
+		return (init[0] | init[1] << 8) + CCSDS_LENGTH_ADJUST;
+		//return (Packet[CCSDS_IDX_LENGTH] | (Packet[CCSDS_IDX_LENGTH + 1] << 8))
+		//		+ CCSDS_LENGTH_ADJUST;
 
 	}// End getTotalLength()
 

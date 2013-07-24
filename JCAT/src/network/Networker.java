@@ -7,7 +7,6 @@ import main.Launcher;
 import org.eclipse.swt.widgets.Display;
 
 import applications.App;
-import applications.ToApp;
 
 import packets.ccsds.CcsdsTlmPkt;
 import packets.cmd.CmdPkt;
@@ -16,26 +15,34 @@ import curval.PktObserver;
 import curval.TlmPktDatabase;
 
 public class Networker {
-	private FswCmdNetwork CmdWriter;
+	private static FswCmdNetwork CmdWriter;
 	private TlmPktDatabase TlmDatabase;
-	private FswTlmNetwork TlmReader;
+	private static FswTlmNetwork TlmReader;
 	private TlmListener TlmDisplay;
-	private static Networker networker = new Networker();
-	private static ArrayList<App> apps = new ArrayList<App>();
+	private static Networker networker;
+	private static ArrayList<App> apps;
+	private static ArrayList<Config> configs;
 
 	public static void addApp(App app) {
 		for (int i = 0; i < apps.size(); i++)
 			if (apps.get(i).getTlmAppID() == app.getTlmAppID())
 				return;
 
-		/* only ads app if it doesn't share TlmAppID with any other app */
 		apps.add(app);
 	}
 
+	public static void addConfig(String name, String msgid) {
+		configs.add(new Config(name, msgid));
+	}
+
+	public static void startNetworker() {
+		apps = new ArrayList<App>();
+		configs = new ArrayList<Config>();
+		networker = new Networker();
+	}
+
 	/** functional **/
-	public static Networker getNetworker() // Allows every App/CmdPkt to call
-											// the same instance of Networker
-	{
+	public static Networker getNetworker() {
 		return networker;
 	}
 
@@ -52,29 +59,23 @@ public class Networker {
 
 		TlmDatabase.registerObserver(TlmDisplay);
 		createTlmMonitorThread();
-		enableToLabTelemetry();
-		configTOLab();
 	}
 
 	/** functional **/
-	private final void enableToLabTelemetry() {
-		CmdPkt Cmd = ToApp.getEnaTlmCmd();
-		CmdWriter.sendCmd(Cmd.getName(), Cmd.getCcsdsPkt());
-	}
-
-	private final void configTOLab() {
-		int[] addresses = new int[apps.size()];
-
-		for (int i = 0; i < addresses.length; i++)
-			addresses[i] = apps.get(i).getTlmAppID();
-
-		CmdPkt[] cmdPkts = ToApp.getConfigTlm(addresses);
-		for (CmdPkt c : cmdPkts)
-			sendPkt(c);
+	public final static void enableToLabTelemetry() {
+		for (App app : apps) {
+			if (app.getName().substring(0, 2).equalsIgnoreCase("to")) {
+				app.executeCommand(6, new String[] { PktReader.getIP() });
+				/*
+				 * TODO find a more elegant solution. Don't hardcode based on
+				 * current TO_LAB
+				 */
+			}
+		}
 	}
 
 	/** functional **/
-	public final void sendPkt(CmdPkt cmdPkt) {
+	public final static void sendPkt(CmdPkt cmdPkt) {
 		CmdWriter.sendCmd(cmdPkt.getName(), cmdPkt.getCcsdsPkt());
 		// Launcher.addUserActivity("Command Sent: " + cmdPkt.getName());
 	}
@@ -86,26 +87,34 @@ public class Networker {
 		}
 	}
 
-	private final static void printEvent(CcsdsTlmPkt pkt) {
+	private final static void printEvent(String config, CcsdsTlmPkt pkt) {
 		byte[] TlmPkt = pkt.getPacket();
-		String MsgA = new String(TlmPkt, 12, 122); // OS_MAX_API_NAME = 20,
-													// CFE_EVS_MAX_MESSAGE_LENGTH
-													// = 122
-		String MsgB = new String(TlmPkt, 44, 122); // OS_MAX_API_NAME = 20,
-													// CFE_EVS_MAX_MESSAGE_LENGTH
-													// = 122
+		final String time = "SOMETIME2";
+		String MsgA = new String(TlmPkt, 12, 122);
+		/*
+		 * TODO get magic numbers from OS_MAX_API_NAME = 20 or
+		 * CFE_EVS_MAX_MESSAGE_LENGTH = 122?
+		 */
+		String MsgB = new String(TlmPkt, 44, 122);
+
+		/*
+		 * TODO get magic numbers from OS_MAX_API_NAME = 20 or
+		 * CFE_EVS_MAX_MESSAGE_LENGTH = 122?
+		 */
 		String MsgStr = MsgA.substring(0, MsgA.indexOf('\0')) + ": "
 				+ MsgB.substring(0, MsgB.indexOf('\0')) + "\n";
-		Launcher.addEvent(MsgStr);
+		Launcher.addEvent(time, config, MsgStr);
 	}
 
 	/** assumed functional **/
-	private final void createTlmMonitorThread() {
+	private final static void createTlmMonitorThread() {
+		final int myInstance = Launcher.getInstanceNum();
+
 		final Thread t = new Thread(new Runnable() {
 			public void run() {
-				while (true) {
+				while (Launcher.getInstanceNum() == myInstance) {
 					try {
-						Thread.sleep(10);
+						Thread.sleep(40);
 					} catch (Throwable e) {
 					}
 					;
@@ -116,13 +125,16 @@ public class Networker {
 									CcsdsTlmPkt TlmPkt = TlmReader.getTlmPktQ()
 											.remove();
 
-									if (TlmPkt.getStreamId() == 0x0808)
-										printEvent(TlmPkt);
-									else
-										for (App app : apps)
-											if (TlmPkt.getStreamId() == app
-													.getTlmAppID())
-												app.ingest(TlmPkt);
+									for (Config c : configs) {
+										if (c.getMsgId() == TlmPkt
+												.getStreamId())
+											printEvent(c.getName(), TlmPkt);
+									}
+
+									for (App app : apps)
+										if (TlmPkt.getStreamId() == app
+												.getTlmAppID())
+											app.ingest(TlmPkt);
 								}
 							}
 						}

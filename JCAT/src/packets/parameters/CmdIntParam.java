@@ -1,29 +1,23 @@
-package packets.cmd;
+package packets.parameters;
 
-
+import utilities.EndianCorrector;
 
 /*
-** @todo - Think about adding Value also stored as an integer with a non string constructor
-** @todo - More robust NumByte error handling
-** @todo - Add radix support
-**
+** TODO - Think about adding Value also stored as an integer with a non string constructor
+** TODO - More robust NumByte error handling
+** TODO - Add radix support
 */
 public class CmdIntParam extends CmdParam
 {
-
-      /*
-       * Constructor: Integer Parameter
-       */
-      public CmdIntParam(String Name, boolean isInputParam, String[] options, String DefValue, int NumBytes)
+      public CmdIntParam(String Name, boolean isInputParam, ChoiceOption[] choiceOptions, int NumBytes)
       {
-         super (Name, isInputParam, options, ParamType.INT, DefValue, NumBytes);
-         
-      } // End CmdParam()
+         super (Name, isInputParam, choiceOptions, ParamType.INT, NumBytes);     
+      }
       
       @Override
 	protected void loadByteArray() {
          
-         switch (NumBytes){
+         switch (ByteArray.length){
          
          case 1:
             System.out.println("CmdIntParam::loadByteArray - 1 byte parameter"); 
@@ -53,10 +47,8 @@ public class CmdIntParam extends CmdParam
             System.out.println("ByteArray[3] = " + ByteArray[3]);
             break;
 
-         default:
-            System.out.println("CmdIntParam::loadByteArray - Unsupported datasize"); 
-            
-         } // End NumByte Switch
-      } // End loadByteArray()
-
-} // End CmdIntparam
+         default: System.out.println("CMDINTPARAM: Unsupported datasize"); 
+         }  
+         EndianCorrector.fixParameterOut(ByteArray);
+      }
+}

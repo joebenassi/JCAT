@@ -1,9 +1,8 @@
-/utilities
-/applications
-/packets
 /network
+/TO_6.3.xml
+/Images
+/utilities
+/packets
+/applications
 /gui
 /main
-/curval
-/Images
-/resources

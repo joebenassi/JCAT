@@ -2,11 +2,29 @@
 
 <channel>
 	<name>Software Bus Services</name>
-	<prefix>SB</prefix>
-	<cmdmid>0x1803</cmdmid>
-	<tlmmid>0x0803</tlmmid>	
+	<configs>
+		<config>
+			<name>CPU1</name>
+			<cmdmid>0x1803</cmdmid>
+			<tlmmid>0x0803</tlmmid>
+		</config>
+		<config>
+			<name>CPU2</name>
+			<cmdmid>0x1823</cmdmid>
+			<tlmmid>0x0823</tlmmid>
+		</config>
+		<config>
+			<name>CPU3</name>
+			<cmdmid>0x1843</cmdmid>
+			<tlmmid>0x0843</tlmmid>
+		</config>
+		<config>
+			<name>CPU4</name>
+			<cmdmid>0x1863</cmdmid>
+			<tlmmid>0x0863</tlmmid>
+		</config>
+	</configs>
 	<commandoffset>+0</commandoffset>
-
 	<commands>
 		<command>
 			<name>CFE_SB_DISABLE_ROUTE_CC</name>
@@ -14,13 +32,11 @@
 				<inputparameter>
 					<name>MsgId</name>
 					<type>CFE_SB_MsgId_t</type>
-					<bytes>TBD</bytes>
 					<primitive>TBD</primitive>
 				</inputparameter>
 				<inputparameter>
 					<name>Pipe</name>
 					<type>CFE_SB_PipeId_t</type>
-					<bytes>TBD</bytes>
 					<primitive>TBD</primitive>
 				</inputparameter>
 			</parameters>
@@ -34,13 +50,11 @@
 				<inputparameter>
 					<name>MsgId</name>
 					<type>CFE_SB_MsgId_t</type>
-					<bytes>TBD</bytes>
 					<primitive>TBD</primitive>
 				</inputparameter>
 				<inputparameter>
 					<name>Pipe</name>
 					<type>CFE_SB_PipeId_t</type>
-					<bytes>TBD</bytes>
 					<primitive>TBD</primitive>
 				</inputparameter>
 			</parameters>
@@ -60,7 +74,6 @@
 				<inputparameter>
 					<name>Filename</name>
 					<type>char</type>
-					<bytes>TBD</bytes>
 					<primitive>TBD</primitive>
 				</inputparameter>
 			</parameters>
@@ -71,7 +84,6 @@
 				<inputparameter>
 					<name>Filename</name>
 					<type>char</type>
-					<bytes>TBD</bytes>
 					<primitive>TBD</primitive>
 				</inputparameter>
 			</parameters>
@@ -85,7 +97,6 @@
 				<inputparameter>
 					<name>Filename</name>
 					<type>char</type>
-					<bytes>TBD</bytes>
 					<primitive>TBD</primitive>
 				</inputparameter>
 			</parameters>
