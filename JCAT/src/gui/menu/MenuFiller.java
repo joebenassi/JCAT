@@ -5,7 +5,6 @@ import gui.popups.menu.ShowAboutPopup;
 import gui.popups.menu.IOPrompt;
 import gui.popups.menu.NavAppXMLPrompt;
 
-
 import java.io.IOException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -47,8 +46,8 @@ public final class MenuFiller {
 	 */
 	public static final void addMenu(final Shell shell, App[] Apps,
 			final String version) {
-		if (shell.getMenuBar()!= null){
-			//shell.
+		if (shell.getMenuBar() != null) {
+			// shell.
 		}
 		shell.setMenuBar(MenuHelper.createMenu(shell, SWT.BAR
 				| SWT.LEFT_TO_RIGHT));
@@ -107,37 +106,39 @@ public final class MenuFiller {
 					try {
 						NavAppXMLPrompt.launch(shell, version);
 
-					} catch (ParserConfigurationException e1){}
-					catch (SAXException e2){}
-					catch (IOException e3){}
+					} catch (ParserConfigurationException e1) {
+					} catch (SAXException e2) {
+					} catch (IOException e3) {
+					}
 				}
 			});
 		}
 
-		final MenuItem enableTelemetryMenuItem = MenuHelper.createMenuItem(fileMenu,
-				SWT.PUSH, "E&nable Telemetry", null, SWT.NONE);
+		final MenuItem enableTelemetryMenuItem = MenuHelper.createMenuItem(
+				fileMenu, SWT.PUSH, "E&nable Telemetry", null, SWT.NONE);
 
-		if (apps == null) enableTelemetryMenuItem.setEnabled(false);
+		if (apps == null)
+			enableTelemetryMenuItem.setEnabled(false);
 		enableTelemetryMenuItem.addListener(SWT.Selection, new Listener() {
+			@Override
 			public void handleEvent(Event e) {
 				Networker.enableToLabTelemetry();
 			}
 		});
 		/*
-		final MenuItem enableAppTelemetry = MenuHelper.createMenuItem(fileMenu,
-				SWT.PUSH, "E&nable App Telemetry", null, SWT.NONE);
-
-		if (apps == null) enableAppTelemetry.setEnabled(false);
-		enableAppTelemetry.addListener(SWT.Selection, new Listener() {
-			public void handleEvent(Event e) {
-				Networker.configTOLab();
-			}
-		});
-		*/
+		 * final MenuItem enableAppTelemetry =
+		 * MenuHelper.createMenuItem(fileMenu, SWT.PUSH,
+		 * "E&nable App Telemetry", null, SWT.NONE);
+		 * 
+		 * if (apps == null) enableAppTelemetry.setEnabled(false);
+		 * enableAppTelemetry.addListener(SWT.Selection, new Listener() { public
+		 * void handleEvent(Event e) { Networker.configTOLab(); } });
+		 */
 		final MenuItem restartMenuItem = MenuHelper.createMenuItem(fileMenu,
 				SWT.PUSH, "R&estart\tCtrl+R", null, SWT.CTRL + 'R');
 
 		restartMenuItem.addListener(SWT.Selection, new Listener() {
+			@Override
 			public void handleEvent(Event e) {
 				Launcher.restartApplication(shell);
 			}
@@ -284,6 +285,7 @@ public final class MenuFiller {
 				SWT.CTRL + 'O');
 
 		outputMenuItem.addListener(SWT.Selection, new Listener() {
+			@Override
 			public void handleEvent(Event e) {
 				IOPrompt.launchOutputPrompt();
 			}
@@ -293,19 +295,18 @@ public final class MenuFiller {
 				SWT.PUSH, "I&nput\tCtrl+N", null, SWT.CTRL + 'N');
 
 		inputMenuItem.addListener(SWT.Selection, new Listener() {
+			@Override
 			public void handleEvent(Event e) {
 				IOPrompt.launchInputPrompt();
 			}
 		});
 		/*
-		final MenuItem colorSchemeMenuItem = MenuHelper.createMenuItem(
-				configureMenu, SWT.PUSH, "C&olor Scheme", null, SWT.NONE);
-
-		colorSchemeMenuItem.addListener(SWT.Selection, new Listener() {
-			public void handleEvent(Event e) {
-				// TODO
-			}
-		});*/
+		 * final MenuItem colorSchemeMenuItem = MenuHelper.createMenuItem(
+		 * configureMenu, SWT.PUSH, "C&olor Scheme", null, SWT.NONE);
+		 * 
+		 * colorSchemeMenuItem.addListener(SWT.Selection, new Listener() {
+		 * public void handleEvent(Event e) { // TODO } });
+		 */
 	}
 
 	/**
@@ -373,6 +374,7 @@ public final class MenuFiller {
 				SWT.PUSH, "A&bout JCAT", null, SWT.NONE);
 
 		aboutMenuItem.addListener(SWT.Selection, new Listener() {
+			@Override
 			public void handleEvent(Event e) {
 				ShowAboutPopup.launchShell(version);
 			}
@@ -386,6 +388,7 @@ public final class MenuFiller {
 				SWT.NONE);
 
 		importAppsMenuItem.addListener(SWT.Selection, new Listener() {
+			@Override
 			public void handleEvent(Event e) {
 				HelpPopup.AppsNotImporting.launch();
 			}
@@ -396,6 +399,7 @@ public final class MenuFiller {
 				SWT.NONE);
 
 		eventWindowMenuItem.addListener(SWT.Selection, new Listener() {
+			@Override
 			public void handleEvent(Event e) {
 				HelpPopup.EmptyEventWindow.launch();
 			}
@@ -406,6 +410,7 @@ public final class MenuFiller {
 						"C&ommand Errors", null, SWT.NONE);
 
 		commandMenuItem.addListener(SWT.Selection, new Listener() {
+			@Override
 			public void handleEvent(Event e) {
 				HelpPopup.CommandErrors.launch();
 			}
@@ -415,6 +420,7 @@ public final class MenuFiller {
 				commonProblemsMenu, SWT.PUSH, "N&o Telemetry", null, SWT.NONE);
 
 		noTelemetryMenuItem.addListener(SWT.Selection, new Listener() {
+			@Override
 			public void handleEvent(Event e) {
 				HelpPopup.NoTelemetry.launch();
 			}
@@ -425,6 +431,7 @@ public final class MenuFiller {
 				SWT.NONE);
 
 		freezesMenuItem.addListener(SWT.Selection, new Listener() {
+			@Override
 			public void handleEvent(Event e) {
 				HelpPopup.ProgramFreezes.launch();
 			}

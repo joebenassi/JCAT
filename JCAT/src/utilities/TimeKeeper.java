@@ -4,11 +4,11 @@ import packets.parameters.DataType;
 
 public class TimeKeeper {
 	private static long startTime;
-	
+
 	public static final void reset() {
 		startTime = System.currentTimeMillis();
 	}
-	
+
 	public static final String getElapsedTime() {
 		long time = getLongTime();
 		int intTime = 0;
@@ -18,13 +18,14 @@ public class TimeKeeper {
 		int sec = intTime / 1000;
 		return getTimeFormatted(sec);
 	}
-	
+
 	public static final String getEventTime(byte[] data) throws Exception {
-		int sec = Integer.parseInt(DataType.uint32Integer.getTlmStrArray(data, 6));
-		//String msec = DataType.uint16Integer.getTlmStrArray(data, 10);
+		int sec = Integer.parseInt(DataType.uint32Integer.getTlmStrArray(data,
+				6));
+		// String msec = DataType.uint16Integer.getTlmStrArray(data, 10);
 		return getTimeFormatted(sec);
 	}
-	
+
 	public static final String getTimeFormatted(int sec) {
 		int min = sec / 60;
 		sec = sec % 60;

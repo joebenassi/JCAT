@@ -6,6 +6,7 @@ public class CmdSpareParam extends CmdParam {
 				.getDataType(type, "int", "1").getBytes());
 	}
 
+	@Override
 	protected void loadByteArray() {
 		switch (ByteArray.length) {
 

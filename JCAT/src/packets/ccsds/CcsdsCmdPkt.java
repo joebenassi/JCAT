@@ -37,10 +37,11 @@ public class CcsdsCmdPkt extends CcsdsPkt {
 		byte Checksum = new Integer(0xFF).byteValue();
 
 		for (int i = 0; i < PktLen; i++) {
-			try{
-			Checksum ^= Packet[i];}
-			catch (Throwable ex){
-				System.out.println("CCSDSCMDPKT: PacketArrayLength: " + Packet.length);
+			try {
+				Checksum ^= Packet[i];
+			} catch (Throwable ex) {
+				System.out.println("CCSDSCMDPKT: PacketArrayLength: "
+						+ Packet.length);
 				System.out.println("CCSDSCMDPKT: Index i: " + i);
 			}
 		}
@@ -56,12 +57,9 @@ public class CcsdsCmdPkt extends CcsdsPkt {
 	 * Load data portion of command data and compute the packet checksum
 	 */
 	public void LoadData(byte Data[], int DataLength) {
-
-		for (int i = 0; i < DataLength; i++) 
-		{
-			Packet[CCSDS_IDX_CMD_DATA+i] = Data[i];
+		for (int i = 0; i < DataLength; i++) {
+			Packet[CCSDS_IDX_CMD_DATA + i] = Data[i];
 		}
-		
 		ComputeChecksum();
 	}
 
@@ -114,7 +112,7 @@ public class CcsdsCmdPkt extends CcsdsPkt {
 		for (i = 0; i < 16; i++)
 			DataBuffer[i] = ByteCmdPkt1[CCSDS_IDX_CMD_DATA + i];
 
-		//CmdPkt.LoadData(DataBuffer, 16);
+		// CmdPkt.LoadData(DataBuffer, 16);
 
 		ByteCmdPkt2 = CmdPkt.GetPacket();
 

@@ -28,7 +28,7 @@ public final class ShowAboutPopup {
 		lines[5] = "non-NASA developers.";
 
 		final Label[] labels = new Label[lines.length];
-		
+
 		Shell shell = new Shell(Display.getCurrent(), SWT.DIALOG_TRIM);
 		FormLayout formLayout = new FormLayout();
 		formLayout.marginBottom = 10;
@@ -40,7 +40,7 @@ public final class ShowAboutPopup {
 		shell.setText(title);
 		shell.setImage(ResourceLoader.getSmallJCATLogo());
 		FormData data = new FormData();
-		
+
 		final Image JCATLogo = ResourceLoader.getBigJCATLogo();
 		Label JCATLogoLabel = new Label(shell, SWT.NONE);
 		JCATLogoLabel.setImage(JCATLogo);
@@ -55,28 +55,27 @@ public final class ShowAboutPopup {
 		data.top = new FormAttachment(0, -2);
 		data.bottom = new FormAttachment(100, 2);
 		spacer.setLayoutData(data);
-		
-		for (int i = 0; i < lines.length; i++)
-		{
+
+		for (int i = 0; i < lines.length; i++) {
 			labels[i] = new Label(shell, SWT.NONE);
 			labels[i].setText(lines[i]);
-			
+
 			data = new FormData();
 			if (i == 0)
 				labels[i].setFont(FontConstants.headerFont);
 			else
 				labels[i].setFont(FontConstants.bodyFont);
 			if (i > 0)
-				data.top = new FormAttachment(labels[i-1], -4);
+				data.top = new FormAttachment(labels[i - 1], -4);
 			if (i == lines.length - 1)
 				data.bottom = new FormAttachment(100, 0);
-				data.left = new FormAttachment(spacer, 0);
-			
+			data.left = new FormAttachment(spacer, 0);
+
 			data.right = new FormAttachment(100, 0);
 			labels[i].setLayoutData(data);
 			shell.pack();
 		}
-		
+
 		shell.pack();
 		shell.open();
 

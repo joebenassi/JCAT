@@ -19,7 +19,7 @@ public class FswTlmNetwork {
 		for (PktObserver o : observers)
 			o.addPkt(TlmPkt);
 	}
-	
+
 	public static final void removeObserver(String id) {
 		for (PktObserver o : observers) {
 			if (o.getID().equals(id)) {
@@ -28,7 +28,7 @@ public class FswTlmNetwork {
 			}
 		}
 	}
-	
+
 	public static void addObserver(PktObserver o) {
 		observers.add(o);
 	}

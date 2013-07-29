@@ -10,9 +10,7 @@ import applications.App;
 
 import packets.ccsds.CcsdsTlmPkt;
 import packets.cmd.CmdPkt;
-import utilities.EndianCorrector;
 import utilities.TimeKeeper;
-
 
 public class Networker {
 	private static FswCmdNetwork CmdWriter;
@@ -73,12 +71,12 @@ public class Networker {
 	}
 
 	private final static void printEvent(String config, CcsdsTlmPkt pkt) {
-		System.out.println("NETWORKER: EVENT PRINTED!");
 		byte[] TlmPkt = pkt.getPacket();
 		String time = "";
 		try {
 			time = TimeKeeper.getEventTime(pkt.getPacket());
-		} catch (Exception e) {e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		String MsgA = new String(TlmPkt, 12, 122);
 		/*
@@ -101,6 +99,7 @@ public class Networker {
 		final int myInstance = Launcher.getInstanceNum();
 
 		final Thread t = new Thread(new Runnable() {
+			@Override
 			public void run() {
 				while (Launcher.getInstanceNum() == myInstance) {
 					try {
@@ -108,34 +107,23 @@ public class Networker {
 					} catch (Throwable e) {
 					}
 					;
-					
-					Display.getDefault().asyncExec(new Runnable() {
-						public void run() {
-								while (!observer.isEmpty()) {
-									CcsdsTlmPkt TlmPkt = observer.getTlmPkt();
-									for (Config c : configs) {
-										//System.out.println(c.getMsgId() + "");
-										//System.out.println(configs.length + " <- AMT OF CONFIGS");
-										/* TODO do I flip parameter bytes of event message? */
-										if (c.getMsgId() == TlmPkt
-												.getStreamId()) {
-											System.out.println("NETWORKER: TRYING TO PRINT");
-											printEvent(c.getName(), TlmPkt);
-										}
-									}
 
-									for (App app : apps)
-										if (TlmPkt.getStreamId() == app
-												.getTlmAppID()) {
-											app.ingest(TlmPkt);
-										}
-									if (TlmPkt.getStreamId() == 0x0840){
-										System.out.println("NETWORKER: GOT ES CPU3 HK TLM PKT");
-									}
-									if (TlmPkt.getStreamId() == 0x0820){
-										System.out.println("NETWORKER: GOT ES CPU2 HK TLM PKT");
-									}
+					Display.getDefault().asyncExec(new Runnable() {
+						@Override
+						public void run() {
+							while (!observer.isEmpty()) {
+								CcsdsTlmPkt TlmPkt = observer.getTlmPkt();
+								for (Config c : configs) {
+									if (c.getMsgId() == TlmPkt.getStreamId())
+										printEvent(c.getName(), TlmPkt);
 								}
+
+								for (App app : apps)
+									if (TlmPkt.getStreamId() == app
+											.getTlmAppID()) {
+										app.ingest(TlmPkt);
+									}
+							}
 						}
 					});
 				}

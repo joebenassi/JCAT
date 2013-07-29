@@ -15,7 +15,7 @@ public class CcsdsPkt {
 	private static final int CCSDS_MSK_MSG_ID = 0x0000FFFF;
 	private static final int CCSDS_MSK_SEQ_CNT = 0x00003FFF;
 	private static final int CCSDS_LENGTH_ADJUST = 7;
-	//private static final int CCSDS_PRI_HDR_LENGTH = 6;
+	// private static final int CCSDS_PRI_HDR_LENGTH = 6;
 
 	byte[] Packet;
 
@@ -62,12 +62,13 @@ public class CcsdsPkt {
 	public int getTotalLength() {
 		byte first = EndianCorrector.getValueOut(Packet, CCSDS_IDX_LENGTH);
 		byte second = EndianCorrector.getValueOut(Packet, CCSDS_IDX_LENGTH + 1);
-		byte[] init = new byte[]{first, second};
+		byte[] init = new byte[] { first, second };
 		EndianCorrector.fixParameterOut(init);
-		
+
 		return (init[0] | init[1] << 8) + CCSDS_LENGTH_ADJUST;
-		//return (Packet[CCSDS_IDX_LENGTH] | (Packet[CCSDS_IDX_LENGTH + 1] << 8))
-		//		+ CCSDS_LENGTH_ADJUST;
+		// return (Packet[CCSDS_IDX_LENGTH] | (Packet[CCSDS_IDX_LENGTH + 1] <<
+		// 8))
+		// + CCSDS_LENGTH_ADJUST;
 
 	}// End getTotalLength()
 
@@ -89,7 +90,7 @@ public class CcsdsPkt {
 	public byte[] getPacket() {
 		return Packet;
 	}// End getPacket()
-	
+
 	public void setPacket(byte[] newPacket) {
 		Packet = newPacket;
 	}

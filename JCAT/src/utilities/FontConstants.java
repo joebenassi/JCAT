@@ -22,8 +22,9 @@ public final class FontConstants {
 			"arial", 21, SWT.NONE);
 	public static final Font monospacedFont = new Font(Display.getCurrent(),
 			"courier", 13, SWT.BOLD);
-	public static final Font bodyFont = new Font(Display.getCurrent(), "arial", 11, SWT.NONE);
-	
+	public static final Font bodyFont = new Font(Display.getCurrent(), "arial",
+			11, SWT.NONE);
+
 	/**
 	 * Disposes the Fonts to clear memory. This is necessary.
 	 */

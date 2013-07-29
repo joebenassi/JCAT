@@ -43,12 +43,13 @@ final class StatusWindow extends Composite {
 
 		setResizeListener(parent);
 		scrollToBottom();
-		
+
 		parent.addMouseWheelListener(new MouseWheelListener() {
-		    public void mouseScrolled(final MouseEvent e) {
-		        Scale src = (Scale)e.getSource();
-		        src.setSelection(src.getSelection() - e.count );
-		    }
+			@Override
+			public void mouseScrolled(final MouseEvent e) {
+				Scale src = (Scale) e.getSource();
+				src.setSelection(src.getSelection() - e.count);
+			}
 		});
 	}
 
@@ -89,22 +90,21 @@ final class StatusWindow extends Composite {
 	 *            the color of all three columns' text for this entry
 	 */
 	public final void addTextEntry(final String[] details, final Color color) {
-		Display.getDefault().syncExec(new Runnable(){
-			public void run()
-			{
+		Display.getDefault().syncExec(new Runnable() {
+			@Override
+			public void run() {
 				TableItem ti = new TableItem(table, SWT.NONE);
 				ti.setForeground(color);
 				ti.setText(details);
 				ti.setFont(dialogFont);
 				scrollToBottom();
 			}
-		});		
+		});
 	}
 
 	private final void scrollToBottom() {
 		TableItem item;
-		if (table.getItemCount() > 0)
-		{
+		if (table.getItemCount() > 0) {
 			item = table.getItem(table.getItemCount() - 1);
 			table.showItem(item);
 		}

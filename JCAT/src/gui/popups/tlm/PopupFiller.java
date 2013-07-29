@@ -1,6 +1,5 @@
 package gui.popups.tlm;
 
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ShellAdapter;
 import org.eclipse.swt.events.ShellEvent;
@@ -33,8 +32,8 @@ import utilities.ShellDisposer;
  * 
  */
 public class PopupFiller {
-	private Shell POPUP = new Shell(SWT.SHELL_TRIM & ~(SWT.RESIZE)
-			| SWT.ON_TOP | SWT.BORDER);
+	private Shell POPUP = new Shell(SWT.SHELL_TRIM & ~(SWT.RESIZE) | SWT.ON_TOP
+			| SWT.BORDER);
 	private static final Font TEXTFONT = FontConstants.bodyFont;
 	private static final Font POPUPTITLEFONT = FontConstants.titleFont;
 	private static Color backgroundColor = ColorConstants.lightPageBackground;
@@ -55,8 +54,10 @@ public class PopupFiller {
 	 * is the only entity that other classes in other packages need to
 	 * communicate with.
 	 * 
-	 * @param POPUPNAME The name of the Shell.
-	 * @param ENTRYNAMES The names of the various Telemetry data subjects.
+	 * @param POPUPNAME
+	 *            The name of the Shell.
+	 * @param ENTRYNAMES
+	 *            The names of the various Telemetry data subjects.
 	 */
 	public PopupFiller(final String POPUPNAME, final String[] ENTRYNAMES) {
 		developShell();
@@ -72,7 +73,8 @@ public class PopupFiller {
 	}
 
 	/**
-	 * Formats the look of the Shell and specifies the correct behavior on close.
+	 * Formats the look of the Shell and specifies the correct behavior on
+	 * close.
 	 */
 	private final void developShell() {
 		POPUP.addShellListener(new ShellAdapter() {
@@ -94,10 +96,13 @@ public class PopupFiller {
 	}
 
 	/**
-	 * Develops the right side of the Shell: The TitleBox, UniversalBox, and EntryBox. 
+	 * Develops the right side of the Shell: The TitleBox, UniversalBox, and
+	 * EntryBox.
 	 * 
-	 * @param POPUPNAME The name of the Shell.
-	 * @param ENTRYNAMES The names of the various Telemetry data subjects.
+	 * @param POPUPNAME
+	 *            The name of the Shell.
+	 * @param ENTRYNAMES
+	 *            The names of the various Telemetry data subjects.
 	 */
 	private final void addRightBar(String POPUPNAME, String[] ENTRYNAMES) {
 		Composite rightBar = new Composite(POPUP, SWT.NONE);
@@ -135,7 +140,8 @@ public class PopupFiller {
 	/**
 	 * Returns the Text containing the telemetry data at the specified index.
 	 * 
-	 * @param index The index of the telemetry data.
+	 * @param index
+	 *            The index of the telemetry data.
 	 * @return The Text containing the telemetry data at the specified index.
 	 */
 	public Text getText(int index) {
@@ -157,7 +163,8 @@ public class PopupFiller {
 	}
 
 	/**
-	 * Returns true if the shell is disposed, false otherwise. This should hopefully return true when the program exist.
+	 * Returns true if the shell is disposed, false otherwise. This should
+	 * hopefully return true when the program exist.
 	 * 
 	 * @return The status of disposal of the shell.
 	 */

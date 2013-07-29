@@ -4,7 +4,6 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Text;
 
 import packets.ccsds.CcsdsTlmPkt;
-import packets.parameters.DataType;
 import packets.tlm.TlmPkt;
 
 import applications.App;
@@ -18,10 +17,11 @@ public class TelemetryUpdater {
 			loadTlmStrArrayHk(TlmMsg.getPacket(), app.getTelemetry());
 			try {
 				app.setTime(TimeKeeper.getEventTime(TlmMsg.getPacket()));
-			} catch (Exception e) {}
+			} catch (Exception e) {
+			}
 			updatePopup(app);
 		}
-		/*TODO account for different AppIDs (Non-HK)*/
+		/* TODO account for different AppIDs (Non-HK) */
 	}
 
 	private static final void loadTlmStrArrayHk(byte[] RawData,
@@ -34,19 +34,20 @@ public class TelemetryUpdater {
 			RawIndex += T.getDataType().getBytes();
 		}
 	}
-	
+
 	private static final void updatePopup(final App app) {
 		for (int i = 0; i < app.getTelemetryAmt(); i++) {
 			final Text text = app.getTelemetryText(i);
 			final String value = app.getTelemetryValue(i);
 			Display.getDefault().asyncExec(new Runnable() {
+				@Override
 				public void run() {
 					text.setText(value);
 				}
 			});
 		}
 	}
-	
+
 	public static void loadTlmStrArrayHdr(CcsdsTlmPkt TlmMsg,
 			String[] TlmStrArray) {
 		TlmStrArray[0] = String.valueOf((TlmMsg.getStreamId()));

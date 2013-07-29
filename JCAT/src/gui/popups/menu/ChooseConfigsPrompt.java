@@ -75,6 +75,7 @@ public class ChooseConfigsPrompt {
 
 		shell.setLayout(formLayout);
 		shell.addShellListener(new ShellAdapter() {
+			@Override
 			public final void shellClosed(ShellEvent e) {
 				e.doit = false;
 				shell.setVisible(false);
@@ -128,6 +129,7 @@ public class ChooseConfigsPrompt {
 			final ArrayList<Document> docs, Button b, final Shell s,
 			final Shell mainShell) {
 		b.addListener(SWT.Selection, new Listener() {
+			@Override
 			public void handleEvent(Event e) {
 				try {
 					NavConstantXMLPrompt.launch();
@@ -203,6 +205,7 @@ public class ChooseConfigsPrompt {
 
 	public static void addTreeListener(Tree tree, final Button okayB) {
 		tree.addListener(SWT.Selection, new Listener() {
+			@Override
 			public void handleEvent(Event event) {
 				if (event.detail == SWT.CHECK) {
 					TreeItem item = (TreeItem) event.item;

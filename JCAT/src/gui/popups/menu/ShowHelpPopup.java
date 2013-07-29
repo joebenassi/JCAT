@@ -23,8 +23,8 @@ public class ShowHelpPopup {
 	private static final Color[] panelColors2 = ColorConstants.panelColors2;
 	private static final Color darkAccent = ColorConstants.darkAccent;
 	private static final int width = 350;
-		
-	public static final void launch(String header, String[] paragraphs){
+
+	public static final void launch(String header, String[] paragraphs) {
 		/* Configure shell */
 		final Shell shell = new Shell(SWT.DIALOG_TRIM | SWT.ON_TOP);
 		shell.setImage(ResourceLoader.getSmallJCATLogo());
@@ -132,9 +132,10 @@ public class ShowHelpPopup {
 
 	private static final String getContent(String[] paragraphs) {
 		String master = "";
-		for (int i = 0; i < paragraphs.length; i++){
+		for (int i = 0; i < paragraphs.length; i++) {
 			master += "   " + paragraphs[i];
-			if (i<paragraphs.length - 1) master+= "\n\n";
+			if (i < paragraphs.length - 1)
+				master += "\n\n";
 		}
 		return master;
 	}

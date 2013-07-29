@@ -1,6 +1,5 @@
 package gui.popups.tlm;
 
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
@@ -13,8 +12,9 @@ import org.eclipse.swt.widgets.Text;
 
 /**
  * This is to be displayed in every App's popup window.
+ * 
  * @author Joe Benassi
- *
+ * 
  */
 final class UniversalBox extends Composite {
 	/**
@@ -38,6 +38,7 @@ final class UniversalBox extends Composite {
 			return name;
 		}
 	}
+
 	/**
 	 * The width of the SequenceCount Text
 	 */
@@ -69,7 +70,7 @@ final class UniversalBox extends Composite {
 	 *            The color of the border of this.
 	 * @param layoutData
 	 *            The layout data to assign to this.
-	 * @param data 
+	 * @param data
 	 */
 	public static final void addUniversalBox(Composite parent,
 			Color backgroundColor, Color textColor, Color textBoxColor,
@@ -97,9 +98,8 @@ final class UniversalBox extends Composite {
 	 * @param layoutData
 	 *            The layout data to assign to this.
 	 */
-	UniversalBox(Composite parent, Color backgroundColor,
-			Color textColor, Color textBoxColor, Color borderColor, Font font, 
-			Object layoutData) {
+	UniversalBox(Composite parent, Color backgroundColor, Color textColor,
+			Color textBoxColor, Color borderColor, Font font, Object layoutData) {
 		/* ADDING BORDER */
 		super(parent, SWT.NONE);
 
@@ -119,7 +119,8 @@ final class UniversalBox extends Composite {
 		internal.setLayout(gridLayout);
 
 		addTopContent(internal, backgroundColor, textColor, textBoxColor, font);
-		addBottomContent(internal, backgroundColor, textColor, textBoxColor, font);
+		addBottomContent(internal, backgroundColor, textColor, textBoxColor,
+				font);
 	}
 
 	/**
@@ -138,7 +139,8 @@ final class UniversalBox extends Composite {
 	 *            The color of the background of the various Texts (textboxes).
 	 */
 	private static final void addBottomContent(Composite internal,
-			Color backgroundColor, Color textColor, Color textBoxColor, Font font) {
+			Color backgroundColor, Color textColor, Color textBoxColor,
+			Font font) {
 		Composite bottomComposite = new Composite(internal, SWT.NONE);
 		bottomComposite.setBackground(backgroundColor);
 		bottomComposite.setLayout(new GridLayout(2, false));
@@ -167,13 +169,14 @@ final class UniversalBox extends Composite {
 	 * @param textBoxColor
 	 *            The color of the background of the various Texts (textboxes).
 	 */
-	private final void addTopContent(Composite internal,
-			Color backgroundColor, Color textColor, Color textBoxColor, Font font) {
+	private final void addTopContent(Composite internal, Color backgroundColor,
+			Color textColor, Color textBoxColor, Font font) {
 		Composite topComposite = new Composite(internal, SWT.NONE);
 		topComposite.setBackground(backgroundColor);
 		topComposite.setLayout(new GridLayout(2, false));
 
-		Child[] topChildren = new Child[] { Child.GMT};//, Child.SC};//, Child.UTC };
+		Child[] topChildren = new Child[] { Child.GMT };// , Child.SC};//,
+														// Child.UTC };
 
 		for (int i = 0; i < topChildren.length; i++) {
 			addLabel(topComposite, topChildren[i].getName(), backgroundColor,
@@ -221,10 +224,11 @@ final class UniversalBox extends Composite {
 	 * @param name
 	 *            The name representing the content. Should be "GMT", "SC",
 	 *            "UTC", or "Sequence Count".
-	 * @param font 
+	 * @param font
 	 */
 	private static final Text addText(final boolean isTopContent,
-			Composite parent, Color textColor, Color textBoxColor, String name, Font font) {
+			Composite parent, Color textColor, Color textBoxColor, String name,
+			Font font) {
 		GridData fieldGridData = new GridData(GridData.FILL_HORIZONTAL);
 		if (isTopContent)
 			fieldGridData.minimumWidth = fieldMinimumWidth1;
@@ -238,10 +242,10 @@ final class UniversalBox extends Composite {
 		temp.setText("        ");
 		temp.setLayoutData(fieldGridData);
 		temp.setForeground(textColor);
-		
+
 		return temp;
 	}
-	
+
 	public final void setTimeText(String time) {
 		timeText.setText(time);
 	}

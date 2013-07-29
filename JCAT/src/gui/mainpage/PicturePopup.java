@@ -10,15 +10,14 @@ import resources.ResourceLoader;
 
 /**
  * IMPROPERLY JAVADOC'D. CURRENTLY UNUSED.
+ * 
  * @author Joe Benassi
- *
+ * 
  */
-public class PicturePopup
-{
+public class PicturePopup {
 	private static final int minimumWidth = 250;
-	
-	public static void showImage(String title, Image image)
-	{
+
+	public static void showImage(String title, Image image) {
 		Display display = Display.getCurrent();
 		final Shell shell = new Shell(display);
 		shell.setLayout(new FillLayout());
@@ -27,7 +26,7 @@ public class PicturePopup
 		label.setImage(image);
 
 		shell.pack();
-		if(shell.getSize().x < minimumWidth)
+		if (shell.getSize().x < minimumWidth)
 			shell.setSize(new Point(minimumWidth, shell.getSize().y));
 		shell.open();
 
@@ -38,7 +37,7 @@ public class PicturePopup
 		image.dispose();
 		display.dispose();
 	}
-	
+
 	public static void showImage(String title, String fileName) {
 		showImage(title, ResourceLoader.getImage(fileName));
 	}

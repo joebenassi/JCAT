@@ -76,6 +76,7 @@ public final class IOPrompt {
 		final Font titleFont = new Font(Display.getCurrent(), title.getFont()
 				.getFontData()[0].getName(), 8, SWT.BOLD);
 		titleL.addDisposeListener(new DisposeListener() {
+			@Override
 			public void widgetDisposed(DisposeEvent arg0) {
 				titleFont.dispose();
 			}
@@ -120,6 +121,7 @@ public final class IOPrompt {
 		Button cancel = new Button(composite, SWT.PUSH);
 		cancel.setText("Cancel");
 		cancel.addSelectionListener(new SelectionAdapter() {
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				dialog.close();
 			}
@@ -190,6 +192,7 @@ public final class IOPrompt {
 	private static final SelectionListener getSelectionListener(
 			final Shell dialog, final Text[] texts, final boolean isOutput) {
 		return new SelectionAdapter() {
+			@Override
 			public final void widgetSelected(SelectionEvent e) {
 				if (isOutput) {
 					PktWriter.setIP(texts[0].getText());
@@ -198,28 +201,29 @@ public final class IOPrompt {
 							+ texts[0].getText());
 					Launcher.addUserActivity("Set output port: "
 							+ texts[1].getText());
-				} 
+				}
 				dialog.close();
 			}
 		};
 	}
-	
-	private static final void addRadioComposite(Composite s, Object data, boolean output)
-	{
+
+	private static final void addRadioComposite(Composite s, Object data,
+			boolean output) {
 		Composite intermediary = new Composite(s, SWT.NONE);
 		intermediary.setLayoutData(data);
 		RowLayout rowLayout = new RowLayout();
 		rowLayout.spacing = 17;
-		intermediary.setLayout (rowLayout);
-		addListener(intermediary, new Button(intermediary, SWT.RADIO), true, output);
-		addListener(intermediary, new Button(intermediary, SWT.RADIO), false, output);
-		
+		intermediary.setLayout(rowLayout);
+		addListener(intermediary, new Button(intermediary, SWT.RADIO), true,
+				output);
+		addListener(intermediary, new Button(intermediary, SWT.RADIO), false,
+				output);
+
 	}
-	
-	private static final void addListener(final Composite c1, Button b, final boolean bigEndian, final boolean isOutput)
-	{
-		if (bigEndian)
-		{
+
+	private static final void addListener(final Composite c1, Button b,
+			final boolean bigEndian, final boolean isOutput) {
+		if (bigEndian) {
 			b.setText("Big Endian");
 			if (isOutput)
 				b.setSelection(EndianCorrector.isBigEndianOut());
@@ -227,29 +231,31 @@ public final class IOPrompt {
 				b.setEnabled(false);
 				b.setSelection(EndianCorrector.isBigEndianIn());
 			}
-		}
-		else 
-		{
+		} else {
 			b.setText("Little Endian");
 			if (isOutput)
 				b.setSelection(!EndianCorrector.isBigEndianOut());
-			else {b.setEnabled(false);
+			else {
+				b.setEnabled(false);
 				b.setSelection(!EndianCorrector.isBigEndianIn());
 			}
 		}
-		
-		b.addListener(SWT.Selection, new Listener () {
-			public void handleEvent (Event event) {
-					Control[] children = c1.getChildren ();
-					for (int j=0; j<2; j++) {
-						Button button = (Button)children [j];
-						if ((button.getStyle () & SWT.RADIO) != 0) button.setSelection (false);
-					}
+
+		b.addListener(SWT.Selection, new Listener() {
+			@Override
+			public void handleEvent(Event event) {
+				Control[] children = c1.getChildren();
+				for (int j = 0; j < 2; j++) {
+					Button button = (Button) children[j];
+					if ((button.getStyle() & SWT.RADIO) != 0)
+						button.setSelection(false);
+				}
 				Button button = (Button) event.widget;
-				button.setSelection (true);
+				button.setSelection(true);
 				if (isOutput)
 					EndianCorrector.setBigEndianOut(bigEndian);
-				else EndianCorrector.setBigEndianIn(bigEndian);
+				else
+					EndianCorrector.setBigEndianIn(bigEndian);
 			}
 		});
 	}

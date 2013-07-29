@@ -97,6 +97,7 @@ public final class App {
 
 	public final void setTime(final String time) {
 		Display.getDefault().syncExec(new Runnable() {
+			@Override
 			public void run() {
 				popupFiller.setTime(time);
 			}
@@ -116,8 +117,6 @@ public final class App {
 	}
 
 	public final void executeCommand(int index, String[] parameters) {
-		// System.out.println("EXECUTING COMMAND " + index + " OF " +
-		// (commands.size() - 1));
 		commands.get(index).execute(parameters);
 	}
 
@@ -176,6 +175,7 @@ public final class App {
 	 */
 	public final Listener getTelemetryListener(final Shell shell) {
 		return new Listener() {
+			@Override
 			public void handleEvent(Event e) {
 				popupFiller.launchPopup();
 				shell.setActive();

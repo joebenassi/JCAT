@@ -16,9 +16,10 @@ public class MainPageFiller {
 	private final Font timeFont = FontConstants.monospacedFont;
 	private final Font monospacedFont = FontConstants.monospacedFont;
 	private final Image JCATLogo = ResourceLoader.getLargeJCATLogo();
-	private final String[] firstEventMessage = new String[] {"CFS TIME: ", "SOURCE: ",
-			"CFS EVENT MESSAGE: " };
-	private final String[] firstUserActivity = new String[] {"ELAPSED TIME: ", "SOURCE: ", "USER ACTIVITY: " };
+	private final String[] firstEventMessage = new String[] { "CFS TIME: ",
+			"SOURCE: ", "CFS EVENT MESSAGE: " };
+	private final String[] firstUserActivity = new String[] { "ELAPSED TIME: ",
+			"SOURCE: ", "USER ACTIVITY: " };
 	private final Color sashBackgroundColor = ColorConstants.eventWindowColor;
 	final Color titleBackgroundColor = ColorConstants.darkAccent;
 	final Color titleForegroundColor = ColorConstants.textColor;
@@ -36,15 +37,16 @@ public class MainPageFiller {
 
 		addEventMessage(firstEventMessage[0], firstEventMessage[1],
 				firstEventMessage[2], titleForegroundColor);
-		
-		addUserActivity(firstUserActivity[0], firstUserActivity[1], firstUserActivity[2], titleForegroundColor);
 
-		BottomBar.addBottomBar(shell,
-				titleBackgroundColor);
+		addUserActivity(firstUserActivity[0], firstUserActivity[1],
+				firstUserActivity[2], titleForegroundColor);
+
+		BottomBar.addBottomBar(shell, titleBackgroundColor);
 	}
 
-	private void addUserActivity(String time, String header, String activity, Color color) {
-		statusWindowSash.addUserActivity(time, header, activity, color);		
+	private void addUserActivity(String time, String header, String activity,
+			Color color) {
+		statusWindowSash.addUserActivity(time, header, activity, color);
 	}
 
 	public final void addUserActivity(String time, String activity, Color color) {

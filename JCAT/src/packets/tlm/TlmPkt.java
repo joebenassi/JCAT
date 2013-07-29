@@ -27,7 +27,11 @@ public class TlmPkt {
 	public TlmPkt(String name, String dataTypeName) {
 		this.name = name;
 		value = "To Be Determined";
-		dataType = DataType.getDataType(dataTypeName, "string", "1"); /* TODO change this?? */
+		dataType = DataType.getDataType(dataTypeName, "string", "1"); /*
+																	 * TODO
+																	 * change
+																	 * this??
+																	 */
 	}
 
 	/**

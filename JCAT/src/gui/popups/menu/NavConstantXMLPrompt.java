@@ -1,4 +1,5 @@
 package gui.popups.menu;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -12,11 +13,11 @@ import org.xml.sax.SAXException;
 
 import utilities.XMLParser;
 
-public final class NavConstantXMLPrompt{
-	public static final void launch()
-			throws ParserConfigurationException,
+public final class NavConstantXMLPrompt {
+	public static final void launch() throws ParserConfigurationException,
 			SAXException, IOException {
-		FileDialog dialog = new FileDialog(new Shell(Display.getCurrent()), SWT.MULTI | SWT.OPEN);
+		FileDialog dialog = new FileDialog(new Shell(Display.getCurrent()),
+				SWT.MULTI | SWT.OPEN);
 		dialog.setText("Select Constant Definition File");
 		dialog.setFilterExtensions(new String[] { "*.xml" });
 		dialog.setFilterPath("c:\\temp");
@@ -26,8 +27,8 @@ public final class NavConstantXMLPrompt{
 		addConstants(fullFilePath, fileNames);
 	}
 
-	private static final void addConstants(
-			final String fullFilePath, final String[] fileNames) throws ParserConfigurationException,
+	private static final void addConstants(final String fullFilePath,
+			final String[] fileNames) throws ParserConfigurationException,
 			SAXException, IOException {
 		String directory;
 		if (fullFilePath != null) {

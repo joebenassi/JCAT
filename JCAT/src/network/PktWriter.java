@@ -14,7 +14,8 @@ import main.Launcher;
 public class PktWriter {
 	private static String port = "1234";
 	private static String ip = "192.168.224.128";
-	//private static String ip = "192.168.1.11";
+
+	// private static String ip = "192.168.1.11";
 
 	public PktWriter() {
 	}
@@ -36,9 +37,9 @@ public class PktWriter {
 		int intport = Integer.parseInt(PktWriter.port);
 
 		byte[] buf2 = new byte[buf.length];
-		for (int i = 0 ; i < buf.length; i ++)
+		for (int i = 0; i < buf.length; i++)
 			buf2[i] = buf[i];
-		
+
 		EndianCorrector.fixHeaderOut(buf2);
 		DatagramPacket out = new DatagramPacket(buf2, buf2.length, address,
 				intport);
@@ -47,16 +48,14 @@ public class PktWriter {
 		socket.close();
 	}
 
-	public static final String getIP()
-	{
+	public static final String getIP() {
 		return ip;
 	}
-	
-	public static final String getPort()
-	{
+
+	public static final String getPort() {
 		return port;
 	}
-	
+
 	public static final void setIP(String IP) {
 		ip = IP;
 	}

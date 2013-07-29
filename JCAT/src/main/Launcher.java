@@ -1,7 +1,5 @@
 package main;
 
-import java.io.File;
-
 import gui.mainpage.MainPageFiller;
 import gui.menu.MenuFiller;
 import gui.popups.menu.NewUserPrompt;
@@ -21,6 +19,7 @@ import resources.ResourceLoader;
 
 import utilities.ColorConstants;
 import utilities.FontConstants;
+import utilities.PreferenceStorage;
 import utilities.ShellDisposer;
 import utilities.TimeKeeper;
 
@@ -33,7 +32,8 @@ import utilities.TimeKeeper;
 public final class Launcher {
 	private static Display display = new Display();
 	private static boolean shouldRestart = true;
-	public static volatile MainPageFiller mainPageFiller;// = new MainPageFiller(shell);
+	public static volatile MainPageFiller mainPageFiller;// = new
+															// MainPageFiller(shell);
 	private static volatile int instanceNum = 0;
 
 	/**
@@ -54,9 +54,8 @@ public final class Launcher {
 	 */
 	public final static void startup(final Shell s) {
 		TimeKeeper.reset();
-		
+
 		Networker.startNetworker();
-		System.out.println("LAUNCHER: JCAT STARTUP!");
 		mainPageFiller = new MainPageFiller(s);
 
 		addShellExitBehavior(s);
@@ -64,10 +63,10 @@ public final class Launcher {
 		MenuFiller.addMenu(s, null, version);
 		s.setImages(new Image[] { ResourceLoader.getSmallJCATLogo(),
 				ResourceLoader.getMedJCATLogo() });
-		//PreferenceTest.showHelp();
-		if (PreferenceTest.shouldShowHelp())
+		// PreferenceTest.showHelp();
+		if (PreferenceStorage.shouldShowHelp())
 			NewUserPrompt.launch();
-		
+
 		s.open();
 
 		addUserActivity("JCAT startup successful");
@@ -98,7 +97,7 @@ public final class Launcher {
 			}
 		}
 	}
-	
+
 	private final static void addShellExitBehavior(final Shell shell) {
 		shell.addShellListener(new ShellAdapter() {
 			@Override
@@ -126,14 +125,13 @@ public final class Launcher {
 	}
 
 	public static final void addEvent(String time, String config, String msgStr) {
-		System.out.println("LAUNCHER: ADDED EVENT: " + msgStr);
 		mainPageFiller.addEventMessage(time, config, msgStr,
 				ColorConstants.textColor);
 	}
 
 	public static final void addUserActivity(String userActivityMessage) {
-		mainPageFiller.addUserActivity(TimeKeeper.getElapsedTime(), userActivityMessage,
-				ColorConstants.textColor);
+		mainPageFiller.addUserActivity(TimeKeeper.getElapsedTime(),
+				userActivityMessage, ColorConstants.textColor);
 	}
 
 	public static final int getInstanceNum() {

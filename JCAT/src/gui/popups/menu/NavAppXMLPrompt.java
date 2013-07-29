@@ -11,9 +11,8 @@ import org.eclipse.swt.widgets.Shell;
 import org.xml.sax.SAXException;
 
 public final class NavAppXMLPrompt {
-	public static final void launch(final Shell shell,
-			final String version) throws ParserConfigurationException,
-			SAXException, IOException {
+	public static final void launch(final Shell shell, final String version)
+			throws ParserConfigurationException, SAXException, IOException {
 		FileDialog dialog = new FileDialog(shell, SWT.MULTI | SWT.OPEN);
 		dialog.setText("Select App Profiles");
 		dialog.setFilterExtensions(new String[] { "*.xml" });
@@ -26,9 +25,10 @@ public final class NavAppXMLPrompt {
 	}
 
 	private static final void populateApps(final Shell shell,
-			final String fullFilePath, final String[] fileNames, final String version) throws ParserConfigurationException,
+			final String fullFilePath, final String[] fileNames,
+			final String version) throws ParserConfigurationException,
 			SAXException, IOException {
-		
+
 		String directory;
 		if (fullFilePath != null) {
 			directory = fullFilePath.substring(0, fullFilePath.length()

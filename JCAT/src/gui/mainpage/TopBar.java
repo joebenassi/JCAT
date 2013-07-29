@@ -19,8 +19,7 @@ final class TopBar extends Composite {
 
 	final static void addTopBar(Composite parent, String title,
 			Color backgroundColor, Color foregroundColor, Font titleFont,
-			Font timeFont, Image JCATLogo)
-	{
+			Font timeFont, Image JCATLogo) {
 		new TopBar(parent, title, backgroundColor, foregroundColor, titleFont,
 				timeFont, JCATLogo);
 	}
@@ -72,6 +71,7 @@ final class TopBar extends Composite {
 	public static final void addTimeUpdater(final Label label) {
 		final int instanceNum = Launcher.getInstanceNum();
 		Thread t = new Thread(new Runnable() {
+			@Override
 			public void run() {
 				while (instanceNum == Launcher.getInstanceNum()) {
 					try {
@@ -79,6 +79,7 @@ final class TopBar extends Composite {
 					} catch (Throwable e) {
 					}
 					Display.getDefault().syncExec(new Runnable() {
+						@Override
 						public void run() {
 							label.setText(TimeKeeper.getElapsedTime());
 						}

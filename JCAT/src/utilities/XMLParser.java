@@ -1,7 +1,5 @@
 package utilities;
 
-import gui.popups.menu.NavConstantXMLPrompt;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -71,7 +69,7 @@ public final class XMLParser {
 				} catch (Throwable e1) {
 				}
 			}
-			
+
 			final NodeList nodes = doc.getElementsByTagName("config");
 			for (int i = 0; i < nodes.getLength(); i++) {
 				try {
@@ -93,8 +91,8 @@ public final class XMLParser {
 			String config) {
 		final String name = getInstance("name", document);
 
-		return new App(name + " [" + config + "]", getCommands(
-				document, CmdID), getTelemetry(document), TlmID);
+		return new App(name + " [" + config + "]",
+				getCommands(document, CmdID), getTelemetry(document), TlmID);
 	}
 
 	public static ArrayList<String> getConfigNames(Document document) {
@@ -113,19 +111,17 @@ public final class XMLParser {
 		return configNames;
 	}
 
-	private static final int getCommandOffset(Document document)
-			{
+	private static final int getCommandOffset(Document document) {
 		final String COString = getInstance("commandoffset", document);
 		String modString;
 		int value = 0;
 
 		String s = COString.substring(0, 2);
-		if (s.equals("-")){
+		if (s.equals("-")) {
 			modString = COString.substring(1, COString.length());
 			value = Integer.parseInt(modString);
 			value *= -1;
-		}
-		else if (s.equals("+")){
+		} else if (s.equals("+")) {
 			modString = COString.substring(1, COString.length());
 			value = Integer.parseInt(modString);
 			value *= 1;
@@ -174,7 +170,7 @@ public final class XMLParser {
 	private static final ArrayList<CmdPkt> getCommands(Document document,
 			int CmdMID) {
 		int commandOffset = 0;
-		
+
 		commandOffset = getCommandOffset(document);
 
 		final Element firstTree = (Element) document.getElementsByTagName(
@@ -185,8 +181,8 @@ public final class XMLParser {
 
 		for (int i = 0; i < nodeList.getLength(); i++) {
 			final int functCode = i + commandOffset;
-			commands.add(getCommand((Element) nodeList.item(i),
-					functCode, CmdMID));
+			commands.add(getCommand((Element) nodeList.item(i), functCode,
+					CmdMID));
 		}
 		return commands;
 	}
@@ -197,8 +193,8 @@ public final class XMLParser {
 	 *            XML document.
 	 * @return
 	 */
-	private static final CmdPkt getCommand(Element commandBase,
-			int funcCode, int appID) {
+	private static final CmdPkt getCommand(Element commandBase, int funcCode,
+			int appID) {
 		final String name = getFirstInstance("name", commandBase);
 
 		final int messageID = appID;
@@ -209,8 +205,7 @@ public final class XMLParser {
 		for (CmdParam c : parameters)
 			dataLength += c.getNumBytes();
 
-		CmdPkt command = new CmdPkt(name, messageID, funcCode,
-				dataLength);
+		CmdPkt command = new CmdPkt(name, messageID, funcCode, dataLength);
 
 		for (CmdParam c : parameters)
 			command.addParam(c);
@@ -230,8 +225,8 @@ public final class XMLParser {
 			Element commandBase) {
 		ArrayList<Element> elements = new ArrayList<Element>();
 
-		NodeList nodeList = (NodeList) commandBase
-				.getElementsByTagName("parameters").item(0).getChildNodes();
+		NodeList nodeList = commandBase.getElementsByTagName("parameters")
+				.item(0).getChildNodes();
 
 		int nodeListLength = nodeList.getLength();
 
@@ -243,7 +238,7 @@ public final class XMLParser {
 
 		return elements;
 	}
-	
+
 	private static final ArrayList<CmdParam> getParameters(Element commandBase) {
 		if (commandBase.getElementsByTagName("parameters").item(0) == null)
 			return new ArrayList<CmdParam>();
@@ -255,14 +250,13 @@ public final class XMLParser {
 			final String type = getFirstInstance("type", elements.get(i));
 
 			final String constant = getFirstInstance("const", elements.get(i));
-			/*if (!constant.equals("DNE"))
-				try {
-					if (!ScalarConstant.hasConstant(constant))
-						
-				} catch (ParserConfigurationException | SAXException
-						| IOException e1) {
-					e1.printStackTrace();
-				}*/
+			/*
+			 * if (!constant.equals("DNE")) try { if
+			 * (!ScalarConstant.hasConstant(constant))
+			 * 
+			 * } catch (ParserConfigurationException | SAXException |
+			 * IOException e1) { e1.printStackTrace(); }
+			 */
 
 			final String bytes = ScalarConstant.getValue(constant);
 
@@ -270,12 +264,12 @@ public final class XMLParser {
 					elements.get(i));
 
 			boolean isInputParam = true;
-			
+
 			String param = elements.get(i).getNodeName();
-			if (param.equalsIgnoreCase("spare")){
+			if (param.equalsIgnoreCase("spare")) {
 				parameters.add(ParamGen.getSpareParam(type));
 			}
-			
+
 			else if (elements.get(i).getNodeName()
 					.equalsIgnoreCase("choiceparameter")) {
 				isInputParam = false;
@@ -284,7 +278,7 @@ public final class XMLParser {
 						"choice");
 
 				ArrayList<ChoiceOption> choiceOptions = new ArrayList<ChoiceOption>();
-				
+
 				for (int j = 0; j < choicesList.getLength(); j++) {
 					try {
 						final String choiceName = ((Element) choicesList
@@ -303,40 +297,40 @@ public final class XMLParser {
 				ChoiceOption[] choiceArray = new ChoiceOption[choiceOptions
 						.size()];
 				choiceOptions.toArray(choiceArray);
-				parameters
-						.add(ParamGen
-								.getCmdParam(name, type, primitive, bytes,
-										isInputParam, choiceArray));
+				parameters.add(ParamGen.getCmdParam(name, type, primitive,
+						bytes, isInputParam, choiceArray));
 			} else
 				parameters.add(ParamGen.getCmdParam(name, type, primitive,
-						bytes, isInputParam,
-						new ChoiceOption[0]));
+						bytes, isInputParam, new ChoiceOption[0]));
 		}
 		return parameters;
 	}
-	
-	public static final void neverShowDisplayHelp(){
+
+	public static final void neverShowDisplayHelp() {
 		try {
 			Document d = ResourceLoader.getSettingsDocument();
 			d.getElementsByTagName("displayhelp").item(0).setTextContent("0");
-		} catch (Throwable e){}
+		} catch (Throwable e) {
+		}
 	}
-	
-	public static final boolean shouldDisplayHelp(){
+
+	public static final boolean shouldDisplayHelp() {
 		try {
-		Document d = ResourceLoader.getSettingsDocument();
-		String shouldDisplayHelp = d.getElementsByTagName("displayhelp").item(0).getTextContent();
-		if (shouldDisplayHelp.equals("0"))
-			return false;
-		else if (shouldDisplayHelp.equals("1"))
-			return true;
-		else throw new Throwable();
+			Document d = ResourceLoader.getSettingsDocument();
+			String shouldDisplayHelp = d.getElementsByTagName("displayhelp")
+					.item(0).getTextContent();
+			if (shouldDisplayHelp.equals("0"))
+				return false;
+			else if (shouldDisplayHelp.equals("1"))
+				return true;
+			else
+				throw new Throwable();
 		} catch (Throwable e) {
 			System.out.println("XMLPARSER: INCORRECT SHOULDDISPLAYHELP VALUE");
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Returns the telemetry data array as defined in the input Document.
 	 * 
@@ -361,7 +355,7 @@ public final class XMLParser {
 		}
 		return telemetry.toArray(new TlmPkt[telemetry.size()]);
 	}
-	
+
 	public static String getName(Document document) {
 		return document.getElementsByTagName("name").item(0).getTextContent();
 	}

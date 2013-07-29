@@ -34,8 +34,10 @@ public final class ColorConstants {
 			lightPageBackground };
 
 	public static Color[] panelColors2 = new Color[] { textColor, newBase,
-		borderColor, newBase, lightPageBackground, textColor, newBase,
-		lightPageBackground, lightPageBackground, lightPageBackground, lightPageBackground, lightPageBackground, lightPageBackground};
+			borderColor, newBase, lightPageBackground, textColor, newBase,
+			lightPageBackground, lightPageBackground, lightPageBackground,
+			lightPageBackground, lightPageBackground, lightPageBackground };
+
 	// public static Color textGray10 =
 	// public static Color baseGray20 =
 	// public static Color baseGray30 = new Color(Display.getCurrent(),

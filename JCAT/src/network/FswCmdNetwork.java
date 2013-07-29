@@ -6,29 +6,25 @@
  *******************************************************************************/
 package network;
 
-
 import packets.ccsds.*;
 
-public class FswCmdNetwork
-{
+public class FswCmdNetwork {
 
-   private static PktWriter  PktOutput;
-   
-   public FswCmdNetwork()
-   {
-      PktOutput = new PktWriter();
-   }
-   
-   public void sendCmd(String name, CcsdsCmdPkt CmdPkt)
-   {
-      PktOutput.WriteCmdPkt(name, CmdPkt.GetPacket(), CmdPkt.getTotalLength());
-      
-   } // End getPktWriter()
-   
-   public PktWriter getPktWriter()
-   {
-      return PktOutput;
-      
-   } // End getPktWriter()
-   
+	private static PktWriter PktOutput;
+
+	public FswCmdNetwork() {
+		PktOutput = new PktWriter();
+	}
+
+	public void sendCmd(String name, CcsdsCmdPkt CmdPkt) {
+		PktOutput
+				.WriteCmdPkt(name, CmdPkt.GetPacket(), CmdPkt.getTotalLength());
+
+	} // End getPktWriter()
+
+	public PktWriter getPktWriter() {
+		return PktOutput;
+
+	} // End getPktWriter()
+
 } // End class FswCmdNetwork

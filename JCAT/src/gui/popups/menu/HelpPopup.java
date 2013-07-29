@@ -36,7 +36,7 @@ public enum HelpPopup {
 				"The App Profile XML is incorrectly formatted. See Menu > Help > Importing New Apps" };
 		private static final String[] EMPTYEVENTWINDOW = new String[] {
 				"If empty after navigating to File > Enable Telemetry, navigate to Commands > TO_LAB > TO_OUTPUT_ENABLE_CC, input your IP address in 'xxx.xxx.xxx.xxx' format, and press 'Send'. Your IP address is also displayed in Configure > Input.",
-				"If that doesn't work, Incorrect output configuration, no connection between JCAT and CFS, no CFS, existing JVM" };
+				"If that doesn't work, Incorrect output configuration, no connection between JCAT and CFS, no CFS, another active JCAT instance" };
 		private static final String[] COMMANDERRORS = new String[] {
 				"If errors are displayed in event wndow: ",
 				"Incorrect output Endian, Command incorrectly defined in Import file for CFE version" };

@@ -16,7 +16,7 @@ public class PktReader {
 		try {
 			MsgSock = new DatagramSocket(port);
 			MsgSock.setReuseAddress(true);
-			//MsgSock.connect(InetAddress.getLocalHost(), port);
+			// MsgSock.connect(InetAddress.getLocalHost(), port);
 		} catch (IOException ex) {
 			System.err.println("Error creating DatagramSocket on port " + port);
 			ex.printStackTrace();
@@ -29,6 +29,7 @@ public class PktReader {
 				1024);
 
 		final Thread t = new Thread(new Runnable() {
+			@Override
 			public void run() {
 				while (true) {
 					try {
