@@ -23,6 +23,7 @@ import packets.parameters.ChoiceOption;
 import packets.parameters.CmdParam;
 import packets.parameters.ScalarConstant;
 import packets.tlm.TlmPkt;
+import resources.ResourceLoader;
 
 import applications.App;
 
@@ -118,23 +119,22 @@ public final class XMLParser {
 		String modString;
 		int value = 0;
 
-		switch (COString.substring(0, 2)) {
-		case "-": {
+		String s = COString.substring(0, 2);
+		if (s.equals("-")){
 			modString = COString.substring(1, COString.length());
 			value = Integer.parseInt(modString);
 			value *= -1;
 		}
-		case "+": {
+		else if (s.equals("+")){
 			modString = COString.substring(1, COString.length());
 			value = Integer.parseInt(modString);
 			value *= 1;
 		}
 
-		default: {
+		else {
 			modString = COString;
 			value = Integer.parseInt(modString);
 			value *= 1;
-		}
 		}
 
 		return value;
@@ -247,7 +247,6 @@ public final class XMLParser {
 	private static final ArrayList<CmdParam> getParameters(Element commandBase) {
 		if (commandBase.getElementsByTagName("parameters").item(0) == null)
 			return new ArrayList<CmdParam>();
-
 		ArrayList<Element> elements = getParameterElements(commandBase);
 		ArrayList<CmdParam> parameters = new ArrayList<CmdParam>();
 
@@ -256,14 +255,14 @@ public final class XMLParser {
 			final String type = getFirstInstance("type", elements.get(i));
 
 			final String constant = getFirstInstance("const", elements.get(i));
-			if (!constant.equals("DNE"))
+			/*if (!constant.equals("DNE"))
 				try {
 					if (!ScalarConstant.hasConstant(constant))
-						NavConstantXMLPrompt.launch();
+						
 				} catch (ParserConfigurationException | SAXException
 						| IOException e1) {
 					e1.printStackTrace();
-				}
+				}*/
 
 			final String bytes = ScalarConstant.getValue(constant);
 
@@ -271,11 +270,16 @@ public final class XMLParser {
 					elements.get(i));
 
 			boolean isInputParam = true;
-			if (elements.get(i).getNodeName()
-					.equalsIgnoreCase("choiceparameter"))
+			
+			String param = elements.get(i).getNodeName();
+			if (param.equalsIgnoreCase("spare")){
+				parameters.add(ParamGen.getSpareParam(type));
+			}
+			
+			else if (elements.get(i).getNodeName()
+					.equalsIgnoreCase("choiceparameter")) {
 				isInputParam = false;
 
-			if (!isInputParam) {
 				NodeList choicesList = elements.get(i).getElementsByTagName(
 						"choice");
 
@@ -310,7 +314,29 @@ public final class XMLParser {
 		}
 		return parameters;
 	}
-
+	
+	public static final void neverShowDisplayHelp(){
+		try {
+			Document d = ResourceLoader.getSettingsDocument();
+			d.getElementsByTagName("displayhelp").item(0).setTextContent("0");
+		} catch (Throwable e){}
+	}
+	
+	public static final boolean shouldDisplayHelp(){
+		try {
+		Document d = ResourceLoader.getSettingsDocument();
+		String shouldDisplayHelp = d.getElementsByTagName("displayhelp").item(0).getTextContent();
+		if (shouldDisplayHelp.equals("0"))
+			return false;
+		else if (shouldDisplayHelp.equals("1"))
+			return true;
+		else throw new Throwable();
+		} catch (Throwable e) {
+			System.out.println("XMLPARSER: INCORRECT SHOULDDISPLAYHELP VALUE");
+		}
+		return true;
+	}
+	
 	/**
 	 * Returns the telemetry data array as defined in the input Document.
 	 * 

@@ -48,7 +48,8 @@ public class CmdIntParam extends CmdParam
             break;
 
          default: System.out.println("CMDINTPARAM: Unsupported datasize"); 
-         }  
+         }
+         
          EndianCorrector.fixParameterOut(ByteArray);
       }
 }

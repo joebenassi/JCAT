@@ -2,6 +2,7 @@ package utilities;
 
 import packets.parameters.ChoiceOption;
 import packets.parameters.CmdParam;
+import packets.parameters.CmdSpareParam;
 import packets.parameters.DataType;
 
 public class ParamGen {
@@ -11,5 +12,9 @@ public class ParamGen {
 		
 		return DataType.getDataType(type, primitive, bytes)
 				.getCmdParam(name, isInputParam, choiceArray);
+	}
+
+	public static CmdParam getSpareParam(String type) {
+		return new CmdSpareParam(type);
 	}
 }

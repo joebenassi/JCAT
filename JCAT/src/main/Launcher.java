@@ -1,9 +1,13 @@
 package main;
 
+import java.io.File;
+
 import gui.mainpage.MainPageFiller;
 import gui.menu.MenuFiller;
+import gui.popups.menu.NewUserPrompt;
 
 import network.Networker;
+import network.PktReader;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ShellAdapter;
@@ -18,6 +22,7 @@ import resources.ResourceLoader;
 import utilities.ColorConstants;
 import utilities.FontConstants;
 import utilities.ShellDisposer;
+import utilities.TimeKeeper;
 
 /**
  * @author Joe Benassi
@@ -28,9 +33,8 @@ import utilities.ShellDisposer;
 public final class Launcher {
 	private static Display display = new Display();
 	private static boolean shouldRestart = true;
-	public static MainPageFiller mainPageFiller;// = new MainPageFiller(shell);
+	public static volatile MainPageFiller mainPageFiller;// = new MainPageFiller(shell);
 	private static volatile int instanceNum = 0;
-	private static long initTime = 0;
 
 	/**
 	 * The main method to execute the program. Creates the main page and the
@@ -40,6 +44,7 @@ public final class Launcher {
 	 *            the main method argument
 	 */
 	public static final void main(String[] args) {
+		PktReader.start();
 		startup(new Shell(display, SWT.DIALOG_TRIM | SWT.CLIP_CHILDREN));
 	}
 
@@ -48,14 +53,21 @@ public final class Launcher {
 	 * <code>new Launcher();</code>
 	 */
 	public final static void startup(final Shell s) {
-		initTime = System.currentTimeMillis();
+		TimeKeeper.reset();
+		
 		Networker.startNetworker();
+		System.out.println("LAUNCHER: JCAT STARTUP!");
 		mainPageFiller = new MainPageFiller(s);
+
 		addShellExitBehavior(s);
 		final String version = "1.0.0";
 		MenuFiller.addMenu(s, null, version);
 		s.setImages(new Image[] { ResourceLoader.getSmallJCATLogo(),
 				ResourceLoader.getMedJCATLogo() });
+		//PreferenceTest.showHelp();
+		if (PreferenceTest.shouldShowHelp())
+			NewUserPrompt.launch();
+		
 		s.open();
 
 		addUserActivity("JCAT startup successful");
@@ -86,7 +98,7 @@ public final class Launcher {
 			}
 		}
 	}
-
+	
 	private final static void addShellExitBehavior(final Shell shell) {
 		shell.addShellListener(new ShellAdapter() {
 			@Override
@@ -109,44 +121,22 @@ public final class Launcher {
 
 	public final static void restartApplication(Shell s) {
 		instanceNum++;
-		s.setVisible(false); // s.dispose();
+		s.setVisible(false);
 		startup(new Shell(display, SWT.DIALOG_TRIM | SWT.CLIP_CHILDREN));
 	}
 
 	public static final void addEvent(String time, String config, String msgStr) {
+		System.out.println("LAUNCHER: ADDED EVENT: " + msgStr);
 		mainPageFiller.addEventMessage(time, config, msgStr,
 				ColorConstants.textColor);
 	}
 
 	public static final void addUserActivity(String userActivityMessage) {
-		mainPageFiller.addUserActivity(getTime(), userActivityMessage,
+		mainPageFiller.addUserActivity(TimeKeeper.getElapsedTime(), userActivityMessage,
 				ColorConstants.textColor);
 	}
 
 	public static final int getInstanceNum() {
 		return instanceNum;
-	}
-
-	public static final String getTime() {
-		long time = getLongTime();
-		int intTime = 0;
-		if (time < Integer.MAX_VALUE)
-			intTime = (int) time;
-
-		int sec = intTime / 1000;
-		intTime = intTime % 1000;
-		int min = sec / 60;
-		sec = sec % 60;
-		int hrs = min / 60;
-		min = min % 60;
-		int days = hrs / 24;
-		hrs = hrs % 24;
-
-		String output = days + "-" + hrs + ":" + min + ":" + sec;
-		return output;
-	}
-
-	public static final long getLongTime() {
-		return System.currentTimeMillis() - initTime;
 	}
 }

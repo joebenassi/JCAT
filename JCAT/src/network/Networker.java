@@ -10,18 +10,17 @@ import applications.App;
 
 import packets.ccsds.CcsdsTlmPkt;
 import packets.cmd.CmdPkt;
+import utilities.EndianCorrector;
+import utilities.TimeKeeper;
 
-import curval.PktObserver;
-import curval.TlmPktDatabase;
 
 public class Networker {
 	private static FswCmdNetwork CmdWriter;
-	private TlmPktDatabase TlmDatabase;
-	private static FswTlmNetwork TlmReader;
-	private TlmListener TlmDisplay;
 	private static Networker networker;
 	private static ArrayList<App> apps;
 	private static ArrayList<Config> configs;
+	private static final String observerID = "arbitrary";
+	private static PktObserver observer = new PktObserver(observerID);
 
 	public static void addApp(App app) {
 		for (int i = 0; i < apps.size(); i++)
@@ -32,6 +31,7 @@ public class Networker {
 	}
 
 	public static void addConfig(String name, String msgid) {
+		System.out.println("NETWORKER: CONFIG is ADDED: " + name);
 		configs.add(new Config(name, msgid));
 	}
 
@@ -39,6 +39,8 @@ public class Networker {
 		apps = new ArrayList<App>();
 		configs = new ArrayList<Config>();
 		networker = new Networker();
+		FswTlmNetwork.removeObserver(observer.getID());
+		FswTlmNetwork.addObserver(observer);
 	}
 
 	/** functional **/
@@ -46,18 +48,8 @@ public class Networker {
 		return networker;
 	}
 
-	/** functional **/
-	public Networker() {
-	}
-
 	public void launch() {
-		System.out.println("APPS LOADED: " + apps.size());
 		CmdWriter = new FswCmdNetwork();
-		TlmDatabase = new TlmPktDatabase();
-		TlmReader = new FswTlmNetwork(TlmDatabase);
-		TlmDisplay = new TlmListener();
-
-		TlmDatabase.registerObserver(TlmDisplay);
 		createTlmMonitorThread();
 	}
 
@@ -80,16 +72,14 @@ public class Networker {
 		// Launcher.addUserActivity("Command Sent: " + cmdPkt.getName());
 	}
 
-	/** functional **/
-	private final static class TlmListener implements PktObserver {
-		public final void update(int StreamId) {
-			// System.out.println("TlmListener called for packet " + StreamId);
-		}
-	}
-
 	private final static void printEvent(String config, CcsdsTlmPkt pkt) {
+		System.out.println("NETWORKER: EVENT PRINTED!");
 		byte[] TlmPkt = pkt.getPacket();
-		final String time = "SOMETIME2";
+		String time = "";
+		try {
+			time = TimeKeeper.getEventTime(pkt.getPacket());
+		} catch (Exception e) {e.printStackTrace();
+		}
 		String MsgA = new String(TlmPkt, 12, 122);
 		/*
 		 * TODO get magic numbers from OS_MAX_API_NAME = 20 or
@@ -118,25 +108,34 @@ public class Networker {
 					} catch (Throwable e) {
 					}
 					;
+					
 					Display.getDefault().asyncExec(new Runnable() {
 						public void run() {
-							synchronized (TlmReader) {
-								while (!TlmReader.getTlmPktQ().isEmpty()) {
-									CcsdsTlmPkt TlmPkt = TlmReader.getTlmPktQ()
-											.remove();
-
+								while (!observer.isEmpty()) {
+									CcsdsTlmPkt TlmPkt = observer.getTlmPkt();
 									for (Config c : configs) {
+										//System.out.println(c.getMsgId() + "");
+										//System.out.println(configs.length + " <- AMT OF CONFIGS");
+										/* TODO do I flip parameter bytes of event message? */
 										if (c.getMsgId() == TlmPkt
-												.getStreamId())
+												.getStreamId()) {
+											System.out.println("NETWORKER: TRYING TO PRINT");
 											printEvent(c.getName(), TlmPkt);
+										}
 									}
 
 									for (App app : apps)
 										if (TlmPkt.getStreamId() == app
-												.getTlmAppID())
+												.getTlmAppID()) {
 											app.ingest(TlmPkt);
+										}
+									if (TlmPkt.getStreamId() == 0x0840){
+										System.out.println("NETWORKER: GOT ES CPU3 HK TLM PKT");
+									}
+									if (TlmPkt.getStreamId() == 0x0820){
+										System.out.println("NETWORKER: GOT ES CPU2 HK TLM PKT");
+									}
 								}
-							}
 						}
 					});
 				}

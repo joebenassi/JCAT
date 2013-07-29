@@ -7,18 +7,16 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 
-final class CommandLine extends Composite {
-	final static void addCommandLine(final Composite parent, Color textColor,
-			Color backgroundColor, final Font textFont) {
-		new CommandLine(parent, textColor, backgroundColor, textFont);
+final class BottomBar extends Composite {
+	final static void addBottomBar(final Composite parent, Color backgroundColor) {
+		new BottomBar(parent, backgroundColor);
 	}
 
-	private CommandLine(final Composite parent, Color textColor,
-			Color backgroundColor, final Font textFont) {
-		/* FORMATTING */
+	private BottomBar(final Composite parent, Color backgroundColor) {
 		super(parent, SWT.NONE);
 		final GridData gridData = new GridData();
 		gridData.grabExcessHorizontalSpace = true;
@@ -27,22 +25,8 @@ final class CommandLine extends Composite {
 
 		setLayout(new FillLayout());
 
-		/* ADDING TEXTBOX */
-
-		final Text text = new Text(this, SWT.NONE);
-		text.setFont(textFont);
-		text.setForeground(textColor);
-
-		text.setBackground(backgroundColor);
-		text.setEditable(true);
-
-		text.addListener(SWT.DefaultSelection, new Listener() {
-			@Override
-			public void handleEvent(final Event e) {
-				// String commandx = text.getText();
-				text.setText("");
-				// Execute Commmand
-			}
-		});
+		final Label label = new Label(this, SWT.NONE);
+		label.setBackground(backgroundColor);
+		label.setText("");
 	}
 }

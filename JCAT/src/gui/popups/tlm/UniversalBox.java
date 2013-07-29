@@ -242,23 +242,7 @@ final class UniversalBox extends Composite {
 		return temp;
 	}
 	
-	public final void setTimeText(String[] time) {
-		final int MSECLENGTH = 6;
-		int sec = Integer.parseInt(time[0]);
-		int min = sec / 60;
-		sec = sec % 60;
-		int hrs = min / 60;
-		min = min %60;
-		int days = hrs / 24;
-		hrs = hrs % 24;
-
-		String msec = time[0];
-		while (msec.length() < MSECLENGTH){
-			msec = "0" + msec;
-		}
-		
-		final String display = days + ":" + hrs + ":" + min + ":" + sec + "." + msec;
-		System.out.println("UNIVERSALBOX TIME: " + display);
-		timeText.setText(display);
+	public final void setTimeText(String time) {
+		timeText.setText(time);
 	}
 }

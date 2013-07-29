@@ -3,10 +3,12 @@ package gui.popups.menu;
 import gui.menu.MenuFiller;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
 import main.Launcher;
 import network.Networker;
@@ -25,6 +27,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
 
 import resources.ResourceLoader;
 
@@ -35,12 +38,25 @@ import applications.App;
 public class ChooseConfigsPrompt {
 	public static final void launch(File[] files, Shell mainShell) {
 		final Shell shell = new Shell(Display.getCurrent());
+		shell.setText("Choose App Configurations");
 		Tree tree = new Tree(shell, SWT.BORDER | SWT.CHECK);
 		Button okayB = new Button(shell, SWT.NONE);
 		developShell(shell, tree, files, mainShell, okayB);
 		addTreeListener(tree, okayB);
+
+		TreeItem[] items = tree.getItems();
+		for (TreeItem item : items) {
+			item.setChecked(true);
+			boolean checked = item.getChecked();
+			checkItems(item, checked);
+			checkPath(item.getParentItem(), checked, false);
+			okayB.setFocus();
+		}
+
+		System.out.println("AMT OF TREEITEMS: " + items.length);
+
 		shell.setImage(ResourceLoader.getSmallJCATLogo());
-		
+
 		shell.pack();
 		shell.open();
 		while (!shell.isDisposed()) {
@@ -48,9 +64,9 @@ public class ChooseConfigsPrompt {
 				Display.getCurrent().sleep();
 		}
 	}
-	
-	private static final void developShell(final Shell shell, Tree tree, File[] files, Shell mainShell, Button okayB)
-	{
+
+	private static final void developShell(final Shell shell, Tree tree,
+			File[] files, Shell mainShell, Button okayB) {
 		FormLayout formLayout = new FormLayout();
 		formLayout.marginBottom = 6;
 		formLayout.marginTop = 6;
@@ -64,7 +80,7 @@ public class ChooseConfigsPrompt {
 				shell.setVisible(false);
 			}
 		});
-		
+
 		FormData data = new FormData();
 		data.width = 200;
 		data.height = 200;
@@ -77,11 +93,12 @@ public class ChooseConfigsPrompt {
 		data.width = 50;
 		okayB.setLayoutData(data);
 		okayB.setFocus();
-		addOkayButtonListener(tree, getDocumentsAndPopulateTree(tree, files), okayB, shell, mainShell);
+		addOkayButtonListener(tree, getDocumentsAndPopulateTree(tree, files),
+				okayB, shell, mainShell);
 	}
-	
-	private static final ArrayList<Document> getDocumentsAndPopulateTree(Tree tree, File[] files)
-	{
+
+	private static final ArrayList<Document> getDocumentsAndPopulateTree(
+			Tree tree, File[] files) {
 		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory
 				.newInstance();
 		ArrayList<Document> documents = new ArrayList<Document>();// Document[files.length];A
@@ -95,42 +112,61 @@ public class ChooseConfigsPrompt {
 					doc.getDocumentElement().normalize();
 					addAppBranch(tree, doc);
 					documents.add(doc);
-				} catch (Throwable e){};
+				} catch (Throwable e) {
+				}
+				;
 			}
-		} catch (Throwable e) {e.printStackTrace();};
-		
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
+		;
+
 		return documents;
 	}
-	
+
 	private static final void addOkayButtonListener(final Tree tree,
-			final ArrayList<Document> docs, Button b, final Shell s, final Shell mainShell) {
-			b.addListener(SWT.Selection, new Listener() {
+			final ArrayList<Document> docs, Button b, final Shell s,
+			final Shell mainShell) {
+		b.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) {
+				try {
+					NavConstantXMLPrompt.launch();
+				} catch (ParserConfigurationException e1) {
+				} catch (SAXException e2) {
+				} catch (IOException e3) {
+				}
+
 				final ArrayList<App> apps = new ArrayList<App>();
-			
+
 				TreeItem[] items = tree.getItems();
-				if (items.length != docs.size()) Launcher.addUserActivity("INVALID XML LOADED");
+				if (items.length != docs.size())
+					Launcher.addUserActivity("INVALID XML LOADED");
 				else {
 					for (int i = 0; i < items.length; i++) {
 						TreeItem appItem = items[i];
-						
+
 						for (int j = 0; j < appItem.getItemCount(); j++) {
 							if (appItem.getItem(j).getChecked()) {
 								String config = appItem.getItem(j).getText();
-								try{
+								try {
 									int[] IDs = XMLParser.getIDs(docs.get(i), j);
-								apps.add(XMLParser.getApp(docs.get(i), IDs[0], IDs[1], config));
-							} catch (Throwable ex){ex.printStackTrace();}
+									apps.add(XMLParser.getApp(docs.get(i),
+											IDs[0], IDs[1], config));
+								} catch (Throwable ex) {
+									ex.printStackTrace();
+								}
+							}
 						}
+						s.close();
 					}
-					s.close();
 				}
-			}				
 				if (apps.size() > 0) {
 					Networker.getNetworker().launch();
-					MenuFiller.addMenu(mainShell, apps.toArray(new App[apps.size()]), "1.0.0");
+					MenuFiller.addMenu(mainShell,
+							apps.toArray(new App[apps.size()]), "1.0.0");
 				}
-			}});
+			}
+		});
 	}
 
 	private static final void checkPath(TreeItem item, boolean checked,

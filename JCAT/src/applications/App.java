@@ -82,7 +82,7 @@ public final class App {
 		this.telemetry = telemetry;
 
 		Networker.addApp(this);
-		Launcher.addUserActivity("APP ADDED: " + name);
+		Launcher.addUserActivity("IMPORTED APP PROFILE: " + name);
 	}
 
 	/**
@@ -95,7 +95,7 @@ public final class App {
 		return TlmAppID;
 	}
 
-	public final void setTime(final String[] time) {
+	public final void setTime(final String time) {
 		Display.getDefault().syncExec(new Runnable() {
 			public void run() {
 				popupFiller.setTime(time);

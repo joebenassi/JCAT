@@ -235,8 +235,6 @@ public final class IOPrompt {
 				b.setSelection(!EndianCorrector.isBigEndianOut());
 			else {b.setEnabled(false);
 				b.setSelection(!EndianCorrector.isBigEndianIn());
-			
-			
 			}
 		}
 		

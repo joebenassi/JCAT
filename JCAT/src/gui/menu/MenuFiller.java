@@ -1,9 +1,10 @@
 package gui.menu;
 
+import gui.popups.menu.HelpPopup;
 import gui.popups.menu.ShowAboutPopup;
 import gui.popups.menu.IOPrompt;
-import gui.popups.menu.HelpPopup;
 import gui.popups.menu.NavAppXMLPrompt;
+
 
 import java.io.IOException;
 
@@ -106,10 +107,9 @@ public final class MenuFiller {
 					try {
 						NavAppXMLPrompt.launch(shell, version);
 
-					} catch (ParserConfigurationException | SAXException
-							| IOException e1) {
-						e1.printStackTrace();
-					}
+					} catch (ParserConfigurationException e1){}
+					catch (SAXException e2){}
+					catch (IOException e3){}
 				}
 			});
 		}

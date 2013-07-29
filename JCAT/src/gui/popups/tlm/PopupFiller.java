@@ -165,7 +165,7 @@ public class PopupFiller {
 		return POPUP.isDisposed();
 	}
 
-	public void setTime(String[] time) {
+	public void setTime(String time) {
 		universalBox.setTimeText(time);
 	}
 }

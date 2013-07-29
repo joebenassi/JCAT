@@ -16,13 +16,12 @@ public class TelemetryUpdater {
 		final int ID = TlmMsg.getStreamId();
 		if (ID == app.getTlmAppID()) {
 			loadTlmStrArrayHk(TlmMsg.getPacket(), app.getTelemetry());
-			app.setTime(getTime(TlmMsg.getPacket()));
+			try {
+				app.setTime(TimeKeeper.getEventTime(TlmMsg.getPacket()));
+			} catch (Exception e) {}
 			updatePopup(app);
 		}
 		/*TODO account for different AppIDs (Non-HK)*/
-		
-		else
-			System.out.println("ERROR IN applications.TlmStrArrayLoader.class");
 	}
 
 	private static final void loadTlmStrArrayHk(byte[] RawData,
@@ -36,13 +35,6 @@ public class TelemetryUpdater {
 		}
 	}
 	
-	public static final String[] getTime(byte[] data) {
-		String sec = DataType.uint32Integer.getTlmStrArray(data, 6);
-		String msec = DataType.uint16Integer.getTlmStrArray(data, 10);
-		
-		return new String[]{sec, msec};
-	}
-	
 	private static final void updatePopup(final App app) {
 		for (int i = 0; i < app.getTelemetryAmt(); i++) {
 			final Text text = app.getTelemetryText(i);
@@ -54,7 +46,7 @@ public class TelemetryUpdater {
 			});
 		}
 	}
-
+	
 	public static void loadTlmStrArrayHdr(CcsdsTlmPkt TlmMsg,
 			String[] TlmStrArray) {
 		TlmStrArray[0] = String.valueOf((TlmMsg.getStreamId()));

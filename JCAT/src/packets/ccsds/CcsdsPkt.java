@@ -88,7 +88,10 @@ public class CcsdsPkt {
 
 	public byte[] getPacket() {
 		return Packet;
-
 	}// End getPacket()
+	
+	public void setPacket(byte[] newPacket) {
+		Packet = newPacket;
+	}
 
 } // End class CcsdsPkt

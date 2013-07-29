@@ -18,7 +18,7 @@ public class MainPageFiller {
 	private final Image JCATLogo = ResourceLoader.getLargeJCATLogo();
 	private final String[] firstEventMessage = new String[] {"CFS TIME: ", "SOURCE: ",
 			"CFS EVENT MESSAGE: " };
-	private final String[] firstUserActivity = new String[] {"SYSTEM TIME: ", "SOURCE: ", "USER ACTIVITY: " };
+	private final String[] firstUserActivity = new String[] {"ELAPSED TIME: ", "SOURCE: ", "USER ACTIVITY: " };
 	private final Color sashBackgroundColor = ColorConstants.eventWindowColor;
 	final Color titleBackgroundColor = ColorConstants.darkAccent;
 	final Color titleForegroundColor = ColorConstants.textColor;
@@ -39,8 +39,8 @@ public class MainPageFiller {
 		
 		addUserActivity(firstUserActivity[0], firstUserActivity[1], firstUserActivity[2], titleForegroundColor);
 
-		CommandLine.addCommandLine(shell, titleForegroundColor,
-				titleBackgroundColor, monospacedFont);
+		BottomBar.addBottomBar(shell,
+				titleBackgroundColor);
 	}
 
 	private void addUserActivity(String time, String header, String activity, Color color) {

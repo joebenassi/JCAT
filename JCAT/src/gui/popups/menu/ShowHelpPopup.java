@@ -23,10 +23,10 @@ public class ShowHelpPopup {
 	private static final Color[] panelColors2 = ColorConstants.panelColors2;
 	private static final Color darkAccent = ColorConstants.darkAccent;
 	private static final int width = 350;
-
-	public static final void launch(String header, String[] paragraphs) {
+		
+	public static final void launch(String header, String[] paragraphs){
 		/* Configure shell */
-		Shell shell = new Shell(SWT.DIALOG_TRIM);
+		final Shell shell = new Shell(SWT.DIALOG_TRIM | SWT.ON_TOP);
 		shell.setImage(ResourceLoader.getSmallJCATLogo());
 		shell.setText("JCAT");
 		shell.setBackground(oC);
@@ -126,8 +126,8 @@ public class ShowHelpPopup {
 		s3.setEditable(false);
 
 		shell.pack();
-		shell.open();
 		ShellDisposer.queueForDisposal(shell);
+		shell.open();
 	}
 
 	private static final String getContent(String[] paragraphs) {

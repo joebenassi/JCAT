@@ -17,7 +17,7 @@ public final class NavConstantXMLPrompt{
 			throws ParserConfigurationException,
 			SAXException, IOException {
 		FileDialog dialog = new FileDialog(new Shell(Display.getCurrent()), SWT.MULTI | SWT.OPEN);
-		dialog.setText("Select Constant File");
+		dialog.setText("Select Constant Definition File");
 		dialog.setFilterExtensions(new String[] { "*.xml" });
 		dialog.setFilterPath("c:\\temp");
 

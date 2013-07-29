@@ -6,62 +6,30 @@
  *******************************************************************************/
 package network;
 
-import java.util.concurrent.ConcurrentLinkedQueue; 
+import java.util.ArrayList;
 
 import packets.ccsds.CcsdsTlmPkt;
 
-import curval.*;
+public class FswTlmNetwork {
+	/* TODO Determine whether a queue is needed after test with higher rates */
+	private static volatile ArrayList<PktObserver> observers = new ArrayList<PktObserver>();
 
-
-public class FswTlmNetwork implements PktEventInterface
-{
-
-   private static PktReader  PktInput;
-   // @todo - Determine whether a queue is needed after test with higher rates 
-   private static ConcurrentLinkedQueue<CcsdsTlmPkt> TlmPktQ = new ConcurrentLinkedQueue<CcsdsTlmPkt>();
-   private TlmPktDatabase TlmDatabase = null;
-
-   public FswTlmNetwork(TlmPktDatabase Database)
-   {
-      PktInput = new PktReader(this);
-      TlmDatabase = Database;
-   }
-
-   /*
-    ** This method queues the message so it can be processed safely (WRT threads)
-    ** in the GUI event loop.
-    */
-    @Override
-	public synchronized void addTlmPkt(byte[] TlmData) 
-    {
-       
-       CcsdsTlmPkt TlmPkt = new CcsdsTlmPkt(TlmData);
-       TlmPktQ.add(TlmPkt);
-       TlmDatabase.notifyObservers(TlmPkt.getStreamId());
-       
-    } // End addTlmPkt()
-   
-   
-   public ConcurrentLinkedQueue<CcsdsTlmPkt> getTlmPktQ()
-   {
-      return TlmPktQ;
-      
-   } // End getTlmPktQ()
-   
-   public synchronized CcsdsTlmPkt getTlmPkt()
-   {
-      return TlmPktQ.remove();
-      
-   } // End getTlmPkt()
-
-   public PktReader getPktReader()
-   {
-      return PktInput;
-      
-   } // End getMsgWriter()
-   /*   
-   public String getStatus()
-   {
-      return PktInput.getStatus();
-   }*/
-} // End class FswTlmNetwork
+	public static synchronized void addTlmPkt(byte[] TlmData) {
+		CcsdsTlmPkt TlmPkt = new CcsdsTlmPkt(TlmData);
+		for (PktObserver o : observers)
+			o.addPkt(TlmPkt);
+	}
+	
+	public static final void removeObserver(String id) {
+		for (PktObserver o : observers) {
+			if (o.getID().equals(id)) {
+				observers.remove(o);
+				return;
+			}
+		}
+	}
+	
+	public static void addObserver(PktObserver o) {
+		observers.add(o);
+	}
+}

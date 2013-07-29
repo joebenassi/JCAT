@@ -1,10 +1,18 @@
 package resources;
 
-import java.io.File;
-import java.util.ArrayList;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
+import org.w3c.dom.Document;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 public class ResourceLoader {
 	static ResourceLoader rl = new ResourceLoader();
@@ -62,21 +70,18 @@ public class ResourceLoader {
 		return image;
 	}
 
-	public static final File[] getCFEFiles()
+	public static final Document getSettingsDocument() throws SAXException, IOException, ParserConfigurationException
 	{
-		return getXMLsFromFolder();
+		InputStream stream = ClassLoader.class.getResourceAsStream("/XMLs/Settings.xml");
+		return readInputStream(stream);
 	}
 	
-	public static final File[] getXMLsFromFolder()
-	{
-		String folderPath = rl.getClass().getResource("/XMLs/").getFile();
-		File folder = new File(folderPath);
-		File[] files = folder.listFiles();
-		ArrayList<File> fileArray = new ArrayList<File>();
-		for (int i = 0; i < files.length; i++)
-			if (files[i].isFile())
-				fileArray.add(files[i]);
-		
-		return fileArray.toArray(new File[fileArray.size()]);
-	}
+	private static Document readInputStream(InputStream response) throws SAXException, IOException, ParserConfigurationException {
+
+		  DocumentBuilderFactory docBF = DocumentBuilderFactory.newInstance();
+		  DocumentBuilder docBuilder = (DocumentBuilder) docBF.newDocumentBuilder();
+		  InputSource inSource = new InputSource(new InputStreamReader(response, "UTF-8"));
+		  Document respDoc = docBuilder.parse(inSource);
+		  return respDoc;
+	 }
 }

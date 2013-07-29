@@ -1,5 +1,7 @@
 package gui.popups.menu;
 
+import java.util.ArrayList;
+
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -10,14 +12,10 @@ import org.eclipse.swt.widgets.Text;
 
 import packets.cmd.CmdPkt;
 import packets.parameters.ChoiceOption;
+import packets.parameters.CmdParam;
+import packets.parameters.CmdParam.ParamType;
 import utilities.GenericPrompt;
 
-/**
- * IN DEVELOPMENT.
- * 
- * @author Joe
- * 
- */
 public class InputCmdParamPrompt {
 	public static void launchShell(final CmdPkt cmdPkt) {
 		final Shell dialog = GenericPrompt.getDialogShell();
@@ -79,22 +77,22 @@ public class InputCmdParamPrompt {
 	
 
 	private static final Scrollable[] getTexts(Shell dialog, CmdPkt cmdPkt) {
-		Scrollable[] texts = new Scrollable[cmdPkt.getParameterNames().length];
-
-		for (int i = 0; i < cmdPkt.getParameterNames().length; i++) {
-			GenericPrompt.addLabel(dialog, cmdPkt.getParameterNames()[i]);
-
-			if (cmdPkt.getParamList().get(i).isInputParam())
-				texts[i] = GenericPrompt.getText(dialog);
-
-			else
-			{
-				ChoiceOption[] choiceOptions = cmdPkt.getParamList().get(i).getChoiceOptions();
-				System.out.println("COMMANDPROMT: CHOICEOPTIONS AMT = " + choiceOptions.length);
-				String[] names = ChoiceOption.getNames(choiceOptions);
-				texts[i] = GenericPrompt.getCombo(dialog, names);
+		ArrayList<Scrollable> texts = new ArrayList<Scrollable>();
+		
+		final CmdParam[] params = cmdPkt.getParamList().toArray(new CmdParam[cmdPkt.getParamList().size()]);
+		
+		for (int i = 0; i < params.length; i++) {
+			if (!(params[i].getType() == ParamType.SPARE))	{
+				GenericPrompt.addLabel(dialog, cmdPkt.getParameterNames()[i]);
+				if (params[i].isInputParam())
+					texts.add(GenericPrompt.getText(dialog));
+				else {
+					String[] names = ChoiceOption.getNames(params[i].getChoiceOptions());
+					texts.add(GenericPrompt.getCombo(dialog, names));
+				}
 			}
 		}
-		return texts;
+		
+		return texts.toArray(new Scrollable[texts.size()]);
 	}
 }

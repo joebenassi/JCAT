@@ -13,8 +13,8 @@ import main.Launcher;
 
 public class PktWriter {
 	private static String port = "1234";
-	//private static String ip = "127.000.000.001";
-	private static String ip = "192.168.1.11";
+	private static String ip = "192.168.224.128";
+	//private static String ip = "192.168.1.11";
 
 	public PktWriter() {
 	}
@@ -40,7 +40,6 @@ public class PktWriter {
 			buf2[i] = buf[i];
 		
 		EndianCorrector.fixHeaderOut(buf2);
-		
 		DatagramPacket out = new DatagramPacket(buf2, buf2.length, address,
 				intport);
 

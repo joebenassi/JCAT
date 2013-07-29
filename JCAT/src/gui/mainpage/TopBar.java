@@ -12,9 +12,10 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 
+import utilities.TimeKeeper;
+
 final class TopBar extends Composite {
 	private static Label time1;
-	//private static Label time2;
 
 	final static void addTopBar(Composite parent, String title,
 			Color backgroundColor, Color foregroundColor, Font titleFont,
@@ -79,7 +80,7 @@ final class TopBar extends Composite {
 					}
 					Display.getDefault().syncExec(new Runnable() {
 						public void run() {
-							label.setText(Launcher.getTime());
+							label.setText(TimeKeeper.getElapsedTime());
 						}
 					});
 				}
@@ -96,11 +97,12 @@ final class TopBar extends Composite {
 		timeBox.setBackground(backgroundColor);
 
 		Label timeType1 = new Label(timeBox, SWT.NONE);
-		timeType1.setText("JCAT TIME: ");
+		timeType1.setText("ELAPSED TIME: ");
 		timeType1.setForeground(foregroundColor);
 		timeType1.setBackground(backgroundColor);
+		timeType1.setFont(timeFont);
 		time1 = new Label(timeBox, SWT.NONE);
-		time1.setText("               ");
+		time1.setText(TimeKeeper.getElapsedTime() + "      ");
 		time1.setForeground(foregroundColor);
 		time1.setBackground(backgroundColor);
 		time1.setFont(timeFont);

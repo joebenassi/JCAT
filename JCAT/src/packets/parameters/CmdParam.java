@@ -17,7 +17,7 @@ package packets.parameters;
 public abstract class CmdParam {
 
 	public enum ParamType {
-		UNDEF, UINT, INT, STR
+		UNDEF, UINT, INT, STR, SPARE
 	};
 
 	private final boolean isInputParam;

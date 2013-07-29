@@ -13,7 +13,5 @@ public class CcsdsTlmPkt extends CcsdsPkt
    public CcsdsTlmPkt(byte[] TlmMsg)
    {
       super(TlmMsg);
-      
    }
-
 } // End class CcsdsTlmPkt
