@@ -14,6 +14,7 @@ import org.eclipse.swt.widgets.Shell;
 import resources.ResourceLoader;
 import utilities.ColorConstants;
 import utilities.FontConstants;
+import utilities.GenericPrompt;
 
 public final class ShowAboutPopup {
 	public static final void launchShell(final String version) {
@@ -29,7 +30,7 @@ public final class ShowAboutPopup {
 
 		final Label[] labels = new Label[lines.length];
 
-		Shell shell = new Shell(Display.getCurrent(), SWT.DIALOG_TRIM);
+		Shell shell = GenericPrompt.getDialogShell();
 		FormLayout formLayout = new FormLayout();
 		formLayout.marginBottom = 10;
 		formLayout.marginTop = 10;
@@ -38,10 +39,10 @@ public final class ShowAboutPopup {
 		formLayout.spacing = 5;
 		shell.setLayout(formLayout);
 		shell.setText(title);
-		shell.setImage(ResourceLoader.getSmallJCATLogo());
+		shell.setImage(ResourceLoader.smallJCATLogo);
 		FormData data = new FormData();
 
-		final Image JCATLogo = ResourceLoader.getBigJCATLogo();
+		final Image JCATLogo = ResourceLoader.bigJCATLogo;
 		Label JCATLogoLabel = new Label(shell, SWT.NONE);
 		JCATLogoLabel.setImage(JCATLogo);
 		data = new FormData();

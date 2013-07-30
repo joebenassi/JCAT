@@ -18,6 +18,7 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 
 import resources.ResourceLoader;
+import utilities.GenericPrompt;
 import utilities.PreferenceStorage;
 
 public class NewUserPrompt {
@@ -32,9 +33,8 @@ public class NewUserPrompt {
 		Display.getDefault().asyncExec(new Runnable() {
 			@Override
 			public void run() {
-				final Shell shell = new Shell(Display.getCurrent(),
-						SWT.DIALOG_TRIM | SWT.ON_TOP);
-				shell.setImage(ResourceLoader.getSmallJCATLogo());
+				final Shell shell = GenericPrompt.getDialogShell();
+				shell.setImage(ResourceLoader.smallJCATLogo);
 				shell.setText("Welcome");
 				FormLayout formLayout = new FormLayout();
 				formLayout.marginWidth = 10;

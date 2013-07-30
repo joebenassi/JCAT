@@ -12,6 +12,7 @@ import resources.ResourceLoader;
 
 import utilities.ColorConstants;
 import utilities.FontConstants;
+import utilities.GenericPrompt;
 import utilities.ShellDisposer;
 
 public class ShowHelpPopup {
@@ -26,8 +27,7 @@ public class ShowHelpPopup {
 
 	public static final void launch(String header, String[] paragraphs) {
 		/* Configure shell */
-		final Shell shell = new Shell(SWT.DIALOG_TRIM | SWT.ON_TOP);
-		shell.setImage(ResourceLoader.getSmallJCATLogo());
+		final Shell shell = GenericPrompt.getDialogShell();
 		shell.setText("JCAT");
 		shell.setBackground(oC);
 		FillLayout fillLayout = new FillLayout();

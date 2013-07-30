@@ -30,6 +30,7 @@ import org.eclipse.swt.widgets.Text;
 
 import resources.ResourceLoader;
 import utilities.EndianCorrector;
+import utilities.GenericPrompt;
 
 public final class IOPrompt {
 	public static final void launchOutputPrompt() {
@@ -41,10 +42,9 @@ public final class IOPrompt {
 	}
 
 	private static final void launchShell(boolean output) {
-		final Shell dialog = getDialogShell();
+		final Shell dialog = GenericPrompt.getDialogShell();
 		dialog.setText("JCAT");
 		dialog.setLayout(new RowLayout(SWT.VERTICAL));
-		dialog.setImage(ResourceLoader.getSmallJCATLogo());
 		final Composite composite = new Composite(dialog, SWT.NONE);
 		FormLayout formLayout = new FormLayout();
 		formLayout.marginLeft = 8;
@@ -98,7 +98,7 @@ public final class IOPrompt {
 		data = new FormData();
 		data.left = new FormAttachment(0, 0);
 		data.right = new FormAttachment(100, 0);
-		data.top = new FormAttachment(label, -10, SWT.BOTTOM);
+		data.top = new FormAttachment(label, -8, SWT.BOTTOM);
 		middle.setLayoutData(data);
 		middle.setLayout(new GridLayout(2, false));
 
@@ -161,11 +161,6 @@ public final class IOPrompt {
 		text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
 		return text;
-	}
-
-	public static final Shell getDialogShell() {
-		return new Shell(new Shell(Display.getCurrent()), SWT.DIALOG_TRIM
-				| SWT.ON_TOP | SWT.BORDER_DASH);
 	}
 
 	private static final void fillDialog(Group middle, Text[] texts,

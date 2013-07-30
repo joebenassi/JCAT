@@ -3,18 +3,20 @@ package packets.parameters;
 import utilities.EndianCorrector;
 
 public enum DataType {
-	int8("int8", 1, false), uint8Integer("uint8", 1, false), uint8String(
-			"uint8", 1, true), uint16Integer("uint16", 2, false), uint16String(
-			"uint16", 2, true), uint32Integer("uint32", 4, false), uint32String(
-			"uint32", 4, true), int16("int16", 2, false), int32("int32", 4,
-			false), Char("char", 1, true), bool("boolean", 1, false), undef(
-			"UNDEFINED", 1, true);
+	uint8Integer("uint8", 1, false), uint8String("uint8", 1, true), uint16Integer(
+			"uint16", 2, false), uint16String("uint16", 2, true), uint32Integer(
+			"uint32", 4, false), uint32String("uint32", 4, true), int8Integer(
+			"int8", 1, false), int8String("int8", 1, true), int16Integer(
+			"int16", 2, false), int16String("int16", 2, true), int32Integer(
+			"int32", 4, false), int32String("int32", 4, true), Char("char", 1,
+			true), undef("UNDEFINED", 1, true);
 
-	public static final DataType[] dataTypes = new DataType[] { DataType.int8,
+	public static final DataType[] dataTypes = new DataType[] {
 			DataType.uint8Integer, DataType.uint8String,
 			DataType.uint16Integer, DataType.uint16String,
-			DataType.uint32Integer, DataType.uint32String, DataType.int16,
-			DataType.int32, DataType.Char, DataType.bool };
+			DataType.uint32Integer, DataType.uint32String,
+			DataType.int8Integer, DataType.int8String, DataType.int16Integer,
+			DataType.int16String, DataType.int32Integer, DataType.int32String, DataType.Char};
 
 	private final String type;
 	private final int typeBytes;
@@ -98,12 +100,10 @@ public enum DataType {
 		case (1): {
 			return String.valueOf((0x00FF & data[0]));
 		}
-
 		case (2): {
 			long longInt = 0x0000FFFF & (data[0] | (data[1] << 8));
 			return String.valueOf(longInt);
 		}
-
 		case (4): {
 			long longIntA = (data[0] | ((data[1] << 8)));
 			long longIntB = (data[2] | ((data[3] << 8)));
@@ -111,7 +111,9 @@ public enum DataType {
 
 			return String.valueOf(longInt);
 		}
-
+		case (0): {
+			return String.valueOf((0x00FF & RawData[RawIndex]));
+		}
 		default:
 			return "Invalid datatype";
 		}

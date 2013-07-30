@@ -11,6 +11,7 @@ import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
@@ -18,6 +19,7 @@ import resources.ResourceLoader;
 
 import utilities.ColorConstants;
 import utilities.FontConstants;
+import utilities.GenericPrompt;
 import utilities.ShellDisposer;
 
 /**
@@ -32,8 +34,7 @@ import utilities.ShellDisposer;
  * 
  */
 public class PopupFiller {
-	private Shell POPUP = new Shell(SWT.SHELL_TRIM & ~(SWT.RESIZE) | SWT.ON_TOP
-			| SWT.BORDER);
+	private Shell POPUP = GenericPrompt.getDialogShell();
 	private static final Font TEXTFONT = FontConstants.bodyFont;
 	private static final Font POPUPTITLEFONT = FontConstants.titleFont;
 	private static Color backgroundColor = ColorConstants.lightPageBackground;
@@ -85,8 +86,8 @@ public class PopupFiller {
 			}
 		});
 
-		POPUP.setImage(ResourceLoader.getSmallJCATLogo());
-		ShellDisposer.queueForDisposal(POPUP);
+		POPUP.setImage(ResourceLoader.smallJCATLogo);
+		ShellDisposer.queueForDisposal((Shell)POPUP.getParent());
 		FormLayout formLayout = new FormLayout();
 		formLayout.marginWidth = 10;
 		formLayout.marginHeight = 10;

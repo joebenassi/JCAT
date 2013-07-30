@@ -81,6 +81,7 @@ public final class App {
 		this.commands = commands;
 		this.telemetry = telemetry;
 
+		//if (!name.equals("FT_APP"))
 		Networker.addApp(this);
 		Launcher.addUserActivity("IMPORTED APP PROFILE: " + name);
 	}

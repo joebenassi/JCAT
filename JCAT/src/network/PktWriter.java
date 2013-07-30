@@ -13,9 +13,8 @@ import main.Launcher;
 
 public class PktWriter {
 	private static String port = "1234";
-	private static String ip = "192.168.224.128";
-
-	// private static String ip = "192.168.1.11";
+	private static String ip = "192.168.224.128"; //VMWare
+	//private static String ip = "192.168.1.11";  //ColdFires
 
 	public PktWriter() {
 	}
@@ -25,8 +24,7 @@ public class PktWriter {
 			sendPacket(CmdData);
 			Launcher.addUserActivity("PKTWRITER: COMMAND SENT: " + name);
 		} catch (Throwable e) {
-			Launcher.addUserActivity("PKTWRITER: COMMAND NOT SENT: " + name
-					+ ". Invalid IP, Port, or packet length");
+			Launcher.addUserActivity("PKTWRITER: COMMAND NOT SENT: " + name);
 			e.printStackTrace();
 		}
 	}
@@ -41,6 +39,7 @@ public class PktWriter {
 			buf2[i] = buf[i];
 
 		EndianCorrector.fixHeaderOut(buf2);
+		
 		DatagramPacket out = new DatagramPacket(buf2, buf2.length, address,
 				intport);
 

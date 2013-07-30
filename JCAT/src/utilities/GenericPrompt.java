@@ -1,5 +1,7 @@
 package utilities;
 
+import gui.popups.menu.IOPrompt;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
@@ -76,9 +78,9 @@ public class GenericPrompt {
 	}
 
 	public static final Shell getDialogShell() {
-		Shell s = new Shell(new Shell(Display.getCurrent()), SWT.DIALOG_TRIM
-				| SWT.APPLICATION_MODAL | SWT.ON_TOP | SWT.BORDER_DASH);
-		s.setImage(ResourceLoader.getSmallJCATLogo());
+		Shell s = new Shell(new Shell(Display.getCurrent(), SWT.ON_TOP),
+				SWT.RESIZE | SWT.DIALOG_TRIM | SWT.BORDER_DASH);
+		s.setImage(ResourceLoader.smallJCATLogo);
 		return s;
 	}
 

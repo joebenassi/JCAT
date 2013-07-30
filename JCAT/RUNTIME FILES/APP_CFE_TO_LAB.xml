@@ -64,7 +64,7 @@
 			<name>CFE_TO_OUTPUT_ENABLE_CC</name>
 			<parameters>
 				<inputparameter>
-					<name>dest_IP[16]</name>
+					<name>dest_IP</name>
 					<type>char</type>
 					<const>IPConst</const>
 					<primitive>string</primitive>

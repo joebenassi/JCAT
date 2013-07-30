@@ -15,7 +15,7 @@ public class MainPageFiller {
 	private final Font titleFont = FontConstants.titleFont;
 	private final Font timeFont = FontConstants.monospacedFont;
 	private final Font monospacedFont = FontConstants.monospacedFont;
-	private final Image JCATLogo = ResourceLoader.getLargeJCATLogo();
+	private final Image JCATLogo = ResourceLoader.largeJCATLogo;
 	private final String[] firstEventMessage = new String[] { "CFS TIME: ",
 			"SOURCE: ", "CFS EVENT MESSAGE: " };
 	private final String[] firstUserActivity = new String[] { "ELAPSED TIME: ",

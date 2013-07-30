@@ -29,7 +29,6 @@ public class Networker {
 	}
 
 	public static void addConfig(String name, String msgid) {
-		System.out.println("NETWORKER: CONFIG is ADDED: " + name);
 		configs.add(new Config(name, msgid));
 	}
 
@@ -53,21 +52,16 @@ public class Networker {
 
 	/** functional **/
 	public final static void enableToLabTelemetry() {
+		/* TODO find a more elegant solution */
 		for (App app : apps) {
-			if (app.getName().substring(0, 2).equalsIgnoreCase("to")) {
+			if (app.getName().substring(0, 2).equalsIgnoreCase("to"))
 				app.executeCommand(6, new String[] { PktReader.getIP() });
-				/*
-				 * TODO find a more elegant solution. Don't hardcode based on
-				 * current TO_LAB
-				 */
-			}
 		}
 	}
 
 	/** functional **/
 	public final static void sendPkt(CmdPkt cmdPkt) {
 		CmdWriter.sendCmd(cmdPkt.getName(), cmdPkt.getCcsdsPkt());
-		// Launcher.addUserActivity("Command Sent: " + cmdPkt.getName());
 	}
 
 	private final static void printEvent(String config, CcsdsTlmPkt pkt) {
@@ -75,9 +69,8 @@ public class Networker {
 		String time = "";
 		try {
 			time = TimeKeeper.getEventTime(pkt.getPacket());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		} catch (Exception e) {}
+		
 		String MsgA = new String(TlmPkt, 12, 122);
 		/*
 		 * TODO get magic numbers from OS_MAX_API_NAME = 20 or
@@ -106,7 +99,6 @@ public class Networker {
 						Thread.sleep(40);
 					} catch (Throwable e) {
 					}
-					;
 
 					Display.getDefault().asyncExec(new Runnable() {
 						@Override

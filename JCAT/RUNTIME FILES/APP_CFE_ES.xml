@@ -174,7 +174,6 @@
 				<choiceparameter>
 					<name>Mode</name>
 					<type>uint32</type>
-					<choicex>CFE_ES_LOG_DISCARD</choicex>
 					<choice>
 						<name>CFE_ES_LOG_DISCARD</name>
 						<value>0</value>
@@ -246,7 +245,6 @@
 				<choiceparameter>
 					<name>Mode</name>
 					<type>uint32</type>
-					<choicex>CFE_ES_LOG_DISCARD</choicex>
 					<choice>
 						<name>CFE_ES_LOG_DISCARD</name>
 						<value>0</value>

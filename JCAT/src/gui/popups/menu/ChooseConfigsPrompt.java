@@ -37,7 +37,7 @@ import applications.App;
 
 public class ChooseConfigsPrompt {
 	public static final void launch(File[] files, Shell mainShell) {
-		final Shell shell = new Shell(Display.getCurrent());
+		final Shell shell = new Shell(new Shell(Display.getCurrent(), SWT.ON_TOP));
 		shell.setText("Choose App Configurations");
 		Tree tree = new Tree(shell, SWT.BORDER | SWT.CHECK);
 		Button okayB = new Button(shell, SWT.NONE);
@@ -52,11 +52,9 @@ public class ChooseConfigsPrompt {
 			checkPath(item.getParentItem(), checked, false);
 			okayB.setFocus();
 		}
-
-		System.out.println("AMT OF TREEITEMS: " + items.length);
-
-		shell.setImage(ResourceLoader.getSmallJCATLogo());
-
+		
+		shell.setImage(ResourceLoader.smallJCATLogo);
+		tree.pack();
 		shell.pack();
 		shell.open();
 		while (!shell.isDisposed()) {
@@ -113,15 +111,9 @@ public class ChooseConfigsPrompt {
 					doc.getDocumentElement().normalize();
 					addAppBranch(tree, doc);
 					documents.add(doc);
-				} catch (Throwable e) {
-				}
-				;
+				} catch (Throwable e) {}
 			}
-		} catch (Throwable e) {
-			e.printStackTrace();
-		}
-		;
-
+		} catch (Throwable e) {}
 		return documents;
 	}
 

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<channel>
+	<name>FT_APP</name>
+	<configs>
+		<config>
+			<name>CPU1</name>
+			<cmdmid>0x181B</cmdmid>
+			<tlmmid>0x0819</tlmmid>
+		</config>
+		<config>
+			<name>CPU2</name>
+			<cmdmid>0x183B</cmdmid>
+			<tlmmid>0x0839</tlmmid>
+		</config>
+		<config>
+			<name>CPU3</name>
+			<cmdmid>0x185B</cmdmid>
+			<tlmmid>0x0859</tlmmid>
+		</config>
+		<config>
+			<name>CPU4</name>
+			<cmdmid>0x187B</cmdmid>
+			<tlmmid>0x0879</tlmmid>
+		</config>
+	</configs>
+	<commandoffset>+0</commandoffset>
+	<commands>		
+		<command>
+			<name>FT_APP_NOOP_CC</name>
+		</command>
+		<command>
+			<name>FT_APP_RESET_CC</name>
+		</command>
+		<command>
+			<name>FT_APP_GET_FILE_CC</name>
+			<parameters>
+				<inputparameter>
+					<name>CPU Name</name>
+					<type>uint8</type>
+					<primitive>string</primitive>
+					<const>FTP_APP_GET_FILE_CPU_NAME</const>
+				</inputparameter>
+				<inputparameter>
+					<name>Source</name>
+					<type>uint8</type>
+					<primitive>string</primitive>
+					<const>FTP_APP_GET_FILE_SOURCE_NAME</const>
+				</inputparameter>
+				<inputparameter>
+					<name>Destination</name>
+					<type>uint8</type>
+					<primitive>string</primitive>
+					<const>FTP_APP_GET_FILE_DESTINATION_NAME</const>
+				</inputparameter>
+			</parameters>
+		</command>
+	</commands>
+	<telemetry>
+	</telemetry>
+</channel>

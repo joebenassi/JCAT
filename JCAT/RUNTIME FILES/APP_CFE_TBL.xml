@@ -49,8 +49,14 @@
 				<choiceparameter>
 					<name>ActiveTblFlag</name>
 					<type>uint16</type>
-					<choice>CFE_TBL_INACTIVE_BUFFER</choice>
-					<choice>CFE_TBL_ACTIVE_BUFFER</choice>
+					<choice>
+						<name>CFE_TBL_INACTIVE_BUFFER</name>
+						<value>0</value>
+					</choice>
+					<choice>
+						<name>CFE_TBL_ACTIVE_BUFFER</name>
+						<value>1</value>
+					</choice>
 				</choiceparameter>
 				<inputparameter>
 					<name>TableName</name>
@@ -72,8 +78,14 @@
 				<choiceparameter>
 					<name>ActiveTblFlag</name>
 					<type>uint16</type>
-					<choice>CFE_TBL_INACTIVE_BUFFER</choice>
-					<choice>CFE_TBL_ACTIVE_BUFFER</choice>
+					<choice>
+						<name>CFE_TBL_INACTIVE_BUFFER</name>
+						<value>0</value>
+					</choice>
+					<choice>
+						<name>CFE_TBL_ACTIVE_BUFFER</name>
+						<value>1</value>
+					</choice>
 				</choiceparameter>
 				<inputparameter>
 					<name>TableName</name>

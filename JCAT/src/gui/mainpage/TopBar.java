@@ -78,12 +78,13 @@ final class TopBar extends Composite {
 						Thread.sleep(1000);
 					} catch (Throwable e) {
 					}
+					try {
 					Display.getDefault().syncExec(new Runnable() {
 						@Override
 						public void run() {
 							label.setText(TimeKeeper.getElapsedTime());
 						}
-					});
+					});} catch (Throwable e){}
 				}
 			}
 		});

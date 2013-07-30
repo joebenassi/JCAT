@@ -115,7 +115,8 @@ public final class XMLParser {
 		final String COString = getInstance("commandoffset", document);
 		String modString;
 		int value = 0;
-
+		
+		/* TODO fix for Linux */
 		String s = COString.substring(0, 2);
 		if (s.equals("-")) {
 			modString = COString.substring(1, COString.length());
@@ -126,13 +127,13 @@ public final class XMLParser {
 			value = Integer.parseInt(modString);
 			value *= 1;
 		}
-
 		else {
 			modString = COString;
-			value = Integer.parseInt(modString);
-			value *= 1;
+			try {value = Integer.parseInt(modString);
+			value *= 1;}
+			catch (Throwable e){}
 		}
-
+	
 		return value;
 	}
 
@@ -312,23 +313,6 @@ public final class XMLParser {
 			d.getElementsByTagName("displayhelp").item(0).setTextContent("0");
 		} catch (Throwable e) {
 		}
-	}
-
-	public static final boolean shouldDisplayHelp() {
-		try {
-			Document d = ResourceLoader.getSettingsDocument();
-			String shouldDisplayHelp = d.getElementsByTagName("displayhelp")
-					.item(0).getTextContent();
-			if (shouldDisplayHelp.equals("0"))
-				return false;
-			else if (shouldDisplayHelp.equals("1"))
-				return true;
-			else
-				throw new Throwable();
-		} catch (Throwable e) {
-			System.out.println("XMLPARSER: INCORRECT SHOULDDISPLAYHELP VALUE");
-		}
-		return true;
 	}
 
 	/**

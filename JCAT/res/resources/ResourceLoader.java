@@ -14,28 +14,14 @@ import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-public class ResourceLoader {
-	static ResourceLoader rl = new ResourceLoader();
+public class ResourceLoader {	
+	private static final ResourceLoader rl = new ResourceLoader();
 
-	public static final Image getMedJCATLogo() {
-		return getImage("JCATLogoMed.png");
-	}
-	
-	public static final Image getSmallJCATLogo() {
-		return getImage("JCATLogoSmall.png");
-	}
-	
-	public static final Image getBigJCATLogo() {
-		return getImage("JCATLogoBig.png");
-	}
+	public static final Image medJCATLogo = getImage("JCATLogoMed.png");
+	public static final Image smallJCATLogo = getImage("JCATLogoSmall.png");
+	public static final Image bigJCATLogo = getImage("JCATLogoBig.png");
+	public static final Image largeJCATLogo = getImage("JCATLogoLarge.png");
 
-	public static final Image getNASALogo() {
-		return getImage("NasaLogo.png");
-	}
-
-	public static final Image getLargeJCATLogo() {
-		return getImage("JCATLogoLarge.png");
-	}
 	/**
 	 * Returns the image that has the file name fileName, fileName.png, or
 	 * fileName.jpg
@@ -83,5 +69,12 @@ public class ResourceLoader {
 		  InputSource inSource = new InputSource(new InputStreamReader(response, "UTF-8"));
 		  Document respDoc = docBuilder.parse(inSource);
 		  return respDoc;
-	 }
+	}
+	
+	public static final void disposeImages() {
+		medJCATLogo.dispose();
+		smallJCATLogo.dispose();
+		bigJCATLogo.dispose();
+		largeJCATLogo.dispose();
+	}
 }

@@ -41,8 +41,14 @@
 				<choiceparameter>
 					<name>TimeSource</name>
 					<type>int16</type>
-					<choice>CFE_TIME_USE_INTERN</choice>
-					<choice>CFE_TIME_USE_EXTERN</choice>
+					<choice>
+						<name>CFE_TIME_USE_INTERN</name>
+						<value>0</value>
+					</choice>
+					<choice>
+						<name>CFE_TIME_USE_EXTERN</name>
+						<value>1</value>
+					</choice>
 				</choiceparameter>
 			</parameters>
 		</command>
@@ -52,9 +58,18 @@
 				<choiceparameter>
 					<name>ClockState</name>
 					<type>int16</type>
-					<choice>CFE_TIME_INVALID</choice>
-					<choice>CFE_TIME_VALID</choice>
-					<choice>CFE_TIME_FLYWHEEL</choice>
+					<choice>
+						<name>CFE_TIME_INVALID</name>
+						<value>0</value>
+					</choice>
+					<choice>
+						<name>CFE_TIME_VALID</name>
+						<value>1</value>
+					</choice>
+					<choice>
+						<name>CFE_TIME_FLYWHEEL</name>
+						<value>2</value>
+					</choice>
 				</choiceparameter>
 			</parameters>
 		</command>
@@ -194,8 +209,14 @@
 				<choiceparameter>
 					<name>ToneSource</name>
 					<type>int16</type>
-					<choice>CFE_TIME_TONE_PRI</choice>
-					<choice>CFE_TIME_TONE_RED</choice>
+					<choice>
+						<name>CFE_TIME_TONE_PRI</name>
+						<value>0</value>
+					</choice>
+					<choice>
+						<name>CFE_TIME_TONE_RED</name>
+						<value>1</value>
+					</choice>
 				</choiceparameter>
 			</parameters>
 		</command>
