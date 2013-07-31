@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<channel>
+	<name>CAMI</name>
+	<configs>
+		<config>
+			<name>CPU1</name>
+			<cmdmid>0x181D</cmdmid>
+			<tlmmid>0x081A</tlmmid>
+		</config>
+		<config>
+			<name>CPU2</name>
+			<cmdmid>0x183D</cmdmid>
+			<tlmmid>0x083A</tlmmid>
+		</config>
+		<config>
+			<name>CPU3</name>
+			<cmdmid>0x185D</cmdmid>
+			<tlmmid>0x085A</tlmmid>
+		</config>
+		<config>
+			<name>CPU4</name>
+			<cmdmid>0x187D</cmdmid>
+			<tlmmid>0x087A</tlmmid>
+		</config>
+	</configs>
+	<commandoffset>+0</commandoffset>
+	<commands>		
+		<command>
+			<name>CFE_CAMI_NOOP_CC</name>
+		</command>
+		<command>
+			<name>CFE_CAMI_RESET_CC</name>
+		</command>
+		<command>
+			<name>CFE_CAMI_FETCH_CC</name>
+		</command>
+	</commands>
+	<telemetry>
+	</telemetry>
+</channel>

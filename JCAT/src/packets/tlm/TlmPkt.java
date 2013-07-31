@@ -1,6 +1,7 @@
 package packets.tlm;
 
 import packets.parameters.DataType;
+import packets.parameters.ScalarConstant;
 
 /**
  * IN DEVELOPMENT. SUBJECT TO CHANGE/REMOVAL.
@@ -24,14 +25,9 @@ public class TlmPkt {
 	 * @param name
 	 *            What quality this represents
 	 */
-	public TlmPkt(String name, String dataTypeName) {
+	public TlmPkt(String name, String type, String primitive, String constant) {
 		this.name = name;
-		value = "To Be Determined";
-		dataType = DataType.getDataType(dataTypeName, "string", "1"); /*
-																	 * TODO
-																	 * change
-																	 * this??
-																	 */
+		dataType = DataType.getDataType(type, primitive, constant);
 	}
 
 	/**

@@ -18,8 +18,7 @@ import utilities.GenericPrompt;
 
 public class InputCmdParamPrompt {
 	public static void launchShell(final CmdPkt cmdPkt) {
-		final Shell dialog = GenericPrompt.getDialogShell();
-
+		final Shell dialog = GenericPrompt.getGenericShell();
 		GenericPrompt.addFirstLine(dialog, cmdPkt.getName());
 
 		final Scrollable[] texts = getTexts(dialog, cmdPkt);

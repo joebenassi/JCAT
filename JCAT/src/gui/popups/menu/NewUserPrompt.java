@@ -33,8 +33,7 @@ public class NewUserPrompt {
 		Display.getDefault().asyncExec(new Runnable() {
 			@Override
 			public void run() {
-				final Shell shell = GenericPrompt.getDialogShell();
-				shell.setImage(ResourceLoader.smallJCATLogo);
+				final Shell shell = GenericPrompt.getGenericShell();
 				shell.setText("Welcome");
 				FormLayout formLayout = new FormLayout();
 				formLayout.marginWidth = 10;

@@ -42,7 +42,7 @@ public final class IOPrompt {
 	}
 
 	private static final void launchShell(boolean output) {
-		final Shell dialog = GenericPrompt.getDialogShell();
+		final Shell dialog = GenericPrompt.getGenericShell();
 		dialog.setText("JCAT");
 		dialog.setLayout(new RowLayout(SWT.VERTICAL));
 		final Composite composite = new Composite(dialog, SWT.NONE);

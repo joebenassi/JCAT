@@ -77,11 +77,21 @@ public class GenericPrompt {
 		return combo;
 	}
 
-	public static final Shell getDialogShell() {
-		Shell s = new Shell(new Shell(Display.getCurrent(), SWT.ON_TOP),
-				SWT.RESIZE | SWT.DIALOG_TRIM | SWT.BORDER_DASH);
-		s.setImage(ResourceLoader.smallJCATLogo);
-		return s;
+	public static final Shell getMainShell() {
+		Shell mainShell = new Shell(Display.getCurrent(), SWT.RESIZE | SWT.DIALOG_TRIM | SWT.BORDER_DASH);
+		mainShell.setImages(ResourceLoader.getImages());
+		
+		return mainShell;
+	}
+	
+	public static final Shell getGenericShell() {
+		Shell parent = new Shell(Display.getCurrent(), SWT.ON_TOP);
+		ShellDisposer.queueForDisposal(parent);
+		
+		Shell child = new Shell(parent, SWT.RESIZE | SWT.DIALOG_TRIM | SWT.BORDER_DASH);
+		child.setImages(ResourceLoader.getImages());
+		
+		return child;
 	}
 
 	public static final void launchShell(final Shell dialog, String shellTitle,

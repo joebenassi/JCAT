@@ -30,7 +30,7 @@ public final class ShowAboutPopup {
 
 		final Label[] labels = new Label[lines.length];
 
-		Shell shell = GenericPrompt.getDialogShell();
+		Shell shell = GenericPrompt.getGenericShell();
 		FormLayout formLayout = new FormLayout();
 		formLayout.marginBottom = 10;
 		formLayout.marginTop = 10;
@@ -39,12 +39,10 @@ public final class ShowAboutPopup {
 		formLayout.spacing = 5;
 		shell.setLayout(formLayout);
 		shell.setText(title);
-		shell.setImage(ResourceLoader.smallJCATLogo);
 		FormData data = new FormData();
 
-		final Image JCATLogo = ResourceLoader.bigJCATLogo;
 		Label JCATLogoLabel = new Label(shell, SWT.NONE);
-		JCATLogoLabel.setImage(JCATLogo);
+		JCATLogoLabel.setImage(ResourceLoader.largeJCATLogo);
 		data = new FormData();
 		JCATLogoLabel.setLayoutData(data);
 
@@ -79,12 +77,5 @@ public final class ShowAboutPopup {
 
 		shell.pack();
 		shell.open();
-
-		shell.addDisposeListener(new DisposeListener() {
-			@Override
-			public void widgetDisposed(DisposeEvent arg0) {
-				JCATLogo.dispose();
-			}
-		});
 	}
 }

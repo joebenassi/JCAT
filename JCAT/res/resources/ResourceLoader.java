@@ -1,26 +1,18 @@
 package resources;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
-import org.w3c.dom.Document;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
 
-public class ResourceLoader {	
+public class ResourceLoader {
 	private static final ResourceLoader rl = new ResourceLoader();
 
-	public static final Image medJCATLogo = getImage("JCATLogoMed.png");
-	public static final Image smallJCATLogo = getImage("JCATLogoSmall.png");
+	private static final Image medJCATLogo = getImage("JCATLogoMed.png");
+	private static final Image smallJCATLogo = getImage("JCATLogoSmall.png");
 	public static final Image bigJCATLogo = getImage("JCATLogoBig.png");
 	public static final Image largeJCATLogo = getImage("JCATLogoLarge.png");
+	private static final Image veryBigJCATLogo = getImage("JCATLogoVeryBig");
+	private static final Image[] images = new Image[] {smallJCATLogo,
+			medJCATLogo, bigJCATLogo, veryBigJCATLogo};
 
 	/**
 	 * Returns the image that has the file name fileName, fileName.png, or
@@ -30,7 +22,7 @@ public class ResourceLoader {
 	 *            the name of the file
 	 * @return the image with that name
 	 */
-	public static final Image getImage(String fileName) {
+	private static final Image getImage(String fileName) {
 		Image image;
 		try {
 			image = new Image(Display.getCurrent(), rl.getClass()
@@ -56,25 +48,27 @@ public class ResourceLoader {
 		return image;
 	}
 
-	public static final Document getSettingsDocument() throws SAXException, IOException, ParserConfigurationException
-	{
-		InputStream stream = ClassLoader.class.getResourceAsStream("/XMLs/Settings.xml");
-		return readInputStream(stream);
-	}
-	
-	private static Document readInputStream(InputStream response) throws SAXException, IOException, ParserConfigurationException {
-
-		  DocumentBuilderFactory docBF = DocumentBuilderFactory.newInstance();
-		  DocumentBuilder docBuilder = (DocumentBuilder) docBF.newDocumentBuilder();
-		  InputSource inSource = new InputSource(new InputStreamReader(response, "UTF-8"));
-		  Document respDoc = docBuilder.parse(inSource);
-		  return respDoc;
-	}
-	
+	/*
+	 * private static Document readInputStream(InputStream response) throws
+	 * SAXException, IOException, ParserConfigurationException {
+	 * 
+	 * DocumentBuilderFactory docBF = DocumentBuilderFactory.newInstance();
+	 * DocumentBuilder docBuilder = (DocumentBuilder)
+	 * docBF.newDocumentBuilder(); InputSource inSource = new InputSource(new
+	 * InputStreamReader(response, "UTF-8")); Document respDoc =
+	 * docBuilder.parse(inSource); return respDoc; }
+	 */
 	public static final void disposeImages() {
 		medJCATLogo.dispose();
 		smallJCATLogo.dispose();
 		bigJCATLogo.dispose();
 		largeJCATLogo.dispose();
+		for (Image i : images) {
+			i.dispose();
+		}
+	}
+
+	public static final Image[] getImages() {
+		return images;
 	}
 }

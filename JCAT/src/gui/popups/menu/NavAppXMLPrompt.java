@@ -19,27 +19,24 @@ public final class NavAppXMLPrompt {
 		dialog.setFilterPath("c:\\temp");
 
 		String fullFilePath = dialog.open();
+		
+		
 		String[] fileNames = dialog.getFileNames();
-
-		populateApps(shell, fullFilePath, fileNames, version);
+		String filterPath = dialog.getFilterPath();
+		
+		populateApps(shell, filterPath, fileNames, version);
 	}
 
 	private static final void populateApps(final Shell shell,
-			final String fullFilePath, final String[] fileNames,
+			final String filterPath, final String[] fileNames,
 			final String version) throws ParserConfigurationException,
 			SAXException, IOException {
 
-		String directory;
-		if (fullFilePath != null) {
-			directory = fullFilePath.substring(0, fullFilePath.length()
-					- fileNames[0].length());
-		} else
-			return;
-
+		/* TODO FIX THIS!!! */
 		File[] files = new File[fileNames.length];
-
+		
 		for (int i = 0; i < fileNames.length; i++) {
-			files[i] = new File(directory + fileNames[i]);
+			files[i] = new File(new File(filterPath), fileNames[i]);
 		}
 
 		ChooseConfigsPrompt.launch(files, shell);

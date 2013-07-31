@@ -115,7 +115,7 @@ public final class XMLParser {
 		final String COString = getInstance("commandoffset", document);
 		String modString;
 		int value = 0;
-		
+
 		/* TODO fix for Linux */
 		String s = COString.substring(0, 2);
 		if (s.equals("-")) {
@@ -126,14 +126,15 @@ public final class XMLParser {
 			modString = COString.substring(1, COString.length());
 			value = Integer.parseInt(modString);
 			value *= 1;
-		}
-		else {
+		} else {
 			modString = COString;
-			try {value = Integer.parseInt(modString);
-			value *= 1;}
-			catch (Throwable e){}
+			try {
+				value = Integer.parseInt(modString);
+				value *= 1;
+			} catch (Throwable e) {
+			}
 		}
-	
+
 		return value;
 	}
 
@@ -292,7 +293,6 @@ public final class XMLParser {
 								choiceValue));
 					} catch (Throwable e) {
 					}
-					;
 				}
 
 				ChoiceOption[] choiceArray = new ChoiceOption[choiceOptions
@@ -307,14 +307,6 @@ public final class XMLParser {
 		return parameters;
 	}
 
-	public static final void neverShowDisplayHelp() {
-		try {
-			Document d = ResourceLoader.getSettingsDocument();
-			d.getElementsByTagName("displayhelp").item(0).setTextContent("0");
-		} catch (Throwable e) {
-		}
-	}
-
 	/**
 	 * Returns the telemetry data array as defined in the input Document.
 	 * 
@@ -323,21 +315,31 @@ public final class XMLParser {
 	 * @return The telemetry data array as defined in the input Document.
 	 */
 	private static final TlmPkt[] getTelemetry(Document document) {
+		/* TODO will all TlmPkts be encoded as strings?? */
 		final Element firstTree = (Element) document.getElementsByTagName(
 				"telemetry").item(0);
-		final NodeList nodeList = firstTree.getElementsByTagName("parameter");
+		if (firstTree.getChildNodes().getLength() > 1) {
+			final NodeList nodeList = firstTree
+					.getElementsByTagName("parameter");
 
-		ArrayList<TlmPkt> telemetry = new ArrayList<TlmPkt>();
+			ArrayList<TlmPkt> telemetry = new ArrayList<TlmPkt>();
 
-		for (int i = 0; i < nodeList.getLength(); i++) {
-			String name = getFirstInstance("name",
-					((Element) (nodeList.item(i))));
-			String dataType = getFirstInstance("type",
-					((Element) (nodeList.item(i))));
+			for (int i = 0; i < nodeList.getLength(); i++) {
+				String name = getFirstInstance("name",
+						((Element) (nodeList.item(i))));
+				String dataType = getFirstInstance("type",
+						((Element) (nodeList.item(i))));
+				String primitive = getFirstInstance("primitive",
+						((Element) nodeList.item(i)));
+				String constant = getFirstInstance("const",
+						((Element) nodeList.item(i)));
+				String val = ScalarConstant.getValue(constant);
 
-			telemetry.add(new TlmPkt(name, dataType));
+				telemetry.add(new TlmPkt(name, dataType, primitive, val));
+			}
+			return telemetry.toArray(new TlmPkt[telemetry.size()]);
 		}
-		return telemetry.toArray(new TlmPkt[telemetry.size()]);
+		return new TlmPkt[] { new TlmPkt("null", "uint8", "string", "1")};
 	}
 
 	public static String getName(Document document) {

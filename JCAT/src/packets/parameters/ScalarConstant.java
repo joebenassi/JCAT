@@ -16,7 +16,7 @@ public class ScalarConstant {
 			if (name.equalsIgnoreCase(names.get(i)))
 				return values.get(i);
 		}
-		return "0";
+		return "1";
 	}
 
 	public static final boolean hasConstant(String name) {

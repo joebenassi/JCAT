@@ -27,7 +27,7 @@ public class ShowHelpPopup {
 
 	public static final void launch(String header, String[] paragraphs) {
 		/* Configure shell */
-		final Shell shell = GenericPrompt.getDialogShell();
+		final Shell shell = GenericPrompt.getGenericShell();
 		shell.setText("JCAT");
 		shell.setBackground(oC);
 		FillLayout fillLayout = new FillLayout();
@@ -68,7 +68,7 @@ public class ShowHelpPopup {
 		data.bottom = new FormAttachment(100, 5);
 		data.left = new FormAttachment(0, 0);
 		data.width = 70;
-		data.height = 100;
+		//data.height = 100;
 		LeftBar.addLeftBar(internal, panelColors2, borderC, data);
 
 		/* Configure c1 */
@@ -126,7 +126,6 @@ public class ShowHelpPopup {
 		s3.setEditable(false);
 
 		shell.pack();
-		ShellDisposer.queueForDisposal(shell);
 		shell.open();
 	}
 

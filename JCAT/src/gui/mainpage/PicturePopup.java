@@ -7,6 +7,7 @@ import org.eclipse.swt.layout.*;
 import org.eclipse.swt.widgets.*;
 
 import resources.ResourceLoader;
+import utilities.GenericPrompt;
 
 /**
  * IMPROPERLY JAVADOC'D. CURRENTLY UNUSED.
@@ -19,7 +20,7 @@ public class PicturePopup {
 
 	public static void showImage(String title, Image image) {
 		Display display = Display.getCurrent();
-		final Shell shell = new Shell(display);
+		final Shell shell = GenericPrompt.getGenericShell();
 		shell.setLayout(new FillLayout());
 		shell.setText(title);
 		final Label label = new Label(shell, SWT.NONE);
@@ -38,11 +39,12 @@ public class PicturePopup {
 		display.dispose();
 	}
 
-	public static void showImage(String title, String fileName) {
-		showImage(title, ResourceLoader.getImage(fileName));
-	}
+	/*
+	 * public static void showImage(String title, String fileName) {
+	 * showImage(title, ResourceLoader.getImage(fileName)); }
+	 */
 
 	public static void main(String[] args) {
-		showImage("TITLEHERE", "SHANGHAI");
+		//showImage("TITLEHERE", "SHANGHAI");
 	}
 }

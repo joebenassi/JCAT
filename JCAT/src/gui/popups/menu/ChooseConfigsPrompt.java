@@ -31,17 +31,21 @@ import org.xml.sax.SAXException;
 
 import resources.ResourceLoader;
 
+import utilities.GenericPrompt;
 import utilities.XMLParser;
 
 import applications.App;
 
 public class ChooseConfigsPrompt {
-	public static final void launch(File[] files, Shell mainShell) {
-		final Shell shell = new Shell(new Shell(Display.getCurrent(), SWT.ON_TOP));
-		shell.setText("Choose App Configurations");
-		Tree tree = new Tree(shell, SWT.BORDER | SWT.CHECK);
-		Button okayB = new Button(shell, SWT.NONE);
-		developShell(shell, tree, files, mainShell, okayB);
+	public static final void launch(final File[] files, Shell mainShell) {
+		final Shell shell = GenericPrompt.getGenericShell();
+		final Tree tree = new Tree(shell, SWT.BORDER | SWT.CHECK);
+		final Button okayB = new Button(shell, SWT.NONE);
+
+		developShell(shell, tree, okayB);
+		Document[] docsold = getDocuments(tree, files);
+		final Document[] docs = populateTree(docsold, tree);
+		addOkayButtonListener(tree, docs, okayB, shell, mainShell);
 		addTreeListener(tree, okayB);
 
 		TreeItem[] items = tree.getItems();
@@ -53,18 +57,18 @@ public class ChooseConfigsPrompt {
 			okayB.setFocus();
 		}
 		
-		shell.setImage(ResourceLoader.smallJCATLogo);
-		tree.pack();
 		shell.pack();
 		shell.open();
+
 		while (!shell.isDisposed()) {
 			if (!Display.getCurrent().readAndDispatch())
 				Display.getCurrent().sleep();
 		}
 	}
 
-	private static final void developShell(final Shell shell, Tree tree,
-			File[] files, Shell mainShell, Button okayB) {
+	private static final void developShell(final Shell shell, Tree tree, Button okayB) {
+		shell.setText("Choose App Configurations");
+		
 		FormLayout formLayout = new FormLayout();
 		formLayout.marginBottom = 6;
 		formLayout.marginTop = 6;
@@ -92,12 +96,22 @@ public class ChooseConfigsPrompt {
 		data.width = 50;
 		okayB.setLayoutData(data);
 		okayB.setFocus();
-		addOkayButtonListener(tree, getDocumentsAndPopulateTree(tree, files),
-				okayB, shell, mainShell);
 	}
-
-	private static final ArrayList<Document> getDocumentsAndPopulateTree(
-			Tree tree, File[] files) {
+	private static final Document[] populateTree(Document[] docs, Tree tree) {
+		ArrayList<Document> docsArray = new ArrayList<Document>();
+		
+		for (Document d : docs) {
+			try {addAppBranch(tree, d);
+				docsArray.add(d);
+				}
+			catch (NullPointerException e){}
+		}
+		
+		return docsArray.toArray(new Document[docsArray.size()]);
+	}
+	
+	private static final Document[] getDocuments(
+			Tree tree, final File[] files) {
 		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory
 				.newInstance();
 		ArrayList<Document> documents = new ArrayList<Document>();// Document[files.length];A
@@ -107,18 +121,18 @@ public class ChooseConfigsPrompt {
 
 			for (int i = 0; i < files.length; i++) {
 				try {
+					System.out.println(files[i].getAbsolutePath());
 					Document doc = documentBuilder.parse(files[i]);
 					doc.getDocumentElement().normalize();
-					addAppBranch(tree, doc);
 					documents.add(doc);
-				} catch (Throwable e) {}
+				} catch (Throwable e) {e.printStackTrace();}
 			}
-		} catch (Throwable e) {}
-		return documents;
+		} catch (Throwable e) {e.printStackTrace();}
+		return documents.toArray(new Document[documents.size()]);
 	}
 
 	private static final void addOkayButtonListener(final Tree tree,
-			final ArrayList<Document> docs, Button b, final Shell s,
+			final Document[] docs, Button b, final Shell s,
 			final Shell mainShell) {
 		b.addListener(SWT.Selection, new Listener() {
 			@Override
@@ -131,9 +145,11 @@ public class ChooseConfigsPrompt {
 				}
 
 				final ArrayList<App> apps = new ArrayList<App>();
-
 				TreeItem[] items = tree.getItems();
-				if (items.length != docs.size())
+				System.out.println("CHOOSECONFIG: AMT OF TREEITEMS: " + items.length);
+				System.out.println("CHOOSECONFIG: AMT OF DOCS: " + docs.length);
+				
+				if (items.length != docs.length)
 					Launcher.addUserActivity("INVALID XML LOADED");
 				else {
 					for (int i = 0; i < items.length; i++) {
@@ -143,8 +159,8 @@ public class ChooseConfigsPrompt {
 							if (appItem.getItem(j).getChecked()) {
 								String config = appItem.getItem(j).getText();
 								try {
-									int[] IDs = XMLParser.getIDs(docs.get(i), j);
-									apps.add(XMLParser.getApp(docs.get(i),
+									int[] IDs = XMLParser.getIDs(docs[i], j);
+									apps.add(XMLParser.getApp(docs[i],
 											IDs[0], IDs[1], config));
 								} catch (Throwable ex) {
 									ex.printStackTrace();

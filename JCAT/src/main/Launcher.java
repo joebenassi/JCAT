@@ -50,15 +50,17 @@ public final class Launcher {
 		// Sleak sleak = new Sleak();
 		// sleak.open();
 		PktReader.start();
-		startup(new Shell(new Shell(Display.getCurrent()),
-				SWT.RESIZE | SWT.DIALOG_TRIM | SWT.BORDER_DASH));
+		startup();
 	}
 
 	/**
 	 * Identical to <code>main()</code>. <code>main</code> calls
 	 * <code>new Launcher();</code>
 	 */
-	public final static void startup(final Shell s) {
+	public final static void startup() {
+		instanceNum++;
+		ShellDisposer.disposePopups();
+		final Shell s = GenericPrompt.getMainShell();
 		TimeKeeper.reset();
 
 		Networker.startNetworker();
@@ -67,8 +69,6 @@ public final class Launcher {
 		addShellExitBehavior(s);
 		final String version = "1.0.0";
 		MenuFiller.addMenu(s, null, version);
-		s.setImages(new Image[] { ResourceLoader.smallJCATLogo,
-				ResourceLoader.medJCATLogo });
 		// PreferenceTest.showHelp();
 		if (PreferenceStorage.shouldShowHelp())
 			NewUserPrompt.launch();
@@ -127,11 +127,8 @@ public final class Launcher {
 	}
 
 	public final static void restartApplication(Shell s) {
-		instanceNum++;
 		s.setVisible(false);
-		ShellDisposer.disposePopups();
-		startup(new Shell(new Shell(Display.getCurrent()),
-				SWT.RESIZE | SWT.DIALOG_TRIM | SWT.BORDER_DASH));
+		startup();
 	}
 
 	public static final void addEvent(String time, String config, String msgStr) {

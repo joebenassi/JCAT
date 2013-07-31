@@ -1,10 +1,12 @@
 package gui.popups.tlm;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.ShellAdapter;
 import org.eclipse.swt.events.ShellEvent;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormLayout;
@@ -12,6 +14,8 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
@@ -34,9 +38,11 @@ import utilities.ShellDisposer;
  * 
  */
 public class PopupFiller {
-	private Shell POPUP = GenericPrompt.getDialogShell();
+	private Shell POPUP = GenericPrompt.getGenericShell();
+	private ScrolledComposite SCROLL = new ScrolledComposite(POPUP, SWT.H_SCROLL | SWT.V_SCROLL);// | SWT.BORDER);
+	private Composite SCROLLER = new Composite(SCROLL, SWT.NONE);
 	private static final Font TEXTFONT = FontConstants.bodyFont;
-	private static final Font POPUPTITLEFONT = FontConstants.titleFont;
+	private static final Font SCROLLERTITLEFONT = FontConstants.titleFont;
 	private static Color backgroundColor = ColorConstants.lightPageBackground;
 	private static Color textColor = ColorConstants.textColor;
 	private static Color textBoxColor = ColorConstants.textBoxColor;
@@ -55,21 +61,26 @@ public class PopupFiller {
 	 * is the only entity that other classes in other packages need to
 	 * communicate with.
 	 * 
-	 * @param POPUPNAME
+	 * @param SCROLLERNAME
 	 *            The name of the Shell.
 	 * @param ENTRYNAMES
 	 *            The names of the various Telemetry data subjects.
 	 */
-	public PopupFiller(final String POPUPNAME, final String[] ENTRYNAMES) {
+	public PopupFiller(final String PopupName, final String[] ENTRYNAMES) {
 		developShell();
-		addRightBar(POPUPNAME, ENTRYNAMES);
+		addRightBar(PopupName, ENTRYNAMES);
 
-		FormData data = new FormData();
+		FormData data = new FormData();		
 		data.width = 60;
-		data.right = new FormAttachment(POPUP.getChildren()[0], 0, SWT.DEFAULT);
-		data.height = POPUP.getSize().y
-				- ((FormLayout) (POPUP.getLayout())).marginHeight + offSet;
-		LeftBar.addLeftBar(POPUP, panelColors, backgroundColor, data);
+		data.right = new FormAttachment(SCROLLER.getChildren()[0], 0, SWT.LEFT);
+		data.left = new FormAttachment(0, 0);
+		data.top = new FormAttachment(0, 5);
+		data.height = SCROLLER.getSize().y
+				- ((FormLayout) (SCROLLER.getLayout())).marginHeight + offSet;
+		data.bottom = new FormAttachment(100, -5);
+		LeftBar.addLeftBar(SCROLLER, panelColors, backgroundColor, data);
+		SCROLLER.pack();
+		SCROLL.pack();
 		POPUP.pack();
 	}
 
@@ -78,6 +89,7 @@ public class PopupFiller {
 	 * close.
 	 */
 	private final void developShell() {
+		POPUP.setLayout(new FillLayout());
 		POPUP.addShellListener(new ShellAdapter() {
 			@Override
 			public final void shellClosed(ShellEvent e) {
@@ -85,28 +97,37 @@ public class PopupFiller {
 				POPUP.setVisible(false);
 			}
 		});
+		SCROLL.addListener(SWT.Activate, new Listener() {
+			public void handleEvent(Event e) {
+				SCROLL.setFocus();
+			}
+		});
+		SCROLL.setLayout(new FillLayout());
+		SCROLL.setContent(SCROLLER);
 
-		POPUP.setImage(ResourceLoader.smallJCATLogo);
-		ShellDisposer.queueForDisposal((Shell)POPUP.getParent());
 		FormLayout formLayout = new FormLayout();
-		formLayout.marginWidth = 10;
-		formLayout.marginHeight = 10;
+		formLayout.marginWidth = 0;
+		formLayout.marginHeight = 0;
+		formLayout.marginRight = 0;
+		formLayout.marginLeft = 0;
 		formLayout.spacing = 0;
-		POPUP.setLayout(formLayout);
-		POPUP.setBackground(backgroundColor);
+		SCROLL.setBackground(backgroundColor);
+		SCROLLER.setLayout(formLayout);
+		SCROLLER.setBackground(backgroundColor);
+		//POPUP.setBackground(backgroundColor);
 	}
 
 	/**
 	 * Develops the right side of the Shell: The TitleBox, UniversalBox, and
 	 * EntryBox.
 	 * 
-	 * @param POPUPNAME
+	 * @param SCROLLERNAME
 	 *            The name of the Shell.
 	 * @param ENTRYNAMES
 	 *            The names of the various Telemetry data subjects.
 	 */
-	private final void addRightBar(String POPUPNAME, String[] ENTRYNAMES) {
-		Composite rightBar = new Composite(POPUP, SWT.NONE);
+	private final void addRightBar(String SCROLLERNAME, String[] ENTRYNAMES) {
+		Composite rightBar = new Composite(SCROLLER, SWT.NONE);
 
 		FormData datax = new FormData();
 		datax.right = new FormAttachment(100, 0);
@@ -120,8 +141,8 @@ public class PopupFiller {
 
 		data = new GridData(SWT.LEFT, SWT.NONE, true, false);
 		data.horizontalIndent = 15;
-		TitleBox.addTitleBox(rightBar, POPUPNAME, backgroundColor, textColor,
-				POPUPTITLEFONT, data);
+		TitleBox.addTitleBox(rightBar, SCROLLERNAME, backgroundColor, textColor,
+				SCROLLERTITLEFONT, data);
 
 		data = new GridData(SWT.LEFT, SWT.NONE, true, false);
 		data.horizontalIndent = 15;
@@ -135,6 +156,7 @@ public class PopupFiller {
 		entryBox = new EntryBox(rightBar, data, borderColor, backgroundColor,
 				backgroundColor, ENTRYNAMES, textColor, backgroundColor,
 				TEXTFONT, textColor, textBoxColor, TEXTFONT);
+		SCROLLER.pack();
 		POPUP.pack();
 	}
 
@@ -150,14 +172,14 @@ public class PopupFiller {
 	}
 
 	/**
-	 * Displays the popup.
+	 * Displays the SCROLLER.
 	 */
 	public final void launchPopup() {
 		POPUP.setVisible(true);
 	}
 
 	/**
-	 * Disposes of the popup. This method is required to free system resources.
+	 * Disposes of the SCROLLER. This method is required to free system resources.
 	 */
 	public final void dispose() {
 		POPUP.dispose();
