@@ -25,12 +25,6 @@ import org.eclipse.swt.widgets.Text;
 
 import resources.ResourceLoader;
 
-/**
- * IN DEVELOPMENT. SUBJECT TO CHANGE.
- * 
- * @author Joe
- * 
- */
 public class GenericPrompt {
 	public static final void addLabel(Shell dialog, String text) {
 		Label label = new Label(dialog, SWT.NONE);
@@ -90,7 +84,6 @@ public class GenericPrompt {
 		
 		Shell child = new Shell(parent, SWT.RESIZE | SWT.DIALOG_TRIM | SWT.BORDER_DASH);
 		child.setImages(ResourceLoader.getImages());
-		
 		return child;
 	}
 

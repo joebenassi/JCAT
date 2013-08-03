@@ -1,5 +1,7 @@
 package packets.ccsds;
 
+import packets.parameters.DataType;
+
 public class CcsdsTlmPkt extends CcsdsPkt {
 	public static final int CCSDS_IDX_TLM_HDR = 6;
 	public static final int CCSDS_IDX_TLM_DATA = 12;
@@ -10,5 +12,10 @@ public class CcsdsTlmPkt extends CcsdsPkt {
 	 */
 	public CcsdsTlmPkt(byte[] TlmMsg) {
 		super(TlmMsg);
+	}
+	
+	public static int getTime(byte[] data) {
+		return Integer.parseInt(DataType.uint32Integer.getTlmStrArray(data,
+				CCSDS_IDX_TLM_HDR));
 	}
 } // End class CcsdsTlmPkt

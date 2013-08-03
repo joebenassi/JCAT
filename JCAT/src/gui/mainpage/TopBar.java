@@ -6,6 +6,10 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.layout.FormAttachment;
+import org.eclipse.swt.layout.FormData;
+import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -14,8 +18,9 @@ import org.eclipse.swt.widgets.Label;
 
 import utilities.TimeKeeper;
 
-final class TopBar extends Composite {
-	private static Label time1;
+public final class TopBar extends Composite {
+	private static Label lastTelemetryTime;
+	//private static long lastTlmUpdate = TimeKeeper.getLongTime();
 
 	final static void addTopBar(Composite parent, String title,
 			Color backgroundColor, Color foregroundColor, Font titleFont,
@@ -38,7 +43,7 @@ final class TopBar extends Composite {
 		setBackground(backgroundColor);
 		addImage(this, JCATLogo);
 		addTitle(this, title, backgroundColor, foregroundColor, titleFont);
-		addTimeBox(this, backgroundColor, foregroundColor, timeFont);
+		addTimeBox(this, backgroundColor, foregroundColor, timeFont, titleFont);
 	}
 
 	private static final void addImage(Composite composite, Image nasaLogo) {
@@ -79,12 +84,15 @@ final class TopBar extends Composite {
 					} catch (Throwable e) {
 					}
 					try {
-					Display.getDefault().syncExec(new Runnable() {
-						@Override
-						public void run() {
-							label.setText(TimeKeeper.getElapsedTime());
-						}
-					});} catch (Throwable e){}
+						Display.getDefault().syncExec(new Runnable() {
+							@Override
+							public void run() {
+								label.setText(TimeKeeper.getElapsedTime());
+							}
+						});
+					} catch (Throwable e) {
+						e.printStackTrace();
+					}
 				}
 			}
 		});
@@ -92,8 +100,24 @@ final class TopBar extends Composite {
 		t.start();
 	}
 
+	public static final void packetReceived() {
+		try {
+			Display.getDefault().syncExec(new Runnable() {
+				@Override
+				public void run() {
+					lastTelemetryTime.setText(TimeKeeper.getElapsedTime() + "       ");
+					//lastTelemetryTime.setText("never     ");
+					//lastTlmUpdate = TimeKeeper.getLongTime();
+				}
+			});
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
+	}
+
 	private static final void addTimeBox(Composite composite,
-			Color backgroundColor, Color foregroundColor, Font timeFont) {
+			Color backgroundColor, Color foregroundColor, Font timeFont,
+			Font titleFont) {
 		Composite timeBox = new Composite(composite, SWT.NONE);
 		timeBox.setLayout(new GridLayout(2, false));
 		timeBox.setBackground(backgroundColor);
@@ -103,12 +127,24 @@ final class TopBar extends Composite {
 		timeType1.setForeground(foregroundColor);
 		timeType1.setBackground(backgroundColor);
 		timeType1.setFont(timeFont);
-		time1 = new Label(timeBox, SWT.NONE);
+		Label time1 = new Label(timeBox, SWT.NONE);
 		time1.setText(TimeKeeper.getElapsedTime() + "      ");
 		time1.setForeground(foregroundColor);
 		time1.setBackground(backgroundColor);
 		time1.setFont(timeFont);
 		addTimeUpdater(time1);
+
+		Label lastTelemetry = new Label(timeBox, SWT.NONE);
+		lastTelemetry.setText("LAST RECEIVED PACKET: ");
+		lastTelemetry.setForeground(foregroundColor);
+		lastTelemetry.setBackground(backgroundColor);
+		lastTelemetry.setFont(timeFont);
+
+		lastTelemetryTime = new Label(timeBox, SWT.NONE);
+		lastTelemetryTime.setText("never      ");
+		lastTelemetryTime.setForeground(foregroundColor);
+		lastTelemetryTime.setBackground(backgroundColor);
+		lastTelemetryTime.setFont(timeFont);
 		/*
 		 * Label timeType2 = new Label(timeBox, SWT.NONE);
 		 * timeType2.setText("S/C UTC: ");

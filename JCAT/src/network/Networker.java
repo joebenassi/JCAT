@@ -8,6 +8,7 @@ import org.eclipse.swt.widgets.Display;
 
 import applications.App;
 
+import packets.ccsds.CcsdsPkt;
 import packets.ccsds.CcsdsTlmPkt;
 import packets.cmd.CmdPkt;
 import utilities.TimeKeeper;
@@ -32,6 +33,13 @@ public class Networker {
 		configs.add(new Config(name, msgid));
 	}
 
+	public static final String getAppName(byte[] data) {
+		for (App app : apps)
+			if (app.getCmdId() == CcsdsPkt.getID(data))
+				return app.getMenuName();
+		return "";
+	}
+
 	public static void startNetworker() {
 		apps = new ArrayList<App>();
 		configs = new ArrayList<Config>();
@@ -51,12 +59,28 @@ public class Networker {
 	}
 
 	/** functional **/
-	public final static void enableToLabTelemetry() {
+	public final static void enableToLabTelemetry(boolean wireless) {
+		/* TODO find a more elegant solution */
+		for (App app : apps) {
+			if (app.getName().substring(0, 2).equalsIgnoreCase("to")) {
+				String ip = PktReader.getLocalIP();
+				if (wireless)
+					ip = PktReader.getIP();
+
+				app.executeCommand(6, new String[] { ip });
+				Launcher.addUserActivity("Enabled Telemetry for IP: " + ip);
+			}
+		}
+	}
+
+	public static void enableEventMessages() {
 		/* TODO find a more elegant solution */
 		for (App app : apps) {
 			if (app.getName().substring(0, 2).equalsIgnoreCase("to"))
-				app.executeCommand(6, new String[] { PktReader.getIP() });
+				app.executeCommand(7, new String[] { "" });
 		}
+		// TODO Auto-generated method stub
+
 	}
 
 	/** functional **/
@@ -69,8 +93,9 @@ public class Networker {
 		String time = "";
 		try {
 			time = TimeKeeper.getEventTime(pkt.getPacket());
-		} catch (Exception e) {}
-		
+		} catch (Exception e) {
+		}
+
 		String MsgA = new String(TlmPkt, 12, 122);
 		/*
 		 * TODO get magic numbers from OS_MAX_API_NAME = 20 or
@@ -90,7 +115,7 @@ public class Networker {
 	/** assumed functional **/
 	private final static void createTlmMonitorThread() {
 		final int myInstance = Launcher.getInstanceNum();
-
+		System.out.println("NETWORKER: MONITORING TLM");
 		final Thread t = new Thread(new Runnable() {
 			@Override
 			public void run() {

@@ -91,8 +91,8 @@ public final class XMLParser {
 			String config) {
 		final String name = getInstance("name", document);
 
-		return new App(name + " [" + config + "]",
-				getCommands(document, CmdID), getTelemetry(document), TlmID);
+		return new App(name, config,
+				getCommands(document, CmdID), getTelemetry(document), TlmID, CmdID);
 	}
 
 	public static ArrayList<String> getConfigNames(Document document) {

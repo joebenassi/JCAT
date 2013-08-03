@@ -35,8 +35,10 @@ public final class App {
 	private final ArrayList<CmdPkt> commands;
 	private final TlmPkt[] telemetry;
 	private final String name;
+	private final String config;
 	private final PopupFiller popupFiller;
 	private final int TlmAppID;
+	private final int CmdAppID;
 
 	/**
 	 * This is a Command and Telemetry app configured with app-specific
@@ -46,6 +48,7 @@ public final class App {
 	 * packets.housekeeping.XMLParser class. This is done through File ->
 	 * Populate Apps and selecting appropriately-formatted XML files on your
 	 * computer.
+	 * @param config 
 	 * 
 	 * @param displayName
 	 *            The name that appears in the menu. Specific to an App.
@@ -66,24 +69,25 @@ public final class App {
 	 * @param appID
 	 *            The ID specific to an App.
 	 */
-	public App(final String name, final ArrayList<CmdPkt> commands,
-			final TlmPkt[] telemetry, final int TlmAppID) {
+	public App(final String name, String config, final ArrayList<CmdPkt> commands,
+			final TlmPkt[] telemetry, final int TlmAppID, final int CmdAppID) {
 		final String[] entryNames = new String[telemetry.length];
 
 		for (int i = 0; i < entryNames.length; i++) {
 			entryNames[i] = telemetry[i].getName();
 		}
 
-		popupFiller = new PopupFiller(name, entryNames);
-
 		this.TlmAppID = TlmAppID;
+		this.CmdAppID = CmdAppID;
+		this.config = config;
 		this.name = name;
 		this.commands = commands;
 		this.telemetry = telemetry;
 
-		//if (!name.equals("FT_APP"))
+		popupFiller = new PopupFiller(getMenuName(), entryNames);
+		
 		Networker.addApp(this);
-		Launcher.addUserActivity("IMPORTED APP PROFILE: " + name);
+		Launcher.addUserActivity("IMPORTED APP PROFILE: " + getMenuName());
 	}
 
 	/**
@@ -95,7 +99,16 @@ public final class App {
 	public final int getTlmAppID() {
 		return TlmAppID;
 	}
-
+	
+	public final void setSC(final String SC) {
+		Display.getDefault().syncExec(new Runnable() {
+			@Override
+			public void run() {
+				popupFiller.setSC(SC);
+			}
+		});
+	}
+	
 	public final void setTime(final String time) {
 		Display.getDefault().syncExec(new Runnable() {
 			@Override
@@ -126,8 +139,16 @@ public final class App {
 	 * 
 	 * @return The name of this particular App.
 	 */
+	public final String getMenuName() {
+		return name + " [" + config + "] ";
+	}
+	
 	public final String getName() {
 		return name;
+	}
+	
+	public final String getConfig() {
+		return config;
 	}
 
 	/**
@@ -190,5 +211,9 @@ public final class App {
 
 	public final void ingest(CcsdsTlmPkt TlmPkt) {
 		TelemetryUpdater.updateTelemetry(TlmPkt, this);
+	}
+
+	public int getCmdId() {
+		return CmdAppID;
 	}
 }

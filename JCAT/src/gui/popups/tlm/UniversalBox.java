@@ -17,40 +17,10 @@ import org.eclipse.swt.widgets.Text;
  * 
  */
 final class UniversalBox extends Composite {
-	/**
-	 * The various entities within this. Each instance defined displays a title
-	 * and current value. Values are updated through the <code>Updater</code>
-	 * class.
-	 * 
-	 * @author Joe Benassi
-	 * 
-	 */
-	private static enum Child {
-		GMT("GMT"), SC("SC"), UTC("UTC"), SequenceCount("Sequence Count");
-
-		private final String name;
-
-		private Child(String name) {
-			this.name = name;
-		}
-
-		public String getName() {
-			return name;
-		}
-	}
-
-	/**
-	 * The width of the SequenceCount Text
-	 */
-	private static final int fieldMinimumWidth2 = 140;
-	/**
-	 * The width of the GMT, SC, and UTC Texts
-	 */
-	private static final int fieldMinimumWidth1 = fieldMinimumWidth2 + 79;
-
-	private Text timeText;
-
+	private static final int fieldMinimumWidth = 210;
 	private static final int verticalSpacing = -5;
+	private Text timeText;
+	private Text SCText;
 
 	/**
 	 * (Same as new UniversalBox(..)) Creates a Composite that displays the GMT,
@@ -118,72 +88,19 @@ final class UniversalBox extends Composite {
 		gridLayout.verticalSpacing = verticalSpacing;
 		internal.setLayout(gridLayout);
 
-		addTopContent(internal, backgroundColor, textColor, textBoxColor, font);
-		addBottomContent(internal, backgroundColor, textColor, textBoxColor,
-				font);
-	}
-
-	/**
-	 * Adds Sequence Count content.
-	 * 
-	 * 
-	 * @param internal
-	 *            The composite to contain the bottom content.
-	 * @param backgroundColor
-	 *            The background of the various contained Labels, Texts, and
-	 *            Composites.
-	 * @param textColor
-	 *            The color of the texts within the various contained Labels,
-	 *            Texts, and Composites.
-	 * @param textBoxColor
-	 *            The color of the background of the various Texts (textboxes).
-	 */
-	private static final void addBottomContent(Composite internal,
-			Color backgroundColor, Color textColor, Color textBoxColor,
-			Font font) {
-		Composite bottomComposite = new Composite(internal, SWT.NONE);
-		bottomComposite.setBackground(backgroundColor);
-		bottomComposite.setLayout(new GridLayout(2, false));
-
-		Child[] bottomChildren = new Child[] { Child.SequenceCount };
-
-		for (int i = 0; i < bottomChildren.length; i++) {
-			addLabel(bottomComposite, bottomChildren[i].getName(),
-					backgroundColor, textColor, font);
-			addText(false, bottomComposite, textColor, textBoxColor,
-					bottomChildren[i].getName(), font);
-		}
-	}
-
-	/**
-	 * Adds GMT, SC, and UTC content.
-	 * 
-	 * @param internal
-	 *            The composite to contain the top content.
-	 * @param backgroundColor
-	 *            The background of the various contained Labels, Texts, and
-	 *            Composites.
-	 * @param textColor
-	 *            The color of the texts within the various contained Labels,
-	 *            Texts, and Composites.
-	 * @param textBoxColor
-	 *            The color of the background of the various Texts (textboxes).
-	 */
-	private final void addTopContent(Composite internal, Color backgroundColor,
-			Color textColor, Color textBoxColor, Font font) {
 		Composite topComposite = new Composite(internal, SWT.NONE);
 		topComposite.setBackground(backgroundColor);
 		topComposite.setLayout(new GridLayout(2, false));
 
-		Child[] topChildren = new Child[] { Child.GMT };// , Child.SC};//,
-														// Child.UTC };
+		addLabel(topComposite, "GMT: ", backgroundColor, textColor, font);
+		timeText = addText(topComposite, textColor, textBoxColor, font);
 
-		for (int i = 0; i < topChildren.length; i++) {
-			addLabel(topComposite, topChildren[i].getName(), backgroundColor,
-					textColor, font);
-			timeText = addText(true, topComposite, textColor, textBoxColor,
-					topChildren[i].getName(), font);
-		}
+		Composite bottomComposite = new Composite(internal, SWT.NONE);
+		bottomComposite.setBackground(backgroundColor);
+		bottomComposite.setLayout(new GridLayout(2, false));
+
+		addLabel(bottomComposite, "SC:  ", backgroundColor, textColor, font);
+		SCText = addText(bottomComposite, textColor, textBoxColor, font);
 	}
 
 	/**
@@ -205,7 +122,7 @@ final class UniversalBox extends Composite {
 			Color backgroundColor, Color textColor, Font font) {
 		Label label = new Label(parent, SWT.NONE);
 		label.setFont(font);
-		label.setText(name + ": ");
+		label.setText(name);
 		label.setBackground(backgroundColor);
 		label.setForeground(textColor);
 	}
@@ -226,27 +143,27 @@ final class UniversalBox extends Composite {
 	 *            "UTC", or "Sequence Count".
 	 * @param font
 	 */
-	private static final Text addText(final boolean isTopContent,
-			Composite parent, Color textColor, Color textBoxColor, String name,
-			Font font) {
-		GridData fieldGridData = new GridData(GridData.FILL_HORIZONTAL);
-		if (isTopContent)
-			fieldGridData.minimumWidth = fieldMinimumWidth1;
-		else
-			fieldGridData.minimumWidth = fieldMinimumWidth2;
-
+	private static final Text addText(Composite parent, Color textColor,
+			Color textBoxColor, Font font) {
 		Text temp = new Text(parent, SWT.NONE);
+		temp.setText("No Telemetry               ");
 		temp.setFont(font);
 		temp.setBackground(textBoxColor);
-		temp.setEditable(false);
-		temp.setText("        ");
-		temp.setLayoutData(fieldGridData);
 		temp.setForeground(textColor);
+		temp.setEditable(false);
 
+		GridData fieldGridData = new GridData(GridData.FILL_HORIZONTAL);
+		fieldGridData.minimumWidth = fieldMinimumWidth;
+		temp.setLayoutData(fieldGridData);
+		
 		return temp;
 	}
 
 	public final void setTimeText(String time) {
 		timeText.setText(time);
+	}
+
+	public void setSCText(String SC) {
+		SCText.setText(SC);
 	}
 }

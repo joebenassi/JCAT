@@ -1,5 +1,6 @@
 package utilities;
 
+import packets.ccsds.CcsdsTlmPkt;
 import packets.parameters.DataType;
 
 public class TimeKeeper {
@@ -20,12 +21,13 @@ public class TimeKeeper {
 	}
 
 	public static final String getEventTime(byte[] data) throws Exception {
-		int sec = Integer.parseInt(DataType.uint32Integer.getTlmStrArray(data,
-				6));
-		// String msec = DataType.uint16Integer.getTlmStrArray(data, 10);
-		return getTimeFormatted(sec);
+		return getTimeFormatted(CcsdsTlmPkt.getTime(data));
 	}
 
+	public static final String getTimeSince(long time) {
+		return getTimeFormatted((int)((getLongTime() - time)/1000));
+	}
+	
 	public static final String getTimeFormatted(int sec) {
 		int min = sec / 60;
 		sec = sec % 60;

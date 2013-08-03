@@ -14,17 +14,20 @@ import org.xml.sax.SAXException;
 import utilities.XMLParser;
 
 public final class NavConstantXMLPrompt {
-	public static final void launch() throws ParserConfigurationException,
-			SAXException, IOException {
+	public static final boolean launch() {
 		FileDialog dialog = new FileDialog(new Shell(Display.getCurrent()),
-				SWT.MULTI | SWT.OPEN);
+				SWT.MULTI | SWT.OPEN | SWT.ON_TOP);
 		dialog.setText("Select Constant Definition File");
 		dialog.setFilterExtensions(new String[] { "*.xml" });
 		dialog.setFilterPath("c:\\temp");
 
 		String fullFilePath = dialog.open();
 		String[] fileNames = dialog.getFileNames();
+		if (fileNames.length < 1) return false;
+		try {
 		addConstants(fullFilePath, fileNames);
+		} catch (Throwable e){}
+		return true;
 	}
 
 	private static final void addConstants(final String fullFilePath,

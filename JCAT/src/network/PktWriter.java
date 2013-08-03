@@ -7,14 +7,16 @@ package network;
 
 import java.net.*;
 
+import packets.ccsds.CcsdsPkt;
+
 import utilities.EndianCorrector;
 
 import main.Launcher;
 
 public class PktWriter {
 	private static String port = "1234";
-	private static String ip = "192.168.224.128"; //VMWare
-	//private static String ip = "192.168.1.11";  //ColdFires
+	//private static String ip = "192.168.224.128"; //VMWare
+	private static String ip = "192.168.1.11";  //ColdFires
 
 	public PktWriter() {
 	}
@@ -22,9 +24,9 @@ public class PktWriter {
 	public void WriteCmdPkt(String name, byte[] CmdData, int dataL) {
 		try {
 			sendPacket(CmdData);
-			Launcher.addUserActivity("PKTWRITER: COMMAND SENT: " + name);
+			Launcher.addUserActivity("COMMAND SENT: " + name + " to " + Networker.getAppName(CmdData));
 		} catch (Throwable e) {
-			Launcher.addUserActivity("PKTWRITER: COMMAND NOT SENT: " + name);
+			Launcher.addUserActivity("COMMAND NOT SENT: " + name + " to " + Networker.getAppName(CmdData));
 			e.printStackTrace();
 		}
 	}

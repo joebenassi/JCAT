@@ -1,5 +1,6 @@
 package packets.ccsds;
 
+import packets.parameters.DataType;
 import utilities.EndianCorrector;
 
 /*
@@ -71,15 +72,21 @@ public class CcsdsPkt {
 		// + CCSDS_LENGTH_ADJUST;
 
 	}// End getTotalLength()
-
+	public static int getID(byte[] data) {
+		return ((((data[CCSDS_IDX_STREAM_ID] & 0x00FF) | (data[CCSDS_IDX_STREAM_ID + 1] << 8)) & CCSDS_MSK_MSG_ID));
+	}
+	
 	public int getStreamId() {
-		return ((((Packet[CCSDS_IDX_STREAM_ID] & 0x00FF) | (Packet[CCSDS_IDX_STREAM_ID + 1] << 8)) & CCSDS_MSK_MSG_ID));
+		return getID(Packet);
 
 	}// End getStreamId()
+	
+	public static int getSeqCount(byte[] data) {
+		return ((((data[CCSDS_IDX_SEQ_COUNT] & 0x00FF) | (data[CCSDS_IDX_SEQ_COUNT + 1] << 8)) & CCSDS_MSK_SEQ_CNT));
+	}
 
 	public int getSeqCount() {
-		return ((((Packet[CCSDS_IDX_SEQ_COUNT] & 0x00FF) | (Packet[CCSDS_IDX_SEQ_COUNT + 1] << 8)) & CCSDS_MSK_SEQ_CNT));
-
+		return getSeqCount(Packet);
 	}// End getSeqCount()
 
 	public int getLength() {

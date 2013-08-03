@@ -32,13 +32,13 @@ public final class NavAppXMLPrompt {
 			final String version) throws ParserConfigurationException,
 			SAXException, IOException {
 
-		/* TODO FIX THIS!!! */
 		File[] files = new File[fileNames.length];
 		
 		for (int i = 0; i < fileNames.length; i++) {
 			files[i] = new File(new File(filterPath), fileNames[i]);
 		}
 
-		ChooseConfigsPrompt.launch(files, shell);
+		if (files.length > 0)
+			ChooseConfigsPrompt.launch(files, shell);
 	}
 }

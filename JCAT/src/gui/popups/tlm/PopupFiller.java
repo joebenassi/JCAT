@@ -198,4 +198,9 @@ public class PopupFiller {
 	public void setTime(String time) {
 		universalBox.setTimeText(time);
 	}
+
+	public void setSC(String SC) {
+		universalBox.setSCText(SC);
+		
+	}
 }

@@ -1,5 +1,8 @@
 package utilities;
 
+import gui.mainpage.TopBar;
+import main.Launcher;
+
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Text;
 
@@ -14,9 +17,11 @@ public class TelemetryUpdater {
 		loadTlmStrArrayHdr(TlmMsg, TlmStrArray);
 		final int ID = TlmMsg.getStreamId();
 		if (ID == app.getTlmAppID()) {
+			//System.out.println("TEMETRYUPDATER: UPDATING TLM");
 			loadTlmStrArrayHk(TlmMsg.getPacket(), app.getTelemetry());
 			try {
 				app.setTime(TimeKeeper.getEventTime(TlmMsg.getPacket()));
+				app.setSC("" + CcsdsTlmPkt.getSeqCount(TlmMsg.getPacket()));
 			} catch (Exception e) {
 			}
 			updatePopup(app);

@@ -114,14 +114,13 @@ public class ChooseConfigsPrompt {
 			Tree tree, final File[] files) {
 		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory
 				.newInstance();
-		ArrayList<Document> documents = new ArrayList<Document>();// Document[files.length];A
+		ArrayList<Document> documents = new ArrayList<Document>();
 		try {
 			final DocumentBuilder documentBuilder = documentBuilderFactory
 					.newDocumentBuilder();
 
 			for (int i = 0; i < files.length; i++) {
 				try {
-					System.out.println(files[i].getAbsolutePath());
 					Document doc = documentBuilder.parse(files[i]);
 					doc.getDocumentElement().normalize();
 					documents.add(doc);
@@ -137,17 +136,10 @@ public class ChooseConfigsPrompt {
 		b.addListener(SWT.Selection, new Listener() {
 			@Override
 			public void handleEvent(Event e) {
-				try {
-					NavConstantXMLPrompt.launch();
-				} catch (ParserConfigurationException e1) {
-				} catch (SAXException e2) {
-				} catch (IOException e3) {
-				}
+				if (!NavConstantXMLPrompt.launch()) return;
 
 				final ArrayList<App> apps = new ArrayList<App>();
 				TreeItem[] items = tree.getItems();
-				System.out.println("CHOOSECONFIG: AMT OF TREEITEMS: " + items.length);
-				System.out.println("CHOOSECONFIG: AMT OF DOCS: " + docs.length);
 				
 				if (items.length != docs.length)
 					Launcher.addUserActivity("INVALID XML LOADED");

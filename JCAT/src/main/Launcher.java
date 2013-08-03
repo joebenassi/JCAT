@@ -1,5 +1,13 @@
 package main;
 
+import java.net.InetAddress;
+import java.net.InterfaceAddress;
+import java.net.NetworkInterface;
+import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.List;
+
 import gui.mainpage.MainPageFiller;
 import gui.menu.MenuFiller;
 import gui.popups.menu.NewUserPrompt;
@@ -75,6 +83,11 @@ public final class Launcher {
 
 		s.open();
 
+		if (!PktReader.isFunctional()) {
+			addUserActivity("JCAT startup unsuccessful");
+			addUserActivity("Existing JCAT instance. No event messages or telemetry will display");
+		}
+		else
 		addUserActivity("JCAT startup successful");
 		try {
 			while (!Display.getCurrent().isDisposed()) {

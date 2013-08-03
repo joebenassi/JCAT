@@ -28,19 +28,19 @@
 			<name>CFE_TO_ADD_PKT_CC</name>
 			<parameters>
 				<inputparameter>
-					<name>Desired Stream(decimal)</name>
+					<name>Desired Config Msgid [decimal]</name>
 					<type>uint16</type>
 				</inputparameter>
 				<inputparameter>
-					<name>CILab Stream(decimal)</name>
+					<name>Msgid For TO_LAB's Config [decimal]</name>
 					<type>uint16</type>
 				</inputparameter>
 				<inputparameter>
-					<name>Flags</name>
+					<name>Flags ["0"]</name>
 					<type>uint16</type>
 				</inputparameter>
 				<inputparameter>
-					<name>BufLimit</name>
+					<name>BufLimit [decimal, ex: "100"]</name>
 					<type>uint8</type>
 				</inputparameter>
 			</parameters>
@@ -52,7 +52,7 @@
 			<name>CFE_TO_REMOVE_PKT_CC</name>
 			<parameters>
 				<inputparameter>
-					<name>Stream</name>
+					<name>Config Msgid [decimal]</name>
 					<type>uint16</type>
 				</inputparameter>
 			</parameters>

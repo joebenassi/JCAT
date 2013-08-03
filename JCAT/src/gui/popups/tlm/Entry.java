@@ -54,7 +54,7 @@ final class Entry extends Composite {
 		super(entryParent, SWT.RIGHT);
 		setLayoutData(entryLayoutData);
 
-		final String initialLabelText = "init                   ";
+		final String initialLabelText = "No Telemetry      ";
 		setBackground(entryBackgroundColor);
 		GridLayout gridLayout = new GridLayout(2, false);
 		gridLayout.makeColumnsEqualWidth = false;
