@@ -1,5 +1,8 @@
-#Configuring Eclipse fore JCAT Development
-###Note: This tutorial will use Eclipse 4.3 to demonstrate the setup.
+ <p align="center" >
+    <img src="https://raw.github.com/joebenassi/JCAT/master/JCAT/res/Images/JCATLogoHuge.png">
+	</p>
+#Java Command And Telemetry (JCAT)
+JCAT is a Java program created at the NASA Goddard Space Flight Center to aid in CFS App development. The CFS (Core Flight System) is a flight software product line that is being used by multiple NASA centers. The CFS provides mission-independent, reusable, core flight software services and applications. The cFE (Core Flight Executive) is a set of applications for the CFS also developed by NASA. 
 
 ##Procedure:
 1. Download Eclipse Standard 4.3.
