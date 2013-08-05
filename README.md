@@ -7,7 +7,7 @@ JCAT is a Java program created at the NASA Goddard Space Flight Center to aid in
 Versions of the CFS are open-source, and can run on various platforms, including RTEMS virtual machines, embedded ColdFire processors, and, in the future, Rasperry Pi processors. A ground system, such as JCAT, was the missing link to allow a community of CFS developers to form and create Apps for their own and each others' use.
 	
 ##How does JCAT help?
-JCAT is the first open-source ground system for CFS App development. It is designed to be a lightwieght, rapid-application prototype development program. JCAT accompishes three tasks to aid in CFS App development: command-sending, telemetry-displaying, and event message-displaying. To test an App, developers simply need to load its 'App Profile' into JCAT at runtime. 
+JCAT is the first open-source ground system for CFS App development. It is designed to be a lightwieght, rapid-application prototype development program. JCAT accompishes three tasks to aid in CFS App development: command-sending, telemetry-displaying, and event message-displaying. To test an App, developers simply need to connect JCAT to the CFS via ethernet cable, router, or virtual machine and load its 'App Profile' into JCAT at runtime. 
 
 ##What is an App Profile?
 An App Profile is an XML file that describes all the App information that JCAT needs to send commands and display telemetry from it. You must create or obtain a correctly-defined App Profile in order to use an App. Examples of App Profiles are available in "App Profiles (CFE 6.1)" within "App Profiles", and apply to CFE 6.1, which is in development.
