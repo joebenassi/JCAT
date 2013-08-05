@@ -31,37 +31,49 @@
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
-        <h3>
-<a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>Welcome to GitHub Pages.</h3>
+        <p></p><p align="center">
+      <img src="https://raw.github.com/joebenassi/JCAT/master/JCAT/res/Images/JCATLogoHuge.png"></p>
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
+<h1>
+<a name="java-command-and-telemetry-jcat" class="anchor" href="#java-command-and-telemetry-jcat"><span class="octicon octicon-link"></span></a>Java Command And Telemetry (JCAT)</h1>
 
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
-</code></pre>
+<p>JCAT is a Java program created at the NASA Goddard Space Flight Center to aid in CFS App development. The CFS (Core Flight System) is a flight software product line that is being used by multiple NASA centers. The CFS provides mission-independent, reusable, core flight software services and applications. The cFE (Core Flight Executive) is a set of applications for the CFS also developed by NASA. </p>
 
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
+<p>Versions of the CFS are open-source, and can run on various platforms, including RTEMS virtual machines, embedded ColdFire processors, and, in the future, Rasperry Pi processors. A ground system, such as JCAT, was the missing link to allow a community of CFS developers to form and create Apps for their own and each others' use.</p>
 
-<h3>
-<a name="designer-templates" class="anchor" href="#designer-templates"><span class="octicon octicon-link"></span></a>Designer Templates</h3>
+<h2>
+<a name="how-does-jcat-help" class="anchor" href="#how-does-jcat-help"><span class="octicon octicon-link"></span></a>How does JCAT help?</h2>
 
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
+<p>JCAT is the first open-source ground system for CFS App development. It is designed to be a lightwieght, rapid-application prototype development program. JCAT accompishes three tasks to aid in CFS App development: command-sending, telemetry-displaying, and event message-displaying. To test an App, developers simply need to connect JCAT to the CFS containing their App via ethernet cable, router, or virtual machine, and load its 'App Profile' into JCAT at runtime. </p>
 
-<h3>
-<a name="rather-drive-stick" class="anchor" href="#rather-drive-stick"><span class="octicon octicon-link"></span></a>Rather Drive Stick?</h3>
+<h2>
+<a name="what-is-an-app-profile" class="anchor" href="#what-is-an-app-profile"><span class="octicon octicon-link"></span></a>What is an App Profile?</h2>
 
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
+<p>An App Profile is an XML file that describes all the information JCAT needs to send commands to and display telemetry from an App. You must create or obtain a correctly-defined App Profile in order to use an App. Examples of App Profiles are available in "App Profiles (CFE 6.1)" within "App Profiles".
+To create an App Profile, you must first know all its commands and the form of its telemetry housekeeping. Next, you should navigate to "App Profile Creation Guide.docx" in "User Help".</p>
 
-<h3>
-<a name="authors-and-contributors" class="anchor" href="#authors-and-contributors"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
+<h2>
+<a name="what-platformsjres-does-jcat-support" class="anchor" href="#what-platformsjres-does-jcat-support"><span class="octicon octicon-link"></span></a>What platforms/JRE's does JCAT support?</h2>
 
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
+<p>JCAT can run on Macintosh, Windows, and Linux on 32 or 64-bit JRE's of Java 6 or later, though it has been designed for Windows. JCAT can test Apps from a CFS running on a virtual machine, over LAN, or through a router.</p>
 
-<h3>
-<a name="support-or-contact" class="anchor" href="#support-or-contact"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
+<h2>
+<a name="how-do-i-get-started-using-jcat" class="anchor" href="#how-do-i-get-started-using-jcat"><span class="octicon octicon-link"></span></a>How do I get started using JCAT?</h2>
 
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
+<ol>
+<li>Determine your Java JRE, and click the corresponding JCAT version in the "Executables" folder. Click 'View Raw' and save it to your hard drive. </li>
+<li>Navigate to "App Profiles", open the folder of your cFE version, and download the files. </li>
+<li>Navigate to "Constant Definition Files", and open the file of your cFE version. </li>
+<li>Double-click JCAT_XXXXX.jar, and follow the instructions in Help &gt; Getting Started. (for Mac users, you must open Terminal, navigate to the location of JCAT, and type "java -XstartOnFirstThread -jar " and the name of your JCAT jarfile.</li>
+</ol><h2>
+<a name="how-do-i-get-started-developing-for-jcat" class="anchor" href="#how-do-i-get-started-developing-for-jcat"><span class="octicon octicon-link"></span></a>How do I get started developing for JCAT?</h2>
+
+<ol>
+<li>Email  for permission to be added as a collaborator on GitHub. This will allow you to push changes.</li>
+<li>Download Eclipse Java EE IDE.</li>
+<li>Download EGit from the Marketplace, and set it up correctly.</li>
+<li>Open the Repositories view, and pull JCAT.</li>
+</ol><p>For further instructions, navigate to "Developer Documentation" and open "Configuring Eclipse".</p>
       </section>
     </div>
 
