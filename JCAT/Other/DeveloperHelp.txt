@@ -1,5 +1,0 @@
-DEVELOPER HELP:
-
-1. When executing JCAT in eclipse, ensure that the SWT .jar is the first listed in the Project Explorer, as it will use this one to compile.
-2. When executing JCAT in eclipse, you will not receive packets from a wireless router. You must export it to a .jar for full functionality.
-3. When exporting JCAT in eclipse, if you leave all SWT .jars in the build path, you will export an (almost) multiplatform .jar. The exported .jar can be altered to run on various JREs by simply editing the manifest file and putting the applicable SWT library first in the list following "Rsrc-Class-Path: ".

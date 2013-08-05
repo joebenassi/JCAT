@@ -42,7 +42,7 @@ public final class ShowAboutPopup {
 		FormData data = new FormData();
 
 		Label JCATLogoLabel = new Label(shell, SWT.NONE);
-		JCATLogoLabel.setImage(ResourceLoader.largeJCATLogo);
+		JCATLogoLabel.setImage(ResourceLoader.bigJCATLogo);
 		data = new FormData();
 		JCATLogoLabel.setLayoutData(data);
 
