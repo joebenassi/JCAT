@@ -10,11 +10,11 @@ The CFS, being so reusable, can run on various platforms, and hopes to create a 
 JCAT is the first open-source ground system for CFS App development. It is designed to be a lightwieght, rapid-application prototype development program. JCAT accompishes three tasks to aid in CFS App development: command-sending, telemetry-displaying, and event message-displaying. To test an App, developers simply need to load its 'App Profile' into JCAT at runtime. 
 
 ##What is an App Profile?
-An App Profile is an XML file that describes all the App information that JCAT needs to send commands and display telemetry from it. You must create or obtain a correctly-defined App Profile in order to use an App. Examples of App Profiles are available in "App Profiles (CFE 6.1)", and apply to CFE 6.1, in development.
-To create an App Profile, you must first know all its commands and its telemetry housekeeping packet. Then, you should navigate to "App Profile Creation Guide.docx" in "User Help".
+An App Profile is an XML file that describes all the App information that JCAT needs to send commands and display telemetry from it. You must create or obtain a correctly-defined App Profile in order to use an App. Examples of App Profiles are available in "App Profiles (CFE 6.1)" within "App Profiles", and apply to CFE 6.1, which is in development.
+To create an App Profile, you must first know all its commands and its telemetry housekeeping packet. Next, you should navigate to "App Profile Creation Guide.docx" in "User Help".
 	
 ##What platforms/JRE's does JCAT support?
-JCAT can ran on Macintosh, Windows, and Linux on 32 or 64-bit JRE's of Java 6 or later, though it has been designed for Windows. JCAT can test Apps in a CFS running on a virtual machine, over LAN, or over a router.
+JCAT can run on Macintosh, Windows, and Linux on 32 or 64-bit JRE's of Java 6 or later, though it has been designed for Windows. JCAT can test Apps in a CFS running on a virtual machine, over LAN, or over a router.
 
 ##How do I get started using JCAT?
 1. Determine your Java JRE, and click the corresponding JCAT version in the "Executables" folder. Click 'View Raw' and save it to your hard drive. 
@@ -28,4 +28,4 @@ JCAT can ran on Macintosh, Windows, and Linux on 32 or 64-bit JRE's of Java 6 or
 3. Download EGit from the Marketplace, and set it up correctly.
 4. Open the Repositories view, and pull JCAT.
 
-for further instructions, navigate to "Developer Documentation" and open "Configuring Eclipse".
+For further instructions, navigate to "Developer Documentation" and open "Configuring Eclipse".
