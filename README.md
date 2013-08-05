@@ -2,9 +2,9 @@
 	  <img src="https://raw.github.com/joebenassi/JCAT/master/JCAT/res/Images/JCATLogoHuge.png">
 	</p>
 #Java Command And Telemetry (JCAT)
-JCAT is a Java program created at the NASA Goddard Space Flight Center to aid in CFS App development. The CFS (Core Flight System) is a flight software product line that is being used by multiple NASA centers. The CFS provides mission-independent, reusable, core flight software services and applications. The cFE (Core Flight Executive) is a set of applications for the CFS developed by NASA. 
+JCAT is a Java program created at the NASA Goddard Space Flight Center to aid in CFS App development. The CFS (Core Flight System) is a flight software product line that is being used by multiple NASA centers. The CFS provides mission-independent, reusable, core flight software services and applications. The cFE (Core Flight Executive) is a set of applications for the CFS also developed by NASA. 
 	
-The CFS, being so reusable, can run on various platforms, and hopes to create a community of developers to create Apps to incorperate into the CFS for mutual benefit. As a result, NASA has released versions of the CFS that are open-source, and has released JCAT as a tool for independant App development.
+Versions of the CFS are open-source, and can run on various platforms, including RTEMS virtual machines, embedded ColdFire processors, and, in the future, Rasperry Pi processors. A ground system, such as JCAT, was the missing link to allow a community of CFS developers to form and create Apps for their own and each others' use.
 	
 ##How does JCAT help?
 JCAT is the first open-source ground system for CFS App development. It is designed to be a lightwieght, rapid-application prototype development program. JCAT accompishes three tasks to aid in CFS App development: command-sending, telemetry-displaying, and event message-displaying. To test an App, developers simply need to load its 'App Profile' into JCAT at runtime. 
