@@ -1,6 +1,5 @@
-
 #Configuring Eclipse for JCAT Development
-###Note: This tutorial will use Eclipse 4.3 to demonstrate the setup.
+<b>Note: </b>This tutorial will use Eclipse 4.3 to demonstrate the setup.
 
 ##Procedure:
 1. 	Download Eclipse Standard 4.3.
