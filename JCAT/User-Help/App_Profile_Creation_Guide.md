@@ -175,25 +175,22 @@ This document is to help users create App Profiles: XML files that can be parsed
 #####New Terms:
 ######Within <strong>&lt;choiceparameter&gt;</strong>:
 <ul>
-	<li><strong>&lt;name&gt;</strong>:     </li>
-	<li><strong>&lt;type&gt;</strong>: (Same as Telemetry > Parameter > type).</li>
-	<li><strong>&lt;choice&gt;</strong>:     </li>
+	<li><strong>&lt;name&gt;</strong>: The string to display as this <strong>&lt;choiceparameter&gt;</strong>'s name in the GUI.</li>
+	<li><strong>&lt;type&gt;</strong>: (Same as <strong>&lt;telemetry&gt;&lt;parameter&gt;&lt;type&gt;</strong>).</li>
+	<li><strong>&lt;choice&gt;</strong>: A possible option for the user to select as this <strong>&lt;choiceparameter&gt;</strong>'s value in the GUI. A single <strong>&lt;choice&gt;</strong> must be selected for this command to send.</li>
 	<ul>
-		<li><strong>&lt;name&gt;</strong>:     </li>
-		<li><strong>&lt;value&gt;</strong>:     </li>
+		<li><strong>&lt;name&gt;</strong>: The string to display as this <strong>&lt;choice&gt;</strong>'s name in the GUI.</li>
+		<li><strong>&lt;value&gt;</strong>: The integer value to set as this <strong>&lt;choiceparameter&gt;</strong>'s value if this <strong>&lt;choice&gt;</strong> is chosen and this <strong>&lt;command&gt;</strong> is sent.</li>
 	</ul>
 </ul>
 ######Within <strong>&lt;inputparameter&gt;</strong>:
 <ul>
-	<li><strong>&lt;name&gt;</strong>:     </li>
-	<li><strong>&lt;type&gt;</strong>: (Same as Telemetry > Parameter > type).</li>
-	<li><strong>&lt;const&gt;</strong>: (Same as Telemetry > Parameter > const).</li>
-	<li><strong>&lt;primitive&gt;</strong>: (Same as Telemetry > Parameter > primitive).</li>
+	<li><strong>&lt;name&gt;</strong>: The string to display as this <strong>&lt;inputparameter&gt;</strong>'s name in the GUI.</li>
+	<li><strong>&lt;type&gt;</strong>: (Same as <strong>&lt;telemetry&gt;&lt;parameter&gt;&lt;type&gt;</strong>).</li>
+	<li><strong>&lt;const&gt;</strong>: (Same as <strong>&lt;telemetry&gt;&lt;parameter&gt;&lt;const&gt;</strong>).</li>
+	<li><strong>&lt;primitive&gt;</strong>: (Same as <strong>&lt;telemetry&gt;&lt;parameter&gt;&lt;primitive&gt;</strong>).</li>
 </ul>
 ######Within <strong>&lt;spare&gt;</strong>:
 <ul>
-	<li><strong>&lt;type&gt;</strong>: (Same as Telemetry > Parameter > type). Note: for a Spare, the type is only used to denote the amount of bytes for the spare.</li>
+	<li><strong>&lt;type&gt;</strong>: (Same as <strong>&lt;telemetry&gt;&lt;parameter&gt;&lt;type&gt;</strong>). Note: for a <strong>&lt;spare&gt;</strong>, the <strong>&lt;type&gt;</strong> is only used to denote the amount of bytes to allocate to it.</li>
 </ul>
-
-
-	
