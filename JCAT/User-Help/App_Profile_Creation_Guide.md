@@ -18,18 +18,18 @@ This document is to help users create App Profiles: XML files that can be parsed
 	<channel>
 		<name>[APPNAME]</name>
 		<configs>
-			<config>
+			[<config>
 				<name>[CPU 1]</name>
 				<cmdmid>[0x1804]</cmdmid>
 				<tlmmid>[0x0804]</tlmmid>
-			</config>
+			</config>]
 		</configs>
 		<commandoffset>[+0]</commandoffset>
-		<commands></commands>
-		<telemetry></telemetry>
+		<commands>[]</commands>
+		<telemetry>[]</telemetry>
 	</channel>
 
-<strong>Notes: </strong>The above example meets the minimum requirements to define an App Profile. The parts contained in brackets are specific to the App.
+<strong>Notes: </strong>The above example meets the minimum requirements to define an App Profile. The parts contained in brackets are specific to the App, and would not be included in a real App Profile.
 <br>
 <br>
 
@@ -54,15 +54,15 @@ This document is to help users create App Profiles: XML files that can be parsed
 ###Moderate-Depth App Profile Example (the above example, but expanded):
 	<?xml version="1.0" encoding="UTF-8"?>
 	<channel>
-		<name>[APPNAME]</name>
+		<name>APPNAME</name>
 		<configs>
 			<config>
-				<name>[CPU 1]</name>
-				<cmdmid>[0x1804]</cmdmid>
-				<tlmmid>[0x0804]</tlmmid>
+				<name>CPU 1</name>
+				<cmdmid>0x1804</cmdmid>
+				<tlmmid>0x0804</tlmmid>
 			</config>
 		</configs>
-		<commandoffset>[+0]</commandoffset&gt;
+		<commandoffset>+0</commandoffset&gt;
 		<commands>
 			<command>
 				<name>CFE_TBL_VALIDATE_CC</name>
