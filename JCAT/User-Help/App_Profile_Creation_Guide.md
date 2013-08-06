@@ -19,7 +19,7 @@ This document is to help users create App Profiles: XML files that can be parsed
 		<name>[APPNAME]</name>
 		<configs>
 			[<config>
-				<name>[CPU 1]</name>
+				<name>[CPU1]</name>
 				<cmdmid>[0x1804]</cmdmid>
 				<tlmmid>[0x0804]</tlmmid>
 			</config>]
@@ -57,7 +57,7 @@ This document is to help users create App Profiles: XML files that can be parsed
 		<name>APPNAME</name>
 		<configs>
 			<config>
-				<name>CPU 1</name>
+				<name>CPU1</name>
 				<cmdmid>0x1804</cmdmid>
 				<tlmmid>0x0804</tlmmid>
 			</config>
