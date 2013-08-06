@@ -24,5 +24,5 @@ JCAT can run on Windows, Linux, and Macintosh on 32 and 64-bit JRE's of Java 6 o
 5. To share your App and App Profile for community use, email joebenassi@gmail.com for instructions.
 
 ##How do I get started developing for JCAT?
-1. Open and follow the directions within <a href="https://github.com/joebenassi/JCAT/blob/master/JCAT/Developer-Help/Configuring_Eclipse.md">JCAT/Developer-Help/Configuring_Eclipse.md</a>.
+1. Open and follow the directions within <a href="https://github.com/joebenassi/JCAT/blob/master/JCAT/Developer-Help/Adding_JCAT_to_Eclipse.md">JCAT/Developer-Help/Adding_JCAT_to_Eclipse.md</a>.
 2. To push changes to JCAT for community use, email joebenassi@gmail.com for permission to be added as a collaborator.
