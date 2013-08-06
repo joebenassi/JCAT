@@ -20,7 +20,7 @@ JCAT can run on Macintosh, Windows, and Linux on 32 or 64-bit JRE's of Java 6 or
 1. Determine your Java JRE, and select the corresponding JCAT version in <a href="https://github.com/joebenassi/JCAT/blob/master/JCAT/Executables/">JCAT/Executables/</a>. Click 'View Raw', and save the resulting file to your hard drive. 
 2. Navigate to <a href="https://github.com/joebenassi/JCAT/blob/master/JCAT/App-Profiles/">JCAT/App-Profiles/</a>, open the folder for your cFE version, and download the files. 
 3. Navigate to <a href="https://github.com/joebenassi/JCAT/blob/master/JCAT/Constant-Definition-Files/">JCAT/Constant-Definition-Files/</a>, open the folder for your cFE version, and download the desired file.
-4. Double-click the JCAT executable you downloaded in Step 1, and follow the in-program instructions. (for 64-bit Mac users, you must open Terminal, navigate to the location of JCAT, and type "java -XstartOnFirstThread -jar JCAT_osx64".
+4. Double-click the JCAT executable you downloaded in Step 1, and follow the in-program instructions. (for 64-bit Mac users to open JCAT, you must open Terminal, navigate to the location of JCAT, and type "java -XstartOnFirstThread -jar JCAT_osx64".
 
 ##How do I get started developing for JCAT?
 1. Email <thisemail> for permission to be added as a collaborator on GitHub. This will allow you to push changes.
