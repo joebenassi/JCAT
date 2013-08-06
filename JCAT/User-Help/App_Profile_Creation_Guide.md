@@ -192,5 +192,5 @@ This document is to help users create App Profiles: XML files that can be parsed
 </ul>
 ######Within <strong>&lt;spare&gt;</strong>:
 <ul>
-	<li><strong>&lt;type&gt;</strong>: (Same as <strong>&lt;telemetry&gt;&lt;parameter&gt;&lt;type&gt;</strong>). Note: for a <strong>&lt;spare&gt;</strong>, the <strong>&lt;type&gt;</strong> is only used to denote the amount of bytes to allocate to it.</li>
+	<li><strong>&lt;type&gt;</strong>: (Same as <strong>&lt;telemetry&gt;&lt;parameter&gt;&lt;type&gt;</strong>). <strong>Note: </strong>for a <strong>&lt;spare&gt;</strong>, the <strong>&lt;type&gt;</strong> is only used to denote the amount of bytes to allocate to it.</li>
 </ul>
