@@ -115,3 +115,85 @@ This document is to help users create App Profiles: XML files that can be parsed
 	<li><strong>&lt;const&gt;:</strong> The variable whose value, as defined in the imported Constant Definition file at run-time, is multiplied by the byte value of this <strong>&lt;parameter&gt;</strong>'s <strong>&lt;type&gt;</strong> to assign the number of bytes for this <strong>&lt;parameter&gt;</strong> in this command packet. Only considered if this <strong>&lt;parameter&gt;</strong>'s <strong>&lt;primitive&gt;</strong> is a string.</li>
 </ul>
 <br>
+###In-Depth App Profile Example (the above example, but expanded):
+	<?xml version="1.0" encoding="UTF-8"?>
+	<channel>
+		<name>APPNAME</name>
+		<configs>
+			<config>
+				<name>CPU1</name>
+				<cmdmid>0x1804</cmdmid>
+				<tlmmid>0x0804</tlmmid>
+			</config>
+		</configs>
+		<commandoffset>+0</commandoffset>
+		<commands>
+			<command>
+				<name>CFE_TBL_VALIDATE_CC</name>
+				<parameters> 					
+					<choiceparameter>
+						<name>ActiveTblFlag</name>
+						<type>uint16</type>
+						<choice>
+							<name>CFE_TBL_INACTIVE_BUFFER</name>
+							<value>0</value>
+						</choice>
+						<choice>
+							<name>CFE_TBL_ACTIVE_BUFFER</name>
+							<value>1</value>
+						</choice>
+					</choiceparameter>
+					<inputparameter>
+						<name>TableName</name>
+						<type>char</type>
+						<const>CFE_TBL_MAX_FULL_NAME_LEN</const>
+						<primitive>string</primitive>
+					</inputparameter>
+					<spare>
+						<type>uint8</type>
+					</spare>
+				</parameters>
+			</command>
+		</commands>
+		<telemetry>
+			<parameter>
+				<name>LastFileDumped</name>
+				<type>char</type>
+				<primitive>string</primitive>
+				<const>OS_MAX_PATH_LEN</const>
+			</parameter>
+			<parameter>
+				<name>ByteAlignPad2</name>
+				<type>uint16</type>
+			</parameter>	
+		</telemetry>
+	</channel>
+	
+<strong>Notes: </strong>The above example <strong>is</strong> a correctly-formatted App Profile, and will, as such, load into JCAT
+<br>
+<br>
+#####New Terms:
+######Within <strong>&lt;choiceparameter&gt;</strong>:
+<ul>
+	<li><strong>&lt;name&gt;</strong>:     </li>
+	<li><strong>&lt;type&gt;</strong>: (Same as Telemetry > Parameter > type).</li>
+	<li><strong>&lt;choice&gt;</strong>:     </li>
+	<ul>
+		<li><strong>&lt;name&gt;</strong>:     </li>
+		<li><strong>&lt;value&gt;</strong>:     </li>
+	</ul>
+</ul>
+######Within <strong>&lt;inputparameter&gt;</strong>:
+<ul>
+	<li><strong>&lt;name&gt;</strong>:     </li>
+	<li><strong>&lt;type&gt;</strong>: (Same as Telemetry > Parameter > type).</li>
+	<li><strong>&lt;const&gt;</strong>: (Same as Telemetry > Parameter > const).</li>
+	<li><strong>&lt;primitive&gt;</strong>: (Same as Telemetry > Parameter > primitive).</li>
+</ul>
+######Within <strong>&lt;spare&gt;</strong>:
+<ul>
+	<li><strong>&lt;type&gt;</strong>: (Same as Telemetry > Parameter > type). Note: for a Spare, the type is only used to denote the amount of bytes for the spare.</li>
+</ul>
+
+
+	
