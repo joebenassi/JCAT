@@ -93,15 +93,14 @@ This document is to help users create App Profiles: XML files that can be parsed
 #####New Terms:
 ######Within <strong>&lt;commands&gt;&lt;command&gt;</strong>: Defines a command that can be used on the App.
 <ul>
-	<li><strong>&lt;name&gt;:</strong> The string to display as the command's name in the GUI.</li>
-	<li><strong>&lt;parameters&gt;:</strong> The parameters required for the command to be sent. This can be absent if there are no parameters.</li>
+	<li><strong>&lt;name&gt;:</strong> The string to display as the <strong>&lt;command&gt;</strong>'s name in the GUI.</li>
+	<li><strong>&lt;parameters&gt;:</strong> The parameters required for the <strong>&lt;command&gt;</strong> to be sent. This can be absent if there are no parameters.</li>
 	<ul>
 		<li><strong>&lt;choiceparameter&gt;:</strong> The parameter type that requires the user to choose from a select list in drop-down form.</li>
 		<li><strong>&lt;inputparameter&gt;:</strong> The parameter type that requires the user to manually enter the value in field.</li>
 		<li><strong>&lt;spare&gt;:</strong> The parameter type that is invisible to the user, which contributes only byte values of zero to the packet.</li>
 	</ul>
 </ul>
-<br>
 
 ######Within <strong>&lt;telemetry&gt;&lt;parameter&gt;</strong>: Defines a telemetry parameter for the App sent by its Housekeeping Packet.
 <ul>
@@ -113,6 +112,6 @@ This document is to help users create App Profiles: XML files that can be parsed
 		<li>char</li>
 	</ul>
 	<li><strong>&lt;primitive&gt;:</strong> The primitive of the <strong>&lt;parameter&gt;</strong>. Can be either a string or integer. If defined as anything other than "string", or is missing entirely, it is considered an integer.</li>
-	<li><strong>&lt;const&gt;:</strong> The variable whose value, as defined in the Constant Definition file, is multiplied by the byte value of the <strong>&lt;parameter&gt;</strong>'s <strong>&lt;type&gt;</strong> to determine the number of bytes assigned to this <strong>&lt;parameter&gt;</strong>. Only works if the <strong>&lt;parameter&gt;</strong>'s </strong>&lt;primitive&gt;</strong> is a string.</li>
+	<li><strong>&lt;const&gt;:</strong> The variable whose value, as defined in the Constant Definition file, is multiplied by the byte value of the <strong>&lt;parameter&gt;</strong>'s <strong>&lt;type&gt;</strong> to determine the number of bytes assigned to this <strong>&lt;parameter&gt;</strong>. Only works if the <strong>&lt;parameter&gt;</strong>'s <strong>&lt;primitive&gt;</strong> is a string.</li>
 </ul>
 <br>
