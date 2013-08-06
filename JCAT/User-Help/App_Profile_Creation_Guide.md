@@ -13,7 +13,7 @@ This document is to help users create App Profiles: XML files that can be parsed
 1. The command code for each command must equal <strong>&lt;commandoffset&gt;</strong> + <strong>x</strong>, where <strong>x</strong> is the index of its App Profiles' matching <strong>&lt;command&gt;</strong> within <strong>&lt;commands&gt;</strong>.
 
 <br>
-###Basic App Profile Example:
+###Basic-Depth App Profile Example:
 	<?xml version="1.0" encoding="UTF-8"?>
 	<channel>
 		<name>[APPNAME]</name>
