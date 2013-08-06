@@ -1,10 +1,10 @@
 #App Profile Creation Guide
 ###Summary of Document 
-This document is to help users create App Profiles: XML files that can be parsed by JCAT to allow command-sending and telemetry-streaming for an App running on the CFS. For additional help, look at CFE App Profiles for examples.
+This document is to help users create App Profiles: XML files that can be parsed by JCAT to allow command-sending and telemetry-streaming for Apps running on the CFS. For additional help, look at CFE App Profiles for examples.
 <br>
 
 ###Requirements for App Profiles:
-######With respect to the CFS version of the App, everything in the App Profile is defined and in correct order, including:
+######With respect to the CFS version of the App, everything in the App Profile is defined, accurate, and in correct order, including:
 1. All <strong>&lt;commands&gt;&lt;command&gt;</strong>s
 2. All <strong>&lt;telemetry&gt;&lt;parameter&gt;</strong>s
 3. All <strong>&lt;inputparameter&gt;</strong>s and <strong>&lt;choiceparameter&gt;</strong>s within <strong>&lt;commands&gt;&lt;command&gt;&lt;parameters&gt;</strong>
@@ -39,7 +39,7 @@ This document is to help users create App Profiles: XML files that can be parsed
 	<li><strong>&lt;name&gt;:</strong> The string to display as the App's name in the GUI</li>
 	<li><strong>&lt;configs&gt;:</strong> The different possible <strong>&lt;config&gt;</strong>s that the App can run as</li>
 	<ul>
-		<li><strong>&lt;config&gt;:</strong> A set of a <strong>&lt;cmdmid&gt;</strong> and <strong>&lt;tlmmid&gt;</strong>, with a <strong>&lt;name&gt;</strong> to describe it in the GUI. You can interact with more than one instance of the App by selecting a <strong>&lt;config&gt;</strong> for each desired instance at runtime</li>
+		<li><strong>&lt;config&gt;:</strong> A set of a <strong>&lt;cmdmid&gt;</strong>, <strong>&lt;tlmmid&gt;</strong>, and <strong>&lt;name&gt;</strong>. You can interact with more than one instance of the App by selecting a <strong>&lt;config&gt;</strong> for each desired instance at runtime</li>
 		<ul>
 			<li><strong>&lt;name&gt;:</strong> The name to describe this <strong>&lt;config&gt;</strong> in the GUI</li>
 			<li><strong>&lt;cmdmid&gt;:</strong> The command message ID
@@ -48,7 +48,7 @@ This document is to help users create App Profiles: XML files that can be parsed
 	</ul>
 	<li><strong>&lt;commandoffset&gt;:</strong> The lowest command code for the App (usually 0)</li>
 	<li><strong>&lt;commands&gt;:</strong> The different <strong>&lt;command&gt;</strong>s that the App can execute</li>
-	<li><strong>&lt;telemetry&gt;:</strong> The different telemetry <strong>&lt;parameters&gt;</strong>s that the App's Housekeeping Packet outputs</li>
+	<li><strong>&lt;telemetry&gt;:</strong> The different telemetry <strong>&lt;parameter&gt;</strong>s that the App's Housekeeping Packet outputs</li>
 </ul>
 <br>
 ###Moderate-Depth App Profile Example (the above example, but expanded):
