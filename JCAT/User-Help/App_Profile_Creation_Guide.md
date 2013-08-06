@@ -36,19 +36,19 @@ This document is to help users create App Profiles: XML files that can be parsed
 #####New Terms:
 ######Within <strong>&lt;channel&gt;</strong>:
 <ul>
-	<li><strong>&lt;name&gt;:</strong> The string to display as the App's name in the GUI</li>
-	<li><strong>&lt;configs&gt;:</strong> The different possible <strong>&lt;config&gt;</strong>s that the App can run as</li>
+	<li><strong>&lt;name&gt;:</strong> The string to display as the App's name in the GUI.</li>
+	<li><strong>&lt;configs&gt;:</strong> The different possible <strong>&lt;config&gt;</strong>s that the App can run as.</li>
 	<ul>
-		<li><strong>&lt;config&gt;:</strong> A set of a <strong>&lt;cmdmid&gt;</strong>, <strong>&lt;tlmmid&gt;</strong>, and <strong>&lt;name&gt;</strong>. You can interact with more than one instance of the App by selecting a <strong>&lt;config&gt;</strong> for each desired instance at runtime</li>
+		<li><strong>&lt;config&gt;:</strong> A set of a <strong>&lt;cmdmid&gt;</strong>, <strong>&lt;tlmmid&gt;</strong>, and <strong>&lt;name&gt;</strong>. You can interact with more than one instance of the App by selecting a <strong>&lt;config&gt;</strong> for each desired instance at runtime.</li>
 		<ul>
-			<li><strong>&lt;name&gt;:</strong> The name to describe this <strong>&lt;config&gt;</strong> in the GUI</li>
-			<li><strong>&lt;cmdmid&gt;:</strong> The command message ID
-			<li><strong>&lt;tlmmid&gt;:</strong> The telemetry message ID
+			<li><strong>&lt;name&gt;:</strong> The name to describe this <strong>&lt;config&gt;</strong> in the GUI.</li>
+			<li><strong>&lt;cmdmid&gt;:</strong> The command message ID.
+			<li><strong>&lt;tlmmid&gt;:</strong> The telemetry message ID.
 		</ul>
 	</ul>
-	<li><strong>&lt;commandoffset&gt;:</strong> The lowest command code for the App (usually 0)</li>
-	<li><strong>&lt;commands&gt;:</strong> The different <strong>&lt;command&gt;</strong>s that the App can execute</li>
-	<li><strong>&lt;telemetry&gt;:</strong> The different telemetry <strong>&lt;parameter&gt;</strong>s that the App's Housekeeping Packet outputs</li>
+	<li><strong>&lt;commandoffset&gt;:</strong> The lowest command code for the App (usually 0).</li>
+	<li><strong>&lt;commands&gt;:</strong> The different <strong>&lt;command&gt;</strong>s that the App can execute.</li>
+	<li><strong>&lt;telemetry&gt;:</strong> The different telemetry <strong>&lt;parameter&gt;</strong>s that the App's Housekeeping Packet outputs.</li>
 </ul>
 <br>
 ###Moderate-Depth App Profile Example (the above example, but expanded):
