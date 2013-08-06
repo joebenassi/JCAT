@@ -10,10 +10,10 @@ This document is to help users create App Profiles: XML files that can be parsed
 3. All <strong>&lt;inputparameter&gt;</strong>s and <strong>&lt;choiceparameter&gt;</strong>s within <strong>&lt;commands&gt;&lt;command&gt;&lt;parameters&gt;</strong>
 
 ######Additionally, the App itself must abide by the following requirement:
-1. The command code for each command within the CFS App must equal <strong>&lt;commandoffset&gt;</strong> + <strong>x</strong>, where <strong>x</strong> is the index of the matching <strong>&lt;command&gt;</strong> within <strong>&lt;commands&gt;</strong> in its App Profile
+1. The command code for each command must equal <strong>&lt;commandoffset&gt;</strong> + <strong>x</strong>, where <strong>x</strong> is the index of its matching <strong>&lt;command&gt;</strong> within its App Profiles' <strong>&lt;commands&gt;</strong>
 
 <br>
-###Basic App Profile Example (not a current App Profile):
+###Basic App Profile Example:
 	<?xml version="1.0" encoding="UTF-8"?>
 	<channel>
 		<name>[APPNAME]</name>
@@ -41,7 +41,7 @@ This document is to help users create App Profiles: XML files that can be parsed
 	<li><strong>&lt;config&gt;:</strong> A set of a <strong>&lt;cmdmid&gt;</strong> and <strong>&lt;tlmmid&gt;</strong>, with a <strong>&lt;name&gt;</strong> to describe it in the GUI. You can interact with more than one instance of the App by selecting a <strong>&lt;config&gt;</strong> for each desired instance at runtime</li>
 	<li><strong>&lt;commandoffset&gt;:</strong> The lowest command code for the App (usually 0)</li>
 	<li><strong>&lt;commands&gt;:</strong> The different <strong>&lt;command&gt;</strong>s that the App can execute</li>
-	<li><strong>&lt;telemetry&gt;:</strong> The different telemetry <strong>&lt;parameters&gt;</strong>s that the App's Housekeeping Packet displays</li>
+	<li><strong>&lt;telemetry&gt;:</strong> The different telemetry <strong>&lt;parameters&gt;</strong>s that the App's Housekeeping Packet outputs</li>
 </ul>
 <br>
 ###Moderate-Depth App Profile Example (the above example, but expanded):
