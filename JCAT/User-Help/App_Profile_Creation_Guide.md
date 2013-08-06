@@ -112,6 +112,6 @@ This document is to help users create App Profiles: XML files that can be parsed
 		<li>char</li>
 	</ul>
 	<li><strong>&lt;primitive&gt;:</strong> The primitive of this <strong>&lt;parameter&gt;</strong>. Can be either a string or integer. If defined as anything other than "string", or is missing entirely, it is considered an integer.</li>
-	<li><strong>&lt;const&gt;:</strong> The variable whose value, as defined in the imported Constant Definition file at run-time, is multiplied by the byte value of this <strong>&lt;parameter&gt;</strong>'s <strong>&lt;type&gt;</strong> to determine the number of bytes assigned to this <strong>&lt;parameter&gt;</strong> in the command packet. Only considered if this <strong>&lt;parameter&gt;</strong>'s <strong>&lt;primitive&gt;</strong> is a string.</li>
+	<li><strong>&lt;const&gt;:</strong> The variable whose value, as defined in the imported Constant Definition file at run-time, is multiplied by the byte value of this <strong>&lt;parameter&gt;</strong>'s <strong>&lt;type&gt;</strong> to assign the number of bytes for this <strong>&lt;parameter&gt;</strong> in this command packet. Only considered if this <strong>&lt;parameter&gt;</strong>'s <strong>&lt;primitive&gt;</strong> is a string.</li>
 </ul>
 <br>
