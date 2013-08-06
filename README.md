@@ -17,7 +17,7 @@ To create an App Profile, you must first know all its commands and its telemetry
 JCAT can run on Macintosh, Windows, and Linux on 32 or 64-bit JRE's of Java 6 or later, though it has been designed for Windows. JCAT can test any App in the CFS, whether or not it is in the cFE.
 
 ##How do I get started using JCAT?
-1. Determine your Java JRE, and select the corresponding JCAT version in "JCAT/Executables/". Click 'View Raw', and save the resulting file to your hard drive. 
+1. Determine your Java JRE, and select the corresponding JCAT version in <a href="https://github.com/joebenassi/JCAT/blob/master/JCAT/Executables/">JCAT/Executables/</a>. Click 'View Raw', and save the resulting file to your hard drive. 
 2. Navigate to <a href="https://github.com/joebenassi/JCAT/blob/master/JCAT/App-Profiles/">JCAT/App-Profiles/</a>, open the folder for your cFE version, and download the files. 
 3. Navigate to <a href="https://github.com/joebenassi/JCAT/blob/master/JCAT/Constant-Definition-Files/">JCAT/Constant-Definition-Files/</a>, and download the file for your cFE version. 
 4. Double-click the JCAT executable you downloaded in Step 1, and follow the in-program instructions. (for 64-bit Mac users, you must open Terminal, navigate to the location of JCAT, and type "java -XstartOnFirstThread -jar JCAT_osx64".
