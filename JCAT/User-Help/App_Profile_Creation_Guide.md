@@ -29,7 +29,7 @@ This document is to help users create App Profiles: XML files that can be parsed
 		<telemetry>[]</telemetry>
 	</channel>
 
-<strong>Notes: </strong>The above example meets the minimum requirements to define an App Profile. The parts contained in brackets are specific to the App, and would not be included in a real App Profile.
+<strong>Notes: </strong>The above example meets the minimum requirements to define an App Profile. The parts contained in brackets are specific to the App, and would <strong>not</strong> be included in a real App Profile. They will be removed in subsequent examples.
 <br>
 <br>
 
