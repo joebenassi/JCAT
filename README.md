@@ -14,7 +14,7 @@ An App Profile is an XML file that describes all the information JCAT needs to s
 To create an App Profile, you must first know all its commands and its telemetry housekeeping packet. Then, open <a href="https://github.com/joebenassi/JCAT/blob/master/JCAT/User-Help/App_Profile_Creation_Guide.md">JCAT/User-Help/App_Profile_Creation_Guide.md</a>.
 	
 ##What JRE's does JCAT support?
-JCAT can run on Macintosh, Windows, and Linux on 32 or 64-bit JRE's of Java 6 or later, though it has been designed graphically for Windows.
+JCAT can run on Windows, Linux, and Macintosh on 32 and 64-bit JRE's of Java 6 or later, though it has been designed graphically for Windows.
 
 ##How do I get started using JCAT?
 1. Determine your Java JRE, and select the corresponding JCAT version in <a href="https://github.com/joebenassi/JCAT/blob/master/JCAT/Executables/">JCAT/Executables/</a>. Click 'View Raw', and save the resulting file to your hard drive. 
