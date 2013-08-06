@@ -33,7 +33,7 @@
 <br>
 <p>If you are unable to open JCAT as described in Step 10 due to an error, try the following solutions:
 <ul>
-    <li>In the list of SWT libraries (swt_win64, swt_win32, swt_linux64, swt_linux32, swt_osx64, and swt_osx32), ensure that your Eclipse JDK's applicable SWT library is the topmost entry in the list. This is because when Eclipse compiles, it uses the first listed library instead of the one intended for your machine.</li>
+    <li>In the list of SWT libraries (swt_win64.jar, swt_win32.jar, swt_linux64.jar, swt_linux32.jar, swt_osx64.jar, and swt_osx32.jar), ensure that your Eclipse JDK's applicable SWT library is the topmost entry in the list. This is because when Eclipse compiles, it uses the first listed library instead of the one intended for your machine.</li>
     <li>Ensure that you are running a JDK of 1.6 or greater.</li>
     <li>If these solutions do not work, email joebenassi@gmail.com for help.</li>
 </ul>
