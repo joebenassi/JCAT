@@ -87,7 +87,8 @@ This document is to help users create App Profiles: XML files that can be parsed
 		</telemetry>
 	</channel>
 
-<strong>Notes: </strong>The above example is <strong>not</strong> a correctly-formatted App Profile. This is because, and only because, the contents within <strong>&lt;choiceparameter&gt;, &lt;inputparameter&gt;, and &lt;spare&gt; are not defined;
+<strong>Notes: </strong>The above example is <strong>not</strong> a correctly-formatted App Profile. This is because, and only because, the contents within <strong>&lt;choiceparameter&gt;</strong>, <strong>&lt;inputparameter&gt;</strong>, and <strong>&lt;spare&gt;</strong> are not defined.
+<br>
 <br>
 #####New Terms:
 ######Within <strong>&lt;commands&gt;&lt;command&gt;</strong>: Defines a command that can be used on the App.
