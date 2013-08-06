@@ -1,4 +1,7 @@
 /applications
 /gui
+/main
+/network
+/packets
 /resources
-/Images
+/utilities
