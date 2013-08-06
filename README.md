@@ -11,7 +11,7 @@ JCAT is the first open-source ground system for CFS App development. It is desig
 
 ##What is an App Profile?
 An App Profile is an XML file that describes all the information JCAT needs to send commands to and display telemetry from an App running on the CFS. You must create or obtain an App Profile in order to use an App in JCAT. Examples of App Profiles are available in <a href="https://github.com/joebenassi/JCAT/tree/master/JCAT/App-Profiles/CFE-6.1/">JCAT/App-Profiles/CFE-6.1/</a>.
-To create an App Profile, you must first know all its commands and its telemetry housekeeping packet. Then, open <a href="https://github.com/joebenassi/JCAT/blob/master/JCAT/User-Help/App_Profile_Creation_Guide.md">JCAT/User-Help/App_Profile_Creation_Guide.md</a>.
+To create an App Profile, you must first know its telemetry housekeeping packet and all its commands. Then, open <a href="https://github.com/joebenassi/JCAT/blob/master/JCAT/User-Help/App_Profile_Creation_Guide.md">JCAT/User-Help/App_Profile_Creation_Guide.md</a> for further instructions.
 	
 ##What JRE's does JCAT support?
 JCAT can run on Windows, Linux, and Macintosh on 32 and 64-bit JRE's of Java 6 or later, though it has been designed graphically for Windows.
