@@ -1,16 +1,16 @@
 #App Profile Creation Guide
 ###Summary of Document 
-This document is to help users create App Profiles: XML files that can be parsed by JCAT to allow command-sending and telemetry-streaming for Apps running on the CFS. For additional help, look at CFE App Profiles for examples.
+This document is to help users create App Profiles: XML files that can be parsed by JCAT to allow command-sending and telemetry-streaming for Apps running in the CFS. For additional help, look at CFE App Profiles for examples.
 <br>
 
 ###Requirements for App Profiles:
-######With respect to the CFS version of the App, everything in the App Profile is defined, accurate, and in correct order, including:
-1. All <strong>&lt;commands&gt;&lt;command&gt;</strong>s
-2. All <strong>&lt;telemetry&gt;&lt;parameter&gt;</strong>s
-3. All <strong>&lt;inputparameter&gt;</strong>s and <strong>&lt;choiceparameter&gt;</strong>s within <strong>&lt;commands&gt;&lt;command&gt;&lt;parameters&gt;</strong>
+######With respect to the CFS version of the App, everything in its App Profile is defined, accurate, and in correct order, including:
+1. All <strong>&lt;commands&gt;&lt;command&gt;</strong>s.
+2. All <strong>&lt;telemetry&gt;&lt;parameter&gt;</strong>s.
+3. All <strong>&lt;inputparameter&gt;</strong>s and <strong>&lt;choiceparameter&gt;</strong>s within <strong>&lt;commands&gt;&lt;command&gt;&lt;parameters&gt;</strong>.
 
 ######Additionally, the App itself must abide by the following requirement:
-1. The command code for each command must equal <strong>&lt;commandoffset&gt;</strong> + <strong>x</strong>, where <strong>x</strong> is the index of its App Profiles' matching <strong>&lt;command&gt;</strong> within <strong>&lt;commands&gt;</strong>
+1. The command code for each command must equal <strong>&lt;commandoffset&gt;</strong> + <strong>x</strong>, where <strong>x</strong> is the index of its App Profiles' matching <strong>&lt;command&gt;</strong> within <strong>&lt;commands&gt;</strong>.
 
 <br>
 ###Basic App Profile Example:
