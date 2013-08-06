@@ -11,7 +11,7 @@ JCAT is the first open-source ground system for CFS App development. It is desig
 
 ##What is an App Profile?
 An App Profile is an XML file that describes all the information JCAT needs to send commands to and display telemetry from an App running in the CFS. You must create or obtain an App Profile in order to use an App in JCAT. Examples of App Profiles are available in <a href="https://github.com/joebenassi/JCAT/tree/master/JCAT/App-Profiles/cFE-6.1/">JCAT/App-Profiles/cFE-6.1/</a>.
-To create an App Profile, you must first know its telemetry housekeeping packet and all its commands. Then, open <a href="https://github.com/joebenassi/JCAT/blob/master/JCAT/User-Help/App_Profile_Creation_Guide.md">JCAT/User-Help/App_Profile_Creation_Guide.md</a> for further instructions.
+To create an App Profile, you must first know its telemetry housekeeping packet and all its commands. Then, open the JCAT wiki's <a href="https://github.com/joebenassi/JCAT/wiki/App-Profile-Creation-Guide">App Profile Creation Guide</a> for further instructions.
 	
 ##What JRE's does JCAT support?
 JCAT can run on Windows, Linux, and Macintosh on 32 and 64-bit JRE's of Java 6 or later, though it has been designed graphically for Windows.
@@ -24,7 +24,7 @@ JCAT can run on Windows, Linux, and Macintosh on 32 and 64-bit JRE's of Java 6 o
 5. To share your App and App Profile for community use, email joebenassi@gmail.com for instructions.
 
 ##How do I get started developing for JCAT?
-1. Follow the directions within <a href="https://github.com/joebenassi/JCAT/blob/master/JCAT/Developer-Help/Adding_JCAT_to_Eclipse.md">JCAT/Developer-Help/Adding_JCAT_to_Eclipse.md</a>.
+1. Follow the directions in the JCAT wiki's <a href="https://github.com/joebenassi/JCAT/wiki/Adding-JCAT-to-Eclipse-for-JCAT-Development">Adding JCAT to Eclipse for JCAT Development</a>.
 2. To push changes to JCAT for community use, email joebenassi@gmail.com for permission to be added as a collaborator.
 
 <br>
