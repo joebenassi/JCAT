@@ -169,14 +169,14 @@ This document is to help users create App Profiles: XML files that can be parsed
 		</telemetry>
 	</channel>
 	
-<strong>Notes: </strong>The above example <strong>is</strong> a correctly-formatted App Profile and will, as such, load into JCAT
+<strong>Notes: </strong>The above example <strong>is</strong> a correctly-formatted App Profile and will, as such, load into JCAT.
 <br>
 <br>
 #####New Terms:
 ######Within <strong>&lt;choiceparameter&gt;</strong>:
 <ul>
 	<li><strong>&lt;name&gt;</strong>: The string to display as this <strong>&lt;choiceparameter&gt;</strong>'s name in the GUI.</li>
-	<li><strong>&lt;type&gt;</strong>: (Same as <strong>&lt;telemetry&gt;&lt;parameter&gt;&lt;type&gt;</strong>).</li>
+	<li><strong>&lt;type&gt;</strong>: (Same as <strong>&lt;telemetry&gt;&lt;parameter&gt;&lt;type&gt;</strong>). <strong>Note: </strong>at this time, <strong>&lt;choiceparameter&gt;</strong>s only function correctly if they are <strong>&lt;type&gt;</strong> integer.</li>
 	<li><strong>&lt;choice&gt;</strong>: A possible option for the user to select as this <strong>&lt;choiceparameter&gt;</strong>'s value in the GUI. A single <strong>&lt;choice&gt;</strong> must be selected for this command to send.</li>
 	<ul>
 		<li><strong>&lt;name&gt;</strong>: The string to display as this <strong>&lt;choice&gt;</strong>'s name in the GUI.</li>
