@@ -24,4 +24,4 @@ JCAT can run on Macintosh, Windows, and Linux on 32 or 64-bit JRE's of Java 6 or
 
 ##How do I get started developing for JCAT?
 1. Email <thisemail> for permission to be added as a collaborator on GitHub. This will allow you to push changes.
-2. Open and follow the directions within <a href="http://www.google.com">Google</a>"JCAT/Developer-Help/Configuring_Eclipse".
+2. Open and follow the directions within <a href="https://github.com/joebenassi/JCAT/blob/master/JCAT/Developer-Help/Configuring_Eclipse.md">JCAT/Developer-Help/Configuring_Eclipse.md</a>.
