@@ -26,7 +26,7 @@
 <p align="center" >
     <img src="https://raw.github.com/joebenassi/JCAT/master/JCAT/Git-Resources/Eclipse_Setup_5.png">
   </p>
-10.	To run JCAT, in Package Explorer, go to JCAT > src > main > Launcher, right click “Launcher”, select Run As > Java Application.
+10.	To run JCAT, in Package Explorer, go to JCAT > src > main, right click “Launcher”, and select Run As > Java Application.
 <p align="center" >
     <img src="https://raw.github.com/joebenassi/JCAT/master/JCAT/Git-Resources/Eclipse_Setup_6.png">
   </p>
