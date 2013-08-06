@@ -169,7 +169,7 @@ This document is to help users create App Profiles: XML files that can be parsed
 		</telemetry>
 	</channel>
 	
-<strong>Notes: </strong>The above example <strong>is</strong> a correctly-formatted App Profile, and will, as such, load into JCAT
+<strong>Notes: </strong>The above example <strong>is</strong> a correctly-formatted App Profile and will, as such, load into JCAT
 <br>
 <br>
 #####New Terms:
