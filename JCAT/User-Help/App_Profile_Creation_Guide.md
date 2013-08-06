@@ -1,10 +1,10 @@
 #App Profile Creation Guide
 ###Summary of Document 
-This document is to help users create App Profiles: XML files that can be parsed by JCAT to allow command-sending and telemetry-streaming for Apps running in the CFS. For additional help, look at CFE App Profiles for examples.
+This document is to help users create App Profiles: XML files that can be parsed by JCAT to allow command-sending and telemetry-streaming for Apps running in the CFS. For additional help, look at cFE App Profiles for examples.
 <br>
 
 ###Requirements for App Profiles:
-######With respect to the CFS version of the App, everything in its App Profile is defined, accurate, and in correct order, including:
+######With respect to the version of the App running in the CFS, everything in its App Profile is defined, is accurate, and is in correct order, including:
 1. All <strong>&lt;commands&gt;&lt;command&gt;</strong>s.
 2. All <strong>&lt;telemetry&gt;&lt;parameter&gt;</strong>s.
 3. All <strong>&lt;inputparameter&gt;</strong>s and <strong>&lt;choiceparameter&gt;</strong>s within all <strong>&lt;commands&gt;&lt;command&gt;&lt;parameters&gt;</strong>.
