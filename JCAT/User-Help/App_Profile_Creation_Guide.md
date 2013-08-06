@@ -7,7 +7,7 @@ This document is to help users create App Profiles: XML files that can be parsed
 ######With respect to the CFS version of the App, everything in its App Profile is defined, accurate, and in correct order, including:
 1. All <strong>&lt;commands&gt;&lt;command&gt;</strong>s.
 2. All <strong>&lt;telemetry&gt;&lt;parameter&gt;</strong>s.
-3. All <strong>&lt;inputparameter&gt;</strong>s and <strong>&lt;choiceparameter&gt;</strong>s within <strong>&lt;commands&gt;&lt;command&gt;&lt;parameters&gt;</strong>.
+3. All <strong>&lt;inputparameter&gt;</strong>s and <strong>&lt;choiceparameter&gt;</strong>s within all <strong>&lt;commands&gt;&lt;command&gt;&lt;parameters&gt;</strong>.
 
 ######Additionally, the App itself must abide by the following requirement:
 1. The command code for each command must equal <strong>&lt;commandoffset&gt;</strong> + <strong>x</strong>, where <strong>x</strong> is the index of its App Profiles' matching <strong>&lt;command&gt;</strong> within <strong>&lt;commands&gt;</strong>.
@@ -36,19 +36,19 @@ This document is to help users create App Profiles: XML files that can be parsed
 #####New Terms:
 ######Within <strong>&lt;channel&gt;</strong>:
 <ul>
-	<li><strong>&lt;name&gt;:</strong> The string to display as the App's name in the GUI.</li>
-	<li><strong>&lt;configs&gt;:</strong> The different possible <strong>&lt;config&gt;</strong>s that the App can run as.</li>
+	<li><strong>&lt;name&gt;:</strong> The string to display as this App's name in the GUI.</li>
+	<li><strong>&lt;configs&gt;:</strong> The different possible <strong>&lt;config&gt;</strong>s that this App can run as.</li>
 	<ul>
-		<li><strong>&lt;config&gt;:</strong> A set of a <strong>&lt;cmdmid&gt;</strong>, <strong>&lt;tlmmid&gt;</strong>, and <strong>&lt;name&gt;</strong>. You can interact with more than one instance of the App by selecting a <strong>&lt;config&gt;</strong> for each desired instance at runtime.</li>
+		<li><strong>&lt;config&gt;:</strong> A set of a <strong>&lt;cmdmid&gt;</strong>, <strong>&lt;tlmmid&gt;</strong>, and <strong>&lt;name&gt;</strong>. You can interact with more than one instance of the this App in JCAT by selecting a <strong>&lt;config&gt;</strong> for each desired instance at run-time.</li>
 		<ul>
 			<li><strong>&lt;name&gt;:</strong> The name to describe this <strong>&lt;config&gt;</strong> in the GUI.</li>
 			<li><strong>&lt;cmdmid&gt;:</strong> The command message ID.
 			<li><strong>&lt;tlmmid&gt;:</strong> The telemetry message ID.
 		</ul>
 	</ul>
-	<li><strong>&lt;commandoffset&gt;:</strong> The lowest command code for the App (usually 0).</li>
-	<li><strong>&lt;commands&gt;:</strong> The different <strong>&lt;command&gt;</strong>s that the App can execute.</li>
-	<li><strong>&lt;telemetry&gt;:</strong> The different telemetry <strong>&lt;parameter&gt;</strong>s that the App's Housekeeping Packet outputs.</li>
+	<li><strong>&lt;commandoffset&gt;:</strong> The lowest command code for this App (usually 0).</li>
+	<li><strong>&lt;commands&gt;:</strong> The different <strong>&lt;command&gt;</strong>s that this App can execute.</li>
+	<li><strong>&lt;telemetry&gt;:</strong> The different telemetry <strong>&lt;parameter&gt;</strong>s that this App's Housekeeping Packet outputs.</li>
 </ul>
 <br>
 ###Moderate-Depth App Profile Example (the above example, but expanded):
@@ -91,27 +91,27 @@ This document is to help users create App Profiles: XML files that can be parsed
 <br>
 <br>
 #####New Terms:
-######Within <strong>&lt;commands&gt;&lt;command&gt;</strong>: Defines a command that can be used on the App.
+######Within <strong>&lt;commands&gt;&lt;command&gt;</strong>: Defines a command that can be used on this App.
 <ul>
-	<li><strong>&lt;name&gt;:</strong> The string to display as the <strong>&lt;command&gt;</strong>'s name in the GUI.</li>
-	<li><strong>&lt;parameters&gt;:</strong> The parameters required for the <strong>&lt;command&gt;</strong> to be sent. This can be absent if there are no parameters.</li>
+	<li><strong>&lt;name&gt;:</strong> The string to display as this <strong>&lt;command&gt;</strong>'s name in the GUI.</li>
+	<li><strong>&lt;parameters&gt;:</strong> The parameters required for this <strong>&lt;command&gt;</strong> to be sent. This can be absent if there are no parameters.</li>
 	<ul>
 		<li><strong>&lt;choiceparameter&gt;:</strong> The parameter type that requires the user to choose from a select list in drop-down form.</li>
 		<li><strong>&lt;inputparameter&gt;:</strong> The parameter type that requires the user to manually enter the desired value in a field.</li>
-		<li><strong>&lt;spare&gt;:</strong> The parameter type that is invisible to the user, but which contributes only byte values of zero to the command packet.</li>
+		<li><strong>&lt;spare&gt;:</strong> The parameter type that is invisible to the user, but which contributes only byte values of zero to this <strong>&lt;command&gt;</strong>'s command packet.</li>
 	</ul>
 </ul>
 
-######Within <strong>&lt;telemetry&gt;&lt;parameter&gt;</strong>: Defines a telemetry parameter for the App sent by its Housekeeping Packet.
+######Within <strong>&lt;telemetry&gt;&lt;parameter&gt;</strong>: Defines a telemetry parameter for this App sent by its Housekeeping Packet.
 <ul>
-	<li><strong>&lt;name&gt;:</strong> The string to display as the <strong>&lt;parameter&gt;</strong>'s name in the GUI.</li>
-	<li><strong>&lt;type&gt;:</strong> The data type of the <strong>&lt;parameter&gt;</strong>. The only valid values are:</li>
+	<li><strong>&lt;name&gt;:</strong> The string to display as this <strong>&lt;parameter&gt;</strong>'s name in the GUI.</li>
+	<li><strong>&lt;type&gt;:</strong> The data type of this <strong>&lt;parameter&gt;</strong>. The only valid values are:</li>
 	<ul>
 		<li>int8, int16, int32</li>
 		<li>uint8, uint16, uint32</li>
 		<li>char</li>
 	</ul>
-	<li><strong>&lt;primitive&gt;:</strong> The primitive of the <strong>&lt;parameter&gt;</strong>. Can be either a string or integer. If defined as anything other than "string", or is missing entirely, it is considered an integer.</li>
-	<li><strong>&lt;const&gt;:</strong> The variable whose value, as defined in the imported Constant Definition file at run-time, is multiplied by the byte value of the <strong>&lt;parameter&gt;</strong>'s <strong>&lt;type&gt;</strong> to determine the number of bytes assigned to this <strong>&lt;parameter&gt;</strong> in the command packet. Only considered if the <strong>&lt;parameter&gt;</strong>'s <strong>&lt;primitive&gt;</strong> is a string.</li>
+	<li><strong>&lt;primitive&gt;:</strong> The primitive of this <strong>&lt;parameter&gt;</strong>. Can be either a string or integer. If defined as anything other than "string", or is missing entirely, it is considered an integer.</li>
+	<li><strong>&lt;const&gt;:</strong> The variable whose value, as defined in the imported Constant Definition file at run-time, is multiplied by the byte value of this <strong>&lt;parameter&gt;</strong>'s <strong>&lt;type&gt;</strong> to determine the number of bytes assigned to this <strong>&lt;parameter&gt;</strong> in the command packet. Only considered if this <strong>&lt;parameter&gt;</strong>'s <strong>&lt;primitive&gt;</strong> is a string.</li>
 </ul>
 <br>
