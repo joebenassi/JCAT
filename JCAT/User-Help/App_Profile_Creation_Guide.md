@@ -91,7 +91,7 @@ This document is to help users create App Profiles: XML files that can be parsed
 <br>
 <br>
 #####New Terms:
-######Within <strong>&lt;commands&gt;&lt;command&gt;</strong>: Defines a command that can be used on this App.
+######Within <strong>&lt;commands&gt;&lt;command&gt;</strong>: Defines a command that can be sent to this App.
 <ul>
 	<li><strong>&lt;name&gt;:</strong> The string to display as this <strong>&lt;command&gt;</strong>'s name in the GUI.</li>
 	<li><strong>&lt;parameters&gt;:</strong> The parameters required for this <strong>&lt;command&gt;</strong> to be sent. This can be absent if there are no parameters.</li>
@@ -102,7 +102,7 @@ This document is to help users create App Profiles: XML files that can be parsed
 	</ul>
 </ul>
 
-######Within <strong>&lt;telemetry&gt;&lt;parameter&gt;</strong>: Defines a telemetry parameter for this App sent by its Housekeeping Packet.
+######Within <strong>&lt;telemetry&gt;&lt;parameter&gt;</strong>: Defines a telemetry parameter contained in this App's Housekeeping Packet.
 <ul>
 	<li><strong>&lt;name&gt;:</strong> The string to display as this <strong>&lt;parameter&gt;</strong>'s name in the GUI.</li>
 	<li><strong>&lt;type&gt;:</strong> The data type of this <strong>&lt;parameter&gt;</strong>. The only valid values are:</li>
