@@ -1,19 +1,19 @@
 #App Profile Creation Guide
 ###Summary of Document 
-This document is to help JCAT users create App Profiles for JCAT. Additionally, use other App Profiles for examples.
+This document is to help users create App Profiles: XML files that can be parsed by JCAT to allow command-sending and telemetry-streaming for an App running on the CFS. For additional help, look at CFE App Profiles for examples.
 <br>
 
-###Requirements for an App Profile XML: 
-######Everything for the App is defined, and everything is in correct order, including:
-1. All <strong>&lt;commands&gt;&lt;command&gt;s</strong> for the App
-2. All <strong>&lt;telemetry&gt;&lt;parameter&gt;s</strong> for the App
-3. All <strong>&lt;inputparameter&gt;s</strong> and <strong>&lt;choiceparameter&gt;s</strong> in <strong>&lt;commands&gt;&lt;command&gt;&lt;parameters&gt;</strong> for the App
+###Requirements for App Profiles:
+######With respect to the CFS version of the App, everything in the App Profile is defined and in correct order, including:
+1. All <strong>&lt;commands&gt;&lt;command&gt;</strong>s
+2. All <strong>&lt;telemetry&gt;&lt;parameter&gt;</strong>s
+3. All <strong>&lt;inputparameter&gt;</strong>s and <strong>&lt;choiceparameter&gt;</strong>s within <strong>&lt;commands&gt;&lt;command&gt;&lt;parameters&gt;</strong>
 
-######Additionally, the App’s commands must abide by the following requirement:
-1. The command code for each command must be equal to <strong>&lt;commandoffset&gt;</strong> + <strong>x</strong>, where <strong>x</strong> is the index of the applicable <strong>&lt;command&gt;</strong> within <strong>&lt;commands&gt;</strong>
+######Additionally, the App itself must abide by the following requirement:
+1. The command code for each command within the CFS App must equal <strong>&lt;commandoffset&gt;</strong> + <strong>x</strong>, where <strong>x</strong> is the index of the matching <strong>&lt;command&gt;</strong> within <strong>&lt;commands&gt;</strong> in its App Profile
 
-
-###Basic Format Example (not a current App profile):
+<br>
+###Basic App Profile Example (not a current App Profile):
 	<?xml version="1.0" encoding="UTF-8"?>
 	<channel>
 		<name>[APPNAME]</name>
@@ -37,14 +37,14 @@ This document is to help JCAT users create App Profiles for JCAT. Additionally, 
 ######Within <strong>&lt;channel&gt;</strong>:
 <ul>
 	<li><strong>&lt;name&gt;:</strong> The string to display as the App's name in the GUI</li>
-	<li><strong>&lt;configs&gt;:</strong> The different possible configurations for the App</li>
-	<li><strong>&lt;config&gt;:</strong> A way the App can run, containing a <strong>&lt;cmdmid&gt;</strong>, <strong>&lt;tlmmid&gt;</strong>, and a <strong>&lt;name&gt;</strong> to describe it. You can interact with more than one instance of the App by selecting a <strong>&lt;config&gt;</strong> for each desired instance at runtime</li>
-	<li><strong>&lt;commandoffset&gt;:</strong> The lowest functional command code for the App (Usually 0)</li>
+	<li><strong>&lt;configs&gt;:</strong> The different possible <strong>&lt;config&gt;</strong>s that the App can run as</li>
+	<li><strong>&lt;config&gt;:</strong> A set of a <strong>&lt;cmdmid&gt;</strong> and <strong>&lt;tlmmid&gt;</strong>, with a <strong>&lt;name&gt;</strong> to describe it in the GUI. You can interact with more than one instance of the App by selecting a <strong>&lt;config&gt;</strong> for each desired instance at runtime</li>
+	<li><strong>&lt;commandoffset&gt;:</strong> The lowest command code for the App (usually 0)</li>
 	<li><strong>&lt;commands&gt;:</strong> The different <strong>&lt;command&gt;</strong>s that the App can execute</li>
 	<li><strong>&lt;telemetry&gt;:</strong> The different telemetry <strong>&lt;parameters&gt;</strong>s that the App's Housekeeping Packet displays</li>
 </ul>
 <br>
-###Moderate-Depth Format Example (the above example, but expanded):
+###Moderate-Depth App Profile Example (the above example, but expanded):
 	<?xml version="1.0" encoding="UTF-8"?>
 	<channel>
 		<name>[APPNAME]</name>
