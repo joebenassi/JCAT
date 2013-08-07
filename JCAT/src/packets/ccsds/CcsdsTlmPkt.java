@@ -14,8 +14,25 @@ public class CcsdsTlmPkt extends CcsdsPkt {
 		super(TlmMsg);
 	}
 	
+	/* WORKS! */
 	public static int getTime(byte[] data) {
-		return Integer.parseInt(DataType.uint32Integer.getTlmStrArray(data,
+		int sec = 0;
+		
+		int a = data[CCSDS_IDX_TLM_HDR];
+		int b = data[CCSDS_IDX_TLM_HDR + 1];
+		int c = data[CCSDS_IDX_TLM_HDR + 2];
+		int d = data[CCSDS_IDX_TLM_HDR + 3];
+		
+		if (a < 0)
+			a+=256;
+		
+		sec += d * 256 * 256 * 256;
+		sec += c * 256 * 256;
+		sec += b * 256;
+		sec += a;
+		/*int sec = Integer.parseInt(DataType.uint32Integer.getTlmStrArray(data,
 				CCSDS_IDX_TLM_HDR));
+		*/
+		return sec;
 	}
-} // End class CcsdsTlmPkt
+}
