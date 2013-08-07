@@ -24,9 +24,9 @@ public final class ShowAboutPopup {
 		lines[0] = "Java Command and Telemetry (JCAT)";
 		lines[1] = "Version " + version;
 		lines[2] = "";
-		lines[3] = "Created by NASA to aid cFE App";
-		lines[4] = "development for both NASA and ";
-		lines[5] = "non-NASA developers.";
+		lines[3] = "Created by NASA to aid CFS App";
+		lines[4] = "development. Go to the JCAT repository";//for both NASA and ";
+		lines[5] = "on GitHub.com for further information.";
 
 		final Label[] labels = new Label[lines.length];
 
