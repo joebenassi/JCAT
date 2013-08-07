@@ -51,10 +51,10 @@ public enum HelpPopup {
 
 	GettingStarted("Getting Started", Text.GETTINGSTARTED, null), AppsNotImporting(
 			"Apps Not Importing", Text.APPSNOTIMPORTING, null), ProgramFreezes(
-			"Freezes/Crashes", Text.PROGRAMFREEZES, null), AAS("AAS", Text.AAS,
-			Symptoms.AAS), ASA("ASA", Text.ASA, Symptoms.ASA), SSS("SSS",
-			Text.SSS, Symptoms.SSS), ANN("ANN", Text.ANN, Symptoms.ANN), NNN(
-			"NNN", Text.NNN, Symptoms.NNN);
+			"Freezes/Crashes", Text.PROGRAMFREEZES, null), AAS("Common Problem 2", Text.AAS,
+			Symptoms.AAS), ASA("Common Problem 3", Text.ASA, Symptoms.ASA), SSS("Common Problem 4",
+			Text.SSS, Symptoms.SSS), ANN("Common Problem 5", Text.ANN, Symptoms.ANN), NNN(
+			"Common Problem 6", Text.NNN, Symptoms.NNN);
 
 	public static final HelpPopup[] commonProblemPopups = new HelpPopup[] {
 			AppsNotImporting, AAS, ASA, SSS, ANN, NNN, ProgramFreezes };
@@ -129,13 +129,14 @@ public enum HelpPopup {
 				"Ensure that this is the only JCAT program currently running on your machine, and that the User Activity window displays “JCAT startup successful”. To be certain, check your system processes and confirm that there is only one Java Virtual Machine running. ",
 				"Ensure that your firewall accepts all packets from port 1235." };
 
-		private static final String[] NNN = new String[] { "Ensure you are connected to the CFS, wirelessly, wired, or otherwise. If the command parameter window stalls for a second after you click ‘Send’, it is likely due to this. Ensure that your firewall and permissions allow for networking." };
+		private static final String[] NNN = new String[] { "Ensure you are connected to the CFS, wirelessly, wired, or otherwise. If the command parameter window stalls temporarily after you click ‘Send’, it is likely due to this. Ensure that your firewall and permissions allow for networking." };
 		
 		private static final String[] APPSNOTIMPORTING = new String[] {
 				"If an App is unchoosable in the 'Select Apps' window after importing its App Profile XML, the App Profile is incorrectly formatted. Consult the README in the JCAT repository on GitHub.com." };
 
 		private static final String[] PROGRAMFREEZES = new String[] {
-				"If JCAT freezes after sending a command, ensure that the command is correctly defined defined in its App Profile, specifically with respect to it's primitive. If you define a parameter as an integer, and input something else, this may occur.", 
+				"If JCAT freezes after sending a command, ensure that the command is correctly defined in its App Profile, specifically with respect to it's primitive. If you define a parameter as an integer, and input something else, this may occur.", 
+				"If JCAT simply pauses temporarily after sending a command, ensure that you are connected to the CFS, wirelessly, wired, or otherwise.",
 				"If JCAT's menu has missing text or is acting differently, or if JCAT slows down, becomes unresponsive, or has the main page window change appearance, it is the result of processing an App Profile. The App Profile may even be perfectly formatted. This malfunction has yet to be resolved."
 		 };
 	}
