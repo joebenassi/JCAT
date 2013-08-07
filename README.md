@@ -27,5 +27,13 @@ JCAT can run on Windows, Linux, and Macintosh on 32 and 64-bit JRE's of Java 6 o
 1. Follow the directions in the JCAT wiki's <a href="https://github.com/joebenassi/JCAT/wiki/Adding-JCAT-to-Eclipse-for-JCAT-Development">Adding JCAT to Eclipse for JCAT Development</a>.
 2. To push changes to JCAT for community use, email joebenassi@gmail.com for permission to be added as a collaborator.
 
+
+##What do I do if I need help?
+######If you encounter a problem with JCAT, consult the following
+1. JCAT in-pogram Help pages
+2. JCAT repository wiki tab
+3. JCAT repository Issues tab
+
+#####If your problem is still not solved, you can add a New Issue to the JCAT repository Issues tab describing the problem or email our developers at joebenassi@gmail.com.
 <br>
-#####Since JCAT is in development, we would love to hear feedback from users and developers alike. If you have found a bug, or have questions, comments, or suggestions, don't hesitate to share it with our developers at joebenassi@gmail.com.
+######If you have questions, comments, or suggestions, don't hesitate to share it with our developers at joebenassi@gmail.com.
