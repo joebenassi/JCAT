@@ -49,8 +49,7 @@ enum Symptoms {
 
 public enum HelpPopup {
 
-	GettingStarted("Getting Started", Text.GETTINGSTARTED, null), ImportingNewApps(
-			"Importing New Apps", Text.IMPORTINGNEWAPPS, null), AppsNotImporting(
+	GettingStarted("Getting Started", Text.GETTINGSTARTED, null), AppsNotImporting(
 			"Apps Not Importing", Text.APPSNOTIMPORTING, null), ProgramFreezes(
 			"Freezes/Crashes", Text.PROGRAMFREEZES, null), AAS("AAS", Text.AAS,
 			Symptoms.AAS), ASA("ASA", Text.ASA, Symptoms.ASA), SSS("SSS",
@@ -109,7 +108,7 @@ public enum HelpPopup {
 				"To begin sending commands, you must first configure your Output settings. Navigate to Configure > Output. Input the IP, port, and endian of the recipient, and click 'OK'. To send a command, navigate to Command > (App name) > (config name) > (command name). A window will prompt for parameters. Fill out the parameters and click 'Send'.",
 				"To begin displaying telemetry, you must first configure your Output settings (see the previous paragraph). Additionally, you must enable telemetry. Depending on your setup, navigate to File > Enable Wireless Telemetry or File > Enable Local Telemetry. To view an App's telemetry, navigate to Telemetry > (App name) > (config name). If any field is labeled 'No Telemetry', no telemetry was received for the App.",
 				"To begin displaying event messages, you must first configure your Output settings and enable telemetry (see the previous paragraphs). Additionally, you must navigate to File > Enable Event Messages. Event messages are displayed on the top half of the main page.",
-				"If JCAT does not successfully send commands, display event messages, or display telemetry at this point, navigate to Help > Common Problems for possible solutions." };
+				"If JCAT does not successfully send commands, display event messages, or display telemetry at this point, navigate to Help > Common Problems for possible solutions. For further help, consult the README in the JCAT repository on GitHub.com." };
 
 		private static final String[] AAS = new String[] {
 				"Note: many commands do not display event messages.",
@@ -131,12 +130,9 @@ public enum HelpPopup {
 				"Ensure that your firewall accepts all packets from port 1235." };
 
 		private static final String[] NNN = new String[] { "Ensure you are connected to the CFS, wirelessly, wired, or otherwise. If the command parameter window stalls for a second after you click ‘Send’, it is likely due to this. Ensure that your firewall and permissions allow for networking." };
-
-		private static final String[] IMPORTINGNEWAPPS = new String[] { "INPROG: To import" };
-
+		
 		private static final String[] APPSNOTIMPORTING = new String[] {
-				"INPROG: If an App is unchoosable in the 'Select Apps' window after importing its App Profile XML: ",
-				"The App Profile XML is incorrectly formatted. See Menu > Help > Importing New Apps" };
+				"If an App is unchoosable in the 'Select Apps' window after importing its App Profile XML, the App Profile is incorrectly formatted. Consult the README in the JCAT repository on GitHub.com." };
 
 		private static final String[] PROGRAMFREEZES = new String[] {
 				"If JCAT freezes after sending a command, ensure that the command is correctly defined defined in its App Profile, specifically with respect to it's primitive. If you define a parameter as an integer, and input something else, this may occur.", 

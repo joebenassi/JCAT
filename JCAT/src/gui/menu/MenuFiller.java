@@ -400,16 +400,6 @@ public final class MenuFiller {
 			}
 		});
 
-		final MenuItem importingNewAppsMenuItem = MenuHelper.createMenuItem(
-				helpMenu, SWT.PUSH, "I&mporting New Apps", null, SWT.NONE);
-
-		importingNewAppsMenuItem.addListener(SWT.Selection, new Listener() {
-			@Override
-			public void handleEvent(Event e) {
-				HelpPopup.ImportingNewApps.launch();
-			}
-		});
-
 		final MenuItem commonProblemsMenuItem = MenuHelper.createMenuItem(
 				helpMenu, SWT.CASCADE, "C&ommon Problems", null, SWT.NONE);
 
