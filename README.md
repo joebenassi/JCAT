@@ -36,4 +36,4 @@ JCAT can run on Windows, Linux, and Macintosh on 32 and 64-bit JRE's of Java 6 o
 
 #####If your problem is still not solved, you can add a New Issue to the JCAT repository Issues tab describing the problem or email our developers at joebenassi@gmail.com.
 <br>
-######If you have questions, comments, or suggestions, don't hesitate to share it with our developers at joebenassi@gmail.com.
+######If you have questions, comments, or suggestions, don't hesitate to contact our developers at joebenassi@gmail.com.
