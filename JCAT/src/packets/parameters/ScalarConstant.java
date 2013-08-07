@@ -2,6 +2,11 @@ package packets.parameters;
 
 import java.util.ArrayList;
 
+/**
+ * NOT DOCUMENTED.
+ * 
+ * @author Joe Benassi
+ */
 public class ScalarConstant {
 	private static ArrayList<String> names = new ArrayList<String>();
 	private static ArrayList<String> values = new ArrayList<String>();

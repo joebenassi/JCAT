@@ -11,6 +11,12 @@ import packets.tlm.TlmPkt;
 
 import applications.App;
 
+/**
+ * NOT DOCUMENTED.
+ * 
+ * @author Joe Benassi
+ * @author David McComas
+ */
 public class TelemetryUpdater {
 	public static void updateTelemetry(CcsdsTlmPkt TlmMsg, App app) {
 		String[] TlmStrArray = new String[app.getTelemetryAmt()];

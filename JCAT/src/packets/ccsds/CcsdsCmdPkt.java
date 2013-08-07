@@ -2,6 +2,11 @@ package packets.ccsds;
 
 import packets.parameters.DataType;
 
+/**
+ * NOT DOCUMENTED.
+ * 
+ * @author David McComas
+ */
 public class CcsdsCmdPkt extends CcsdsPkt {
 	static final public int CCSDS_IDX_CMD_HDR = 6;
 	static final public int CCSDS_IDX_CMD_DATA = 8;
@@ -64,7 +69,7 @@ public class CcsdsCmdPkt extends CcsdsPkt {
 		}
 		ComputeChecksum();
 	}
-	
+
 	public static int getTime(byte[] data) {
 		return Integer.parseInt(DataType.uint32Integer.getTlmStrArray(data,
 				CCSDS_IDX_CMD_HDR));

@@ -1,18 +1,20 @@
 package packets.parameters;
 
-/*
- ** @author dmccomas
- **
- ** Design Notes:
- **   1. This class is intended to be used as an interface to a class providing a user interface such as
- **      a GUI or a script. Therefore the user interface will be a string. On the 'back end' is a byte
- **      array to the communications to the CFS. Since these interface types are fixed an abstract base
- **      class can provide methods for the interfaces and the concrete subclasses would provide the conversion
- **      implementation for each data type.
- **   2. When I hard coded some defaults the string constructor seemed odd but if this project expands to use 
- **      a text based database then it would also use text for the constructor so the design may be okay.
- **   3. Generics didn't fit the problem being solved because they are typically used in containers when the
- **      different types are being passed across a class interface.
+/**
+ * NOT DOCUMENTED. Design Notes: 1. This class is intended to be used as an
+ * interface to a class providing a user interface such as a GUI or a script.
+ * Therefore the user interface will be a string. On the 'back end' is a byte
+ * array to the communications to the CFS. Since these interface types are fixed
+ * an abstract base class can provide methods for the interfaces and the
+ * concrete subclasses would provide the conversion implementation for each data
+ * type. 2. When I hard coded some defaults the string constructor seemed odd
+ * but if this project expands to use a text based database then it would also
+ * use text for the constructor so the design may be okay. 3. Generics didn't
+ * fit the problem being solved because they are typically used in containers
+ * when the different types are being passed across a class interface.
+ * 
+ * @author Joe Benassi
+ * @author David McComas
  */
 public abstract class CmdParam {
 

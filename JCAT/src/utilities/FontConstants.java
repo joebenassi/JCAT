@@ -6,13 +6,10 @@ import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.widgets.Display;
 
 /**
- * This class provides the Fonts specifically referenced and copied by
- * gui.mainpage.MainPageFiller and gui.popup.PopupFiller, though they are used
- * in most of the GUI classes through parameter-passing by
- * gui.mainpage.MainPageFiller and gui.popup.PopupFiller.
+ * FULLY DOCUMENTED. This class provides the Fonts specifically referenced and
+ * copied by various GUI classes.
  * 
  * @author Joe Benassi
- * 
  */
 public final class FontConstants {
 

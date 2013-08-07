@@ -4,6 +4,11 @@ import java.util.prefs.Preferences;
 
 import main.Launcher;
 
+/**
+ * NOT DOCUMENTED.
+ * 
+ * @author Joe Benassi
+ */
 public class PreferenceStorage {
 	private static volatile Preferences prefs = Preferences
 			.userNodeForPackage(main.Launcher.class);

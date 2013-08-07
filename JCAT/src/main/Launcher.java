@@ -34,36 +34,50 @@ import utilities.ShellDisposer;
 import utilities.TimeKeeper;
 
 /**
- * @author Joe Benassi
- * @version 1.0.0 July 8, 2013
+ * FULLY DOCUMENTED. The class containing the main method to execute the program.
  * 
- *          The class containing the main method to execute the program
+ * @author Joe Benassi
  */
 public final class Launcher {
 	private static boolean shouldRestart = true;
+	private static final String version = "1.0.0";
+	private static final String successMessage = "JCAT startup successful";
+	private static final String[] failureMessage = new String[] {
+			"JCAT startup unsuccessful",
+			"Existing JCAT instance. No event messages or telemetry will display" };
+
+	/**
+	 * This is the MainPageFiller that occupies the current primary Shell. When
+	 * File > Restart is executed, this does not get destroyed.
+	 */
 	public static volatile MainPageFiller mainPageFiller;
+
+	/**
+	 * This value equals the instance of JCAT. It increments every time JCAT
+	 * restarts. This is so that certain threads end after a restart. This is
+	 * safe because those same threads are created on JCAT's restart.
+	 */
 	private static volatile int instanceNum = 0;
 
 	/**
-	 * The main method to execute the program. Creates the main page and the
-	 * initial menu, to be changed later as Apps are imported
+	 * The main method to execute the program. Starts PktReader, and calls
+	 * 'startup()'.
 	 * 
 	 * @param args
 	 *            the main method argument
 	 */
 	public static final void main(String[] args) {
-		// DeviceData data = new DeviceData();
-		// data.tracking = true;
-		Display display = new Display();// data);
-		// Sleak sleak = new Sleak();
-		// sleak.open();
+		Display display = new Display();
 		PktReader.start();
 		startup();
 	}
 
 	/**
-	 * Identical to <code>main()</code>. <code>main</code> calls
-	 * <code>new Launcher();</code>
+	 * Increments the InstanceNum, disposes of old popups, resets the time,
+	 * resets Networker, adds the main page, adds the 'Continue?' prompt on
+	 * exit, adds the menu, launches the 'new user' window if appropriate,
+	 * displays the main page, and displays in the Event Window if JCAT's
+	 * startup was successful.
 	 */
 	public final static void startup() {
 		instanceNum++;
@@ -75,20 +89,18 @@ public final class Launcher {
 		mainPageFiller = new MainPageFiller(s);
 
 		addShellExitBehavior(s);
-		final String version = "1.0.0";
 		MenuFiller.addMenu(s, null, version);
-		// PreferenceTest.showHelp();
+
 		if (PreferenceStorage.shouldShowHelp())
 			NewUserPrompt.launch();
 
 		s.open();
 
 		if (!PktReader.isFunctional()) {
-			addUserActivity("JCAT startup unsuccessful");
-			addUserActivity("Existing JCAT instance. No event messages or telemetry will display");
-		}
-		else
-		addUserActivity("JCAT startup successful");
+			addUserActivity(failureMessage[0]);
+			addUserActivity(failureMessage[1]);
+		} else
+			addUserActivity(successMessage);
 		try {
 			while (!Display.getCurrent().isDisposed()) {
 				try {
@@ -102,6 +114,10 @@ public final class Launcher {
 		}
 	}
 
+	/**
+	 * If shouldRestart is false, then this disposes of all resources, popups,
+	 * shells, and the Display.
+	 */
 	public static final void shutdown() {
 		if (!shouldRestart) {
 			ResourceLoader.disposeImages();
@@ -119,6 +135,12 @@ public final class Launcher {
 		}
 	}
 
+	/**
+	 * Adds a "Confirm Quit" prompt when the user attempts to exit.
+	 * 
+	 * @param shell
+	 *            The shell to add the listener to.
+	 */
 	private final static void addShellExitBehavior(final Shell shell) {
 		shell.addShellListener(new ShellAdapter() {
 			@Override
@@ -139,21 +161,50 @@ public final class Launcher {
 		});
 	}
 
+	/**
+	 * Sets the current main page invisible, and calls startup().
+	 * 
+	 * @param s
+	 *            The current primary shell; the Shell the main page is
+	 *            currently occupying.
+	 */
 	public final static void restartApplication(Shell s) {
 		s.setVisible(false);
 		startup();
 	}
 
+	/**
+	 * Adds an event to the Event Window.
+	 * 
+	 * @param time
+	 *            The time for this event. First column.
+	 * @param config
+	 *            The config for this event. Second column.
+	 * @param msgStr
+	 *            The event message. Third column.
+	 */
 	public static final void addEvent(String time, String config, String msgStr) {
 		mainPageFiller.addEventMessage(time, config, msgStr,
 				ColorConstants.textColor);
 	}
 
+	/**
+	 * Adds a mesage to the User Activity window.
+	 * 
+	 * @param userActivityMessage
+	 *            The message to display.
+	 */
 	public static final void addUserActivity(String userActivityMessage) {
 		mainPageFiller.addUserActivity(TimeKeeper.getElapsedTime(),
 				userActivityMessage, ColorConstants.textColor);
 	}
 
+	/**
+	 * Returns the instanceNum; the number denoting the particular instance of
+	 * JCAT. This instanceNum changes whenever JCAT is restarted.
+	 * 
+	 * @return The instance of JCAT.
+	 */
 	public static final int getInstanceNum() {
 		return instanceNum;
 	}

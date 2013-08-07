@@ -3,10 +3,9 @@ package utilities;
 import main.Launcher;
 
 /**
- * corrects commands to correct Endian (big or little)
+ * NOT DOCUMENTED.
  * 
- * @author Joe
- * 
+ * @author Joe Benassi
  */
 public class EndianCorrector {
 	/* Assumes JCAT is running on little endian */

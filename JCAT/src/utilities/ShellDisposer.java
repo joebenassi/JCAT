@@ -4,6 +4,11 @@ import java.util.ArrayList;
 
 import org.eclipse.swt.widgets.Shell;
 
+/**
+ * NOT DOCUMENTED.
+ * 
+ * @author Joe Benassi
+ */
 public class ShellDisposer {
 	private static ArrayList<Shell> popups = new ArrayList<Shell>();
 

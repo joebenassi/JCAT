@@ -25,6 +25,11 @@ import org.eclipse.swt.widgets.Text;
 
 import resources.ResourceLoader;
 
+/**
+ * NOT DOCUMENTED.
+ * 
+ * @author Joe Benassi
+ */
 public class GenericPrompt {
 	public static final void addLabel(Shell dialog, String text) {
 		Label label = new Label(dialog, SWT.NONE);

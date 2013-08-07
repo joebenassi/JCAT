@@ -1,5 +1,10 @@
 package packets.parameters;
 
+/**
+ * NOT DOCUMENTED.
+ * 
+ * @author Joe Benassi
+ */
 public class CmdSpareParam extends CmdParam {
 	public CmdSpareParam(String type) {
 		super("", true, new ChoiceOption[0], ParamType.SPARE, DataType

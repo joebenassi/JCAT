@@ -20,8 +20,7 @@ import packets.tlm.TlmPkt;
 import utilities.TelemetryUpdater;
 
 /**
- * FULLY DOCUMENTED.
- * A class that has an instance for each App Profile loaded.
+ * FULLY DOCUMENTED. A class that has an instance for each App Profile loaded.
  * 
  * @author Joe Benassi
  */
@@ -285,6 +284,7 @@ public final class App {
 
 	/**
 	 * Returns the command ID for this App.
+	 * 
 	 * @return the cmdmid for this App.
 	 */
 	public int getCmdId() {

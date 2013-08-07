@@ -1,5 +1,10 @@
 package packets.parameters;
 
+/**
+ * NOT DOCUMENTED.
+ * 
+ * @author Joe Benassi
+ */
 public class ChoiceOption {
 	private final String name;
 	private final String value;

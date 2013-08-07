@@ -4,10 +4,9 @@ import packets.parameters.DataType;
 import packets.parameters.ScalarConstant;
 
 /**
- * IN DEVELOPMENT. SUBJECT TO CHANGE/REMOVAL.
+ * NOT DOCUMENTED.
  * 
  * @author Joe Benassi
- * 
  */
 public class TlmPkt {
 	private final String name;

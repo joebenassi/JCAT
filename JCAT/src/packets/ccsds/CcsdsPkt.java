@@ -3,11 +3,12 @@ package packets.ccsds;
 import packets.parameters.DataType;
 import utilities.EndianCorrector;
 
-/*
- ** 
- ** @author dmccomas
- **
- ** @todo - Implement packet type
+/**
+ * NOT DOCUMENTED.
+ * 
+ * @author David McComas
+ * 
+ *         TODO Implement packet type
  */
 public class CcsdsPkt {
 	private static final int CCSDS_IDX_STREAM_ID = 0;
@@ -72,15 +73,16 @@ public class CcsdsPkt {
 		// + CCSDS_LENGTH_ADJUST;
 
 	}// End getTotalLength()
+
 	public static int getID(byte[] data) {
 		return ((((data[CCSDS_IDX_STREAM_ID] & 0x00FF) | (data[CCSDS_IDX_STREAM_ID + 1] << 8)) & CCSDS_MSK_MSG_ID));
 	}
-	
+
 	public int getStreamId() {
 		return getID(Packet);
 
 	}// End getStreamId()
-	
+
 	public static int getSeqCount(byte[] data) {
 		return ((((data[CCSDS_IDX_SEQ_COUNT] & 0x00FF) | (data[CCSDS_IDX_SEQ_COUNT + 1] << 8)) & CCSDS_MSK_SEQ_CNT));
 	}

@@ -5,6 +5,11 @@ import packets.parameters.CmdParam;
 import packets.parameters.CmdSpareParam;
 import packets.parameters.DataType;
 
+/**
+ * NOT DOCUMENTED.
+ * 
+ * @author Joe Benassi
+ */
 public class ParamGen {
 	public static final CmdParam getCmdParam(String name, String type,
 			String primitive, String bytes, boolean isInputParam,

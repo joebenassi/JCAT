@@ -14,7 +14,6 @@ import org.eclipse.swt.widgets.Text;
  * object.
  * 
  * @author Joe Benassi
- * 
  */
 final class Entry extends Composite {
 	private final Text text;

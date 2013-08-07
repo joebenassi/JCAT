@@ -1,15 +1,16 @@
-/*******************************************************************************
- * 
- * This class provides a bridge between the network package (has no knowledge of CCSDS)
- * and the application/GUI.
- * 
- *******************************************************************************/
 package network;
 
 import java.util.ArrayList;
 
 import packets.ccsds.CcsdsTlmPkt;
 
+/**
+ * NOT DOCUMENTED. This class provides a bridge between the network package (has
+ * no knowledge of CCSDS) and the application/GUI.
+ * 
+ * @author Joe Benassi
+ * @author David McComas
+ */
 public class FswTlmNetwork {
 	/* TODO Determine whether a queue is needed after test with higher rates */
 	private static volatile ArrayList<PktObserver> observers = new ArrayList<PktObserver>();

@@ -13,13 +13,19 @@ import packets.ccsds.CcsdsTlmPkt;
 import packets.cmd.CmdPkt;
 import utilities.TimeKeeper;
 
+/**
+ * NOT DOCUMENTED.
+ * 
+ * @author Joe Benassi
+ * @author David McComas
+ */
 public class Networker {
-	private static FswCmdNetwork CmdWriter;
 	private static Networker networker;
 	private static ArrayList<App> apps;
 	private static ArrayList<Config> configs;
 	private static final String observerID = "arbitrary";
 	private static PktObserver observer = new PktObserver(observerID);
+	private static PktWriter PktOutput;
 
 	public static void addApp(App app) {
 		for (int i = 0; i < apps.size(); i++)
@@ -54,7 +60,6 @@ public class Networker {
 	}
 
 	public void launch() {
-		CmdWriter = new FswCmdNetwork();
 		createTlmMonitorThread();
 	}
 
@@ -79,13 +84,12 @@ public class Networker {
 			if (app.getName().substring(0, 2).equalsIgnoreCase("to"))
 				app.executeCommand(7, new String[] { "" });
 		}
-		// TODO Auto-generated method stub
-
 	}
 
 	/** functional **/
 	public final static void sendPkt(CmdPkt cmdPkt) {
-		CmdWriter.sendCmd(cmdPkt.getName(), cmdPkt.getCcsdsPkt());
+		PktOutput.WriteCmdPkt(cmdPkt.getName(), cmdPkt.getCcsdsPkt()
+				.GetPacket(), cmdPkt.getCcsdsPkt().getTotalLength());
 	}
 
 	private final static void printEvent(String config, CcsdsTlmPkt pkt) {

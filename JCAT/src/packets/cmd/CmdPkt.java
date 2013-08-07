@@ -6,6 +6,11 @@ import packets.ccsds.CcsdsCmdPkt;
 import packets.parameters.CmdParam;
 import network.Networker;
 
+/**
+ * NOT DOCUMENTED.
+ * 
+ * @author David McComas
+ */
 public class CmdPkt {
 	private final String Name;
 	private ArrayList<CmdParam> ParamList = new ArrayList<CmdParam>();

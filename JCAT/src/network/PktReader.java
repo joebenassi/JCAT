@@ -1,6 +1,5 @@
 package network;
 
-/*TODO read in cFE headers like osconfig.h to get #defines*/
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -17,6 +16,14 @@ import main.Launcher;
 import utilities.EndianCorrector;
 import gui.mainpage.TopBar;
 
+/**
+ * NOT DOCUMENTED.
+ * 
+ * @author Joe Benassi
+ * @author David McComas
+ * 
+ *         TODO read in cFE headers like osconfig.h to get #defines
+ */
 public class PktReader {
 	private static DatagramSocket MsgSock;
 	private static final int port = 1235;
@@ -36,7 +43,7 @@ public class PktReader {
 	private static void startThread() {
 		final DatagramPacket DataPacket = new DatagramPacket(new byte[1024],
 				1024);
-		
+
 		final Thread t = new Thread(new Runnable() {
 			@Override
 			public void run() {
@@ -47,19 +54,22 @@ public class PktReader {
 						 * friendly
 						 */
 						Thread.sleep(40);
-					} catch (Throwable e) {e.printStackTrace();
+					} catch (Throwable e) {
+						e.printStackTrace();
 					}
-				
+
 					try {
 						MsgSock.receive(DataPacket);
 						byte[] data = DataPacket.getData();
 						TopBar.packetReceived();
-						//try {Launcher.addUserActivity("PKTREADER: STRMID = " + CcsdsTlmPkt.getID(data));
-						//} catch (Throwable e){}
+						// try {Launcher.addUserActivity("PKTREADER: STRMID = "
+						// + CcsdsTlmPkt.getID(data));
+						// } catch (Throwable e){}
 						EndianCorrector.fixHeaderIn(data);
 						FswTlmNetwork.addTlmPkt(data);
-					} catch (Exception ex) {}
-			}
+					} catch (Exception ex) {
+					}
+				}
 			}
 		});
 		t.setDaemon(true);
@@ -91,10 +101,11 @@ public class PktReader {
 		return output;
 	}
 
-/*	public static void main(String[] args) {
-		System.out.println("Wireless IP: " + getIP());
-		System.out.println("Local IP: " + getLocalIP());
-	}*/
+	/*
+	 * public static void main(String[] args) {
+	 * System.out.println("Wireless IP: " + getIP());
+	 * System.out.println("Local IP: " + getLocalIP()); }
+	 */
 
 	/* only tested on windows */
 	public static String getIP() {
@@ -119,7 +130,7 @@ public class PktReader {
 		}
 		return "Cannot Access";
 	}
-	
+
 	public static String getLocalIP() {
 		try {
 			return InetAddress.getLocalHost().getHostAddress();

@@ -26,11 +26,9 @@ import resources.ResourceLoader;
 import applications.App;
 
 /**
- * IN DEVELOPMENT. WILL BE CHANGED. Used to parse XML files for configuration
- * details of Apps and return those Apps.
+ * NOT DOCUMENTED.
  * 
  * @author Joe Benassi
- * 
  */
 public final class XMLParser {
 	/**
@@ -91,8 +89,8 @@ public final class XMLParser {
 			String config) {
 		final String name = getInstance("name", document);
 
-		return new App(name, config,
-				getCommands(document, CmdID), getTelemetry(document), TlmID, CmdID);
+		return new App(name, config, getCommands(document, CmdID),
+				getTelemetry(document), TlmID, CmdID);
 	}
 
 	public static ArrayList<String> getConfigNames(Document document) {
@@ -339,7 +337,7 @@ public final class XMLParser {
 			}
 			return telemetry.toArray(new TlmPkt[telemetry.size()]);
 		}
-		return new TlmPkt[] { new TlmPkt("null", "uint8", "string", "1")};
+		return new TlmPkt[] { new TlmPkt("null", "uint8", "string", "1") };
 	}
 
 	public static String getName(Document document) {

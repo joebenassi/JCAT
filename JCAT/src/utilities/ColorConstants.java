@@ -4,13 +4,10 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Display;
 
 /**
- * This class provides the Colors specifically referenced and copied by
- * gui.mainpage.MainPageFiller and gui.popup.PopupFiller, though they are used
- * in most of the GUI classes through parameter-passing by
- * gui.mainpage.MainPageFiller and gui.popup.PopupFiller.
+ * FULLY DOCUMENTED. This class provides the Colors specifically referenced and copied by various
+ * GUI classes.
  * 
  * @author Joe Benassi
- * 
  */
 public final class ColorConstants {
 
@@ -38,35 +35,29 @@ public final class ColorConstants {
 			lightPageBackground, lightPageBackground, lightPageBackground,
 			lightPageBackground, lightPageBackground, lightPageBackground };
 
-	// public static Color textGray10 =
-	// public static Color baseGray20 =
-	// public static Color baseGray30 = new Color(Display.getCurrent(),
-	// base.getRed() + 30, base.getGreen() + 30, base.getBlue() + 30);
-	// public static Color baseGray52 = new Color(Display.getCurrent(),
-	// base.getRed() + 52, base.getGreen() + 52, base.getBlue() + 52);
-
 	/**
-	 * Used to change the text color for various texts.
+	 * Used to change the text color for various texts. Currently not used.
 	 * 
 	 * @param color
-	 *            the color to change the text
+	 *            The color to set as the text color.
 	 */
 	public static final void changeText(Color color) {
 		textColor = color;
 	}
 
 	/**
-	 * Used to change the base color for various backgrounds.
+	 * Used to change the base color for various backgrounds. Currently not
+	 * used.
 	 * 
 	 * @param color
-	 *            the color to change the base
+	 *            The color to set as the base.
 	 */
 	public static final void changeBase(Color color) {
 		newBase = color;
 	}
 
 	/**
-	 * Dispenses the Colors to clear memory. This is necessary.
+	 * Disposes all the Color objects to clear memory. This is necessary.
 	 */
 	public static final void disposeColors() {
 		textColor.dispose();

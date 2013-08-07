@@ -3,6 +3,11 @@ package utilities;
 import packets.ccsds.CcsdsTlmPkt;
 import packets.parameters.DataType;
 
+/**
+ * NOT DOCUMENTED.
+ * 
+ * @author Joe Benassi
+ */
 public class TimeKeeper {
 	private static long startTime;
 

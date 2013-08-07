@@ -2,10 +2,14 @@ package packets.parameters;
 
 import utilities.EndianCorrector;
 
-/*
- ** TODO - Think about adding Value also stored as an integer with a non string constructor
- ** TODO - More robust NumByte error handling
- ** TODO - Add radix support
+/**
+ * NOT DOCUMENTED.
+ * 
+ * @author David McComas
+ * 
+ *         TODO Think about adding Value also stored as an integer with a non
+ *         string constructor TODO More robust NumByte error handling TODO Add
+ *         radix support
  */
 public class CmdIntParam extends CmdParam {
 	public CmdIntParam(String Name, boolean isInputParam,

@@ -1,5 +1,12 @@
 package packets.parameters;
 
+/**
+ * NOT DOCUMENTED.
+ * 
+ * @author David McComas
+ * 
+ *         TODO Add error protection (null & invalid length)
+ */
 public class CmdStrParam extends CmdParam {
 	public CmdStrParam(String Name, boolean isInputParam,
 			ChoiceOption[] choiceOptions, int NumBytes) {
@@ -11,12 +18,13 @@ public class CmdStrParam extends CmdParam {
 		/* TODO add error protection (null & invalid len. */
 		for (int i = 0; i < ByteArray.length; i++) {
 			if (i < Value.length()) {
-				ByteArray[i] = (byte) (Value.codePointAt(i) & 0x0FF); 
+				ByteArray[i] = (byte) (Value.codePointAt(i) & 0x0FF);
 				/* Unicode equals ASCII */
 			}
-		
-			else ByteArray[i] = 0;
+
+			else
+				ByteArray[i] = 0;
 		}
 	}
-	
+
 }

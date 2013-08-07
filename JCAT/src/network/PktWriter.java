@@ -1,10 +1,12 @@
 package network;
 
-/*
- ** MsgWriter 
- **
+/**
+ * NOT DOCUMENTED.
+ * 
+ * @author Joe Benassi
+ * @author David McComas
+ * 
  */
-
 import java.net.*;
 
 import packets.ccsds.CcsdsPkt;
@@ -15,8 +17,8 @@ import main.Launcher;
 
 public class PktWriter {
 	private static String port = "1234";
-	//private static String ip = "192.168.224.128"; //VMWare
-	private static String ip = "192.168.1.11";  //ColdFires
+	// private static String ip = "192.168.224.128"; //VMWare
+	private static String ip = "192.168.1.11"; // ColdFires
 
 	public PktWriter() {
 	}
@@ -24,9 +26,11 @@ public class PktWriter {
 	public void WriteCmdPkt(String name, byte[] CmdData, int dataL) {
 		try {
 			sendPacket(CmdData);
-			Launcher.addUserActivity("COMMAND SENT: " + name + " to " + Networker.getAppName(CmdData));
+			Launcher.addUserActivity("COMMAND SENT: " + name + " to "
+					+ Networker.getAppName(CmdData));
 		} catch (Throwable e) {
-			Launcher.addUserActivity("COMMAND NOT SENT: " + name + " to " + Networker.getAppName(CmdData));
+			Launcher.addUserActivity("COMMAND NOT SENT: " + name + " to "
+					+ Networker.getAppName(CmdData));
 			e.printStackTrace();
 		}
 	}
@@ -41,7 +45,7 @@ public class PktWriter {
 			buf2[i] = buf[i];
 
 		EndianCorrector.fixHeaderOut(buf2);
-		
+
 		DatagramPacket out = new DatagramPacket(buf2, buf2.length, address,
 				intport);
 

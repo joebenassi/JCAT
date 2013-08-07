@@ -4,6 +4,12 @@ import java.util.ArrayList;
 
 import packets.ccsds.CcsdsTlmPkt;
 
+/**
+ * NOT DOCUMENTED.
+ * 
+ * @author Joe Benassi
+ * @author David McComas
+ */
 public class PktObserver {
 	private volatile ArrayList<CcsdsTlmPkt> pkts = new ArrayList<CcsdsTlmPkt>();
 	private final String id;

@@ -2,6 +2,11 @@ package packets.parameters;
 
 import utilities.EndianCorrector;
 
+/**
+ * NOT DOCUMENTED.
+ * 
+ * @author Joe Benassi
+ */
 public enum DataType {
 	uint8Integer("uint8", 1, false), uint8String("uint8", 1, true), uint16Integer(
 			"uint16", 2, false), uint16String("uint16", 2, true), uint32Integer(
