@@ -20,7 +20,7 @@ import packets.tlm.TlmPkt;
 import utilities.TelemetryUpdater;
 
 /**
- * FULLYDOCUMENTED!
+ * FULLY DOCUMENTED.
  * A class that has an instance for each App Profile loaded.
  * 
  * @author Joe Benassi
@@ -34,13 +34,6 @@ public final class App {
 	private final int TlmAppID;
 	private final int CmdAppID;
 
-	/**
-	 * 
-	 * test
-	 * 
-	 * 
-	 * 
-	 */
 	/**
 	 * This is a Command and Telemetry app configured with app-specific
 	 * parameters, and can represent any Command and Telemetry app. Every app is
