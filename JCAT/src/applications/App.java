@@ -41,6 +41,9 @@ public final class App {
 	private final int CmdAppID;
 
 	/**
+	 * 
+	 * test
+	 * 
 	 * This is a Command and Telemetry app configured with app-specific
 	 * parameters, and can represent any Command and Telemetry app. Every app is
 	 * an instance of this class with app-specific parameters. The parameters
