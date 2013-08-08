@@ -10,7 +10,7 @@ Versions of the CFS are open-source and can run on platforms such as RTEMS virtu
 JCAT is the first open-source ground system for CFS App development. It is designed to be a lightweight, rapid-application prototype development program. JCAT accomplishes three tasks to aid in CFS App development: command-sending, telemetry-displaying, and event message-displaying. To test an App, developers simply need to connect JCAT to the CFS containing their App via Ethernet cable, router, or virtual machine, and load its App Profile into JCAT at run-time. JCAT can test any App in the CFS, whether or not it is in the cFE. 
 
 ##What is an App Profile?
-An App Profile is an XML file that describes all the information JCAT needs to send commands to and display telemetry from an App running in the CFS. You must create or obtain an App Profile in order to use an App in JCAT. Examples of App Profiles are available in <a href="https://github.com/joebenassi/JCAT/tree/master/JCAT/App-Profiles/cFE-6.1/">JCAT/App-Profiles/cFE-6.1/</a>.
+An App Profile is an XML file that describes all the information JCAT needs to send commands to, and display telemetry from, an App running in the CFS. You must create or obtain an App Profile in order to use an App in JCAT. Examples of App Profiles are available in <a href="https://github.com/joebenassi/JCAT/tree/master/JCAT/App-Profiles/cFE-6.1/">JCAT/App-Profiles/cFE-6.1/</a>.
 To create an App Profile, you must first know its telemetry housekeeping packet and all its commands. Then, open the JCAT wiki's <a href="https://github.com/joebenassi/JCAT/wiki/App-Profile-Creation-Guide">App Profile Creation Guide</a> for further instructions.
 	
 ##What JRE's does JCAT support?
@@ -30,7 +30,7 @@ JCAT can run on Windows, Linux, and Macintosh on 32 and 64-bit JRE's of Java 6 o
 
 ##What do I do if I need help?
 ######If you encounter a problem with JCAT, consult the following
-1. JCAT in-pogram Help pages
+1. JCAT in-program Help pages
 2. JCAT repository wiki tab
 3. JCAT repository Issues tab
 
