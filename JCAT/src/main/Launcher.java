@@ -183,8 +183,8 @@ public final class Launcher {
 	 * @param msgStr
 	 *            The event message. Third column.
 	 */
-	public static final void addEvent(String time, String config, String msgStr) {
-		mainPageFiller.addEventMessage(time, config, msgStr,
+	public static final void addEvent(int time, String config, String msgStr) {
+		mainPageFiller.addEventMessage(TimeKeeper.getTimeFormatted(time), config, msgStr,
 				ColorConstants.textColor);
 	}
 

@@ -25,10 +25,6 @@ public class TimeKeeper {
 		return getTimeFormatted(sec);
 	}
 
-	public static final String getEventTime(byte[] data) throws Exception {
-		return getTimeFormatted(CcsdsTlmPkt.getTime(data));
-	}
-
 	public static final String getTimeFormatted(int sec) {
 		int min = sec / 60;
 		sec = sec % 60;

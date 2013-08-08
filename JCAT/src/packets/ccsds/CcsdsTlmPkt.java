@@ -3,31 +3,40 @@ package packets.ccsds;
 import packets.parameters.DataType;
 
 /**
- * NOT DOCUMENTED.
+ * FULLY DOCUMENTED. An instance of this class is created when a packet is
+ * received by PktReader.
  * 
  * @author Joe Benassi
  * @author David McComas
  */
 public class CcsdsTlmPkt extends CcsdsPkt {
-	public static final int CCSDS_IDX_TLM_HDR = 6;
-	public static final int CCSDS_IDX_TLM_DATA = 12;
-	public static final int CCSDS_TLM_HDR_LEN = 12;
+	private static final int CCSDS_IDX_TLM_HDR = 6;
+	private static final int CCSDS_IDX_TLM_DATA = 12;
+	private static final int CCSDS_TLM_HDR_LEN = 12;
 
-	/*
-	 * * Construct a packet from raw data stream
+	/**
+	 * Constructs a CcsdsPkt from a raw data stream. Formatted to have
+	 * attributes of a telemetry packet.
+	 * 
+	 * @param TlmMsg
+	 *            The data comprising the packet.
 	 */
 	public CcsdsTlmPkt(byte[] TlmMsg) {
 		super(TlmMsg);
 	}
 
-	/* WORKS! */
-	public static int getTime(byte[] data) {
+	/**
+	 * Parses the packet and returns the time of the packet.
+	 * 
+	 * @return The time that the CFS encoded the packet with, in seconds.
+	 */
+	public final int getTime() {
 		int sec = 0;
 
-		int a = data[CCSDS_IDX_TLM_HDR];
-		int b = data[CCSDS_IDX_TLM_HDR + 1];
-		int c = data[CCSDS_IDX_TLM_HDR + 2];
-		int d = data[CCSDS_IDX_TLM_HDR + 3];
+		int a = Packet[CCSDS_IDX_TLM_HDR];
+		int b = Packet[CCSDS_IDX_TLM_HDR + 1];
+		int c = Packet[CCSDS_IDX_TLM_HDR + 2];
+		int d = Packet[CCSDS_IDX_TLM_HDR + 3];
 
 		if (a < 0)
 			a += 256;

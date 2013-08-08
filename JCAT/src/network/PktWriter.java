@@ -3,7 +3,7 @@ package network;
 import java.net.*;
 
 import packets.ccsds.CcsdsPkt;
-import packets.cmd.CmdPkt;
+import packets.cmd.Cmd;
 
 import utilities.EndianCorrector;
 
@@ -37,18 +37,18 @@ public class PktWriter {
 	 * @param cmdPkt
 	 *            The command packet to send.
 	 */
-	public static final void sendPacket(CmdPkt cmdPkt) {
+	public static final void sendPacket(Cmd cmdPkt) {
 		final String name = cmdPkt.getName();
-		final byte[] CmdData = cmdPkt.getCcsdsPkt().GetPacket();
-		final int dataLength = cmdPkt.getCcsdsPkt().getTotalLength();
+		final byte[] CmdData = cmdPkt.getCcsdsPkt().getPacket();
+		final int dataLength = cmdPkt.getCcsdsPkt().getLength();
 
 		try {
 			sendPacket(CmdData);
 			Launcher.addUserActivity("COMMAND SENT: " + name + " to "
-					+ Networker.getAppName(CmdData));
+					+ Networker.getAppName(cmdPkt));
 		} catch (Throwable e) {
 			Launcher.addUserActivity("COMMAND NOT SENT: " + name + " to "
-					+ Networker.getAppName(CmdData));
+					+ Networker.getAppName(cmdPkt));
 			e.printStackTrace();
 		}
 	}

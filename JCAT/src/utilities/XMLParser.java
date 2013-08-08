@@ -16,11 +16,12 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import packets.cmd.CmdPkt;
+import packets.cmd.Cmd;
 import packets.parameters.ChoiceOption;
 import packets.parameters.CmdParam;
 import packets.parameters.ScalarConstant;
-import packets.tlm.TlmPkt;
+import packets.parameters.DataType;
+import packets.tlm.Tlm;
 import resources.ResourceLoader;
 
 import applications.App;
@@ -167,7 +168,7 @@ public final class XMLParser {
 	 * @return the array of Commands as defined in the input document
 	 */
 
-	private static final ArrayList<CmdPkt> getCommands(Document document,
+	private static final ArrayList<Cmd> getCommands(Document document,
 			int CmdMID) {
 		int commandOffset = 0;
 
@@ -177,7 +178,7 @@ public final class XMLParser {
 				"commands").item(0);
 		final NodeList nodeList = firstTree.getElementsByTagName("command");
 
-		ArrayList<CmdPkt> commands = new ArrayList<CmdPkt>();
+		ArrayList<Cmd> commands = new ArrayList<Cmd>();
 
 		for (int i = 0; i < nodeList.getLength(); i++) {
 			final int functCode = i + commandOffset;
@@ -193,7 +194,7 @@ public final class XMLParser {
 	 *            XML document.
 	 * @return
 	 */
-	private static final CmdPkt getCommand(Element commandBase, int funcCode,
+	private static final Cmd getCommand(Element commandBase, int funcCode,
 			int appID) {
 		final String name = getFirstInstance("name", commandBase);
 
@@ -205,7 +206,7 @@ public final class XMLParser {
 		for (CmdParam c : parameters)
 			dataLength += c.getNumBytes();
 
-		CmdPkt command = new CmdPkt(name, messageID, funcCode, dataLength);
+		Cmd command = new Cmd(name, messageID, funcCode, dataLength);
 
 		for (CmdParam c : parameters)
 			command.addParam(c);
@@ -267,7 +268,7 @@ public final class XMLParser {
 
 			String param = elements.get(i).getNodeName();
 			if (param.equalsIgnoreCase("spare")) {
-				parameters.add(ParamGen.getSpareParam(type));
+				parameters.add(CmdParam.getSpare(type));
 			}
 
 			else if (elements.get(i).getNodeName()
@@ -296,11 +297,12 @@ public final class XMLParser {
 				ChoiceOption[] choiceArray = new ChoiceOption[choiceOptions
 						.size()];
 				choiceOptions.toArray(choiceArray);
-				parameters.add(ParamGen.getCmdParam(name, type, primitive,
-						bytes, isInputParam, choiceArray));
+				
+				parameters.add(DataType.getDataType(type, primitive, bytes).getCmdParam(name,
+						isInputParam, choiceArray));
 			} else
-				parameters.add(ParamGen.getCmdParam(name, type, primitive,
-						bytes, isInputParam, new ChoiceOption[0]));
+				parameters.add(DataType.getDataType(type, primitive, bytes).getCmdParam(name,
+						isInputParam, new ChoiceOption[0]));
 		}
 		return parameters;
 	}
@@ -312,7 +314,7 @@ public final class XMLParser {
 	 *            The Document to parse for configuration details.
 	 * @return The telemetry data array as defined in the input Document.
 	 */
-	private static final TlmPkt[] getTelemetry(Document document) {
+	private static final Tlm[] getTelemetry(Document document) {
 		/* TODO will all TlmPkts be encoded as strings?? */
 		final Element firstTree = (Element) document.getElementsByTagName(
 				"telemetry").item(0);
@@ -320,7 +322,7 @@ public final class XMLParser {
 			final NodeList nodeList = firstTree
 					.getElementsByTagName("parameter");
 
-			ArrayList<TlmPkt> telemetry = new ArrayList<TlmPkt>();
+			ArrayList<Tlm> telemetry = new ArrayList<Tlm>();
 
 			for (int i = 0; i < nodeList.getLength(); i++) {
 				String name = getFirstInstance("name",
@@ -333,11 +335,11 @@ public final class XMLParser {
 						((Element) nodeList.item(i)));
 				String val = ScalarConstant.getValue(constant);
 
-				telemetry.add(new TlmPkt(name, dataType, primitive, val));
+				telemetry.add(new Tlm(name, dataType, primitive, val));
 			}
-			return telemetry.toArray(new TlmPkt[telemetry.size()]);
+			return telemetry.toArray(new Tlm[telemetry.size()]);
 		}
-		return new TlmPkt[] { new TlmPkt("null", "uint8", "string", "1") };
+		return new Tlm[] { new Tlm("null", "uint8", "string", "1") };
 	}
 
 	public static String getName(Document document) {

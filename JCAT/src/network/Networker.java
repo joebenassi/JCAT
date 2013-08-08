@@ -10,7 +10,7 @@ import applications.App;
 
 import packets.ccsds.CcsdsPkt;
 import packets.ccsds.CcsdsTlmPkt;
-import packets.cmd.CmdPkt;
+import packets.cmd.Cmd;
 import utilities.TelemetryUpdater;
 import utilities.TimeKeeper;
 
@@ -61,15 +61,15 @@ public class Networker {
 
 	/**
 	 * Returns the menuname of the App whose commandID matches that of the input
-	 * byte[] data. If no App has this, this returns "".
+	 * cmdPkt. If no App has this, this returns "".
 	 * 
 	 * @param data
 	 *            The data within a App's command.
 	 * @return The String representing the menuname of the App.
 	 */
-	public static final String getAppName(byte[] data) {
+	public static final String getAppName(Cmd cmdPkt) {
 		for (App app : apps)
-			if (app.getCmdId() == CcsdsPkt.getID(data))
+			if (app.getCmdId() == cmdPkt.getCcsdsPkt().getStreamID())
 				return app.getMenuName();
 		return "";
 	}
@@ -140,11 +140,7 @@ public class Networker {
 	 */
 	private final static void printEvent(String config, CcsdsTlmPkt pkt) {
 		byte[] TlmPkt = pkt.getPacket();
-		String time = "";
-		try {
-			time = TimeKeeper.getEventTime(pkt.getPacket());
-		} catch (Exception e) {
-		}
+		int time = pkt.getTime();
 
 		String MsgA = new String(TlmPkt, 12, 122);
 		String MsgB = new String(TlmPkt, 44, 122);
@@ -176,12 +172,12 @@ public class Networker {
 							while (!observer.isEmpty()) {
 								CcsdsTlmPkt TlmPkt = observer.getTlmPkt();
 								for (Config c : configs) {
-									if (c.getMsgId() == TlmPkt.getStreamId())
+									if (c.getMsgId() == TlmPkt.getStreamID())
 										printEvent(c.getName(), TlmPkt);
 								}
 
 								for (App app : apps)
-									if (TlmPkt.getStreamId() == app
+									if (TlmPkt.getStreamID() == app
 											.getTlmAppID()) {
 										TelemetryUpdater.updateTelemetry(
 												TlmPkt, app);

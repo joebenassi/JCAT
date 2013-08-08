@@ -15,8 +15,8 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 import packets.ccsds.CcsdsTlmPkt;
-import packets.cmd.CmdPkt;
-import packets.tlm.TlmPkt;
+import packets.cmd.Cmd;
+import packets.tlm.Tlm;
 import utilities.TelemetryUpdater;
 
 /**
@@ -25,8 +25,8 @@ import utilities.TelemetryUpdater;
  * @author Joe Benassi
  */
 public final class App {
-	private final ArrayList<CmdPkt> commands;
-	private final TlmPkt[] telemetry;
+	private final ArrayList<Cmd> commands;
+	private final Tlm[] telemetry;
 	private final String name;
 	private final String config;
 	private final PopupFiller popupFiller;
@@ -59,7 +59,7 @@ public final class App {
 	 *            the App.
 	 */
 	public App(final String name, String config,
-			final ArrayList<CmdPkt> commands, final TlmPkt[] telemetry,
+			final ArrayList<Cmd> commands, final Tlm[] telemetry,
 			final int TlmAppID, final int CmdAppID) {
 		final String[] entryNames = new String[telemetry.length];
 
@@ -266,7 +266,7 @@ public final class App {
 	 * 
 	 * @return The telemetry objects for this App.
 	 */
-	public final TlmPkt[] getTelemetry() {
+	public final Tlm[] getTelemetry() {
 		return telemetry;
 	}
 

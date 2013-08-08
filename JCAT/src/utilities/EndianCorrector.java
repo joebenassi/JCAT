@@ -56,7 +56,7 @@ public class EndianCorrector {
 		/* TODO fix this */
 	}
 
-	public static final byte getValueOut(byte[] buf, int index) {
+	/*public static final byte getValueOut(byte[] buf, int index) {
 		if (isBigEndianOut) {
 			if (index % 2 == 0)
 				index++;
@@ -64,7 +64,7 @@ public class EndianCorrector {
 				index--;
 		}
 		return buf[index];
-	}
+	}*/
 
 	private final static void flipHeaderBytes(byte[] init) {
 		for (int i = 0; i < 8; i = i + 2) {

@@ -8,7 +8,7 @@ import packets.parameters.ScalarConstant;
  * 
  * @author Joe Benassi
  */
-public class TlmPkt {
+public class Tlm {
 	private final String name;
 	private String value;
 	private final DataType dataType;
@@ -24,7 +24,7 @@ public class TlmPkt {
 	 * @param name
 	 *            What quality this represents
 	 */
-	public TlmPkt(String name, String type, String primitive, String constant) {
+	public Tlm(String name, String type, String primitive, String constant) {
 		this.name = name;
 		dataType = DataType.getDataType(type, primitive, constant);
 	}

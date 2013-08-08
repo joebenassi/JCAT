@@ -12,23 +12,22 @@ import network.PktWriter;
  * 
  * @author David McComas
  */
-public class CmdPkt {
+public class Cmd {
 	private final String Name;
 	private ArrayList<CmdParam> ParamList = new ArrayList<CmdParam>();
-	private int ParamByteLen;
+	private final int ParamByteLen;
 	private CcsdsCmdPkt CmdPkt;
 
-	public CmdPkt(String Name, int MsgId, int FuncCode, int DataLen) {
+	public Cmd(String Name, int MsgId, int FuncCode, int DataLen) {
 		this.Name = Name;
-		ParamByteLen = 0;
+		ParamByteLen = DataLen;
 
-		CmdPkt = new CcsdsCmdPkt(MsgId,
-				CcsdsCmdPkt.CCSDS_CMD_HDR_LEN + DataLen, FuncCode);
+		CmdPkt = new CcsdsCmdPkt(MsgId, DataLen, FuncCode);
 		CmdPkt.ComputeChecksum();
 	}
 
 	public void execute(String[] paramValues) {
-		for (int i = 0; i < paramValues.length; i++) {		
+		for (int i = 0; i < paramValues.length; i++) {
 			if (ParamList.get(i).isInputParam())
 				ParamList.get(i).setValue(paramValues[i]);
 			else {
@@ -44,7 +43,10 @@ public class CmdPkt {
 				}
 			}
 		}
-		loadParamList();
+		if (!ParamList.isEmpty())
+			loadParamList();
+
+		CmdPkt.ComputeChecksum();
 		PktWriter.sendPacket(this);
 	}
 
@@ -56,34 +58,26 @@ public class CmdPkt {
 		return parameterNames;
 	}
 
-	/**Probably the problem **/
+	/** Probably the problem **/
 	private final void loadParamList() {
 		byte[] CmdParamBuffer;
 		int CmdParamBufIndx = 0;
 
-		if (!ParamList.isEmpty()) {
-			ParamByteLen = 0;
-			for (int i = 0; i < ParamList.size(); i++) {
-				ParamByteLen += ParamList.get(i).getNumBytes();
-			}
-			CmdParamBuffer = new byte[ParamByteLen];
+		CmdParamBuffer = new byte[ParamByteLen];
 
-			for (int i = 0; i < ParamList.size(); i++) {
-				byte[] ParamBuffer = ParamList.get(i).getByteArray();
+		for (int i = 0; i < ParamList.size(); i++) {
+			byte[] ParamBuffer = ParamList.get(i).getByteArray();
 
-				for (int j = 0; j < ParamList.get(i).getNumBytes(); j++) 
-					CmdParamBuffer[CmdParamBufIndx++] = ParamBuffer[j];
-			}
-			CmdPkt.LoadData(CmdParamBuffer, ParamByteLen);
-		} else {
+			for (int j = 0; j < ParamList.get(i).getNumBytes(); j++)
+				CmdParamBuffer[CmdParamBufIndx++] = ParamBuffer[j];
 		}
-		CmdPkt.ComputeChecksum();
+		CmdPkt.LoadData(CmdParamBuffer);
 	}
 
 	public final CcsdsCmdPkt getCcsdsPkt() {
 		return CmdPkt;
 	}
-
+	
 	public final String getName() {
 		return Name;
 	}

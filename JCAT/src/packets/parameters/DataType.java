@@ -51,14 +51,10 @@ public enum DataType {
 
 	public final CmdParam getCmdParam(String name, boolean isInputParam,
 			ChoiceOption[] choiceArray) {
-		if (typeBytes == 0) // if Undef.
-			return new CmdStrParam(name, isInputParam, choiceArray, 1);
-
-		if (isString) {
-			return new CmdStrParam(name, isInputParam, choiceArray, getBytes());
-		}
-
-		return new CmdIntParam(name, isInputParam, choiceArray, getBytes());
+		if (isString) 
+			return new CmdParam(CmdParam.ParamType.STR, name, isInputParam, choiceArray, getBytes());
+		
+		return new CmdParam(CmdParam.ParamType.INT, name, isInputParam, choiceArray, getBytes());
 	}
 
 	public static DataType getDataType(String type, String primitive,

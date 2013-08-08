@@ -10,7 +10,7 @@ import org.eclipse.swt.widgets.Scrollable;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
-import packets.cmd.CmdPkt;
+import packets.cmd.Cmd;
 import packets.parameters.ChoiceOption;
 import packets.parameters.CmdParam;
 import packets.parameters.CmdParam.ParamType;
@@ -18,7 +18,7 @@ import utilities.GenericPrompt;
 
 public class ChooseHelpPopup {
 
-	public static void launchShell(final CmdPkt cmdPkt) {
+	public static void launchShell(final Cmd cmdPkt) {
 		final Shell dialog = GenericPrompt.getGenericShell();
 		GenericPrompt.addFirstLine(dialog, "Describe the following conditions: ");
 
@@ -35,7 +35,7 @@ public class ChooseHelpPopup {
 	}
 
 	private static final SelectionListener getSelectionListener(
-			final Shell dialog, final CmdPkt cmdPkt, final Scrollable[] texts) {
+			final Shell dialog, final Cmd cmdPkt, final Scrollable[] texts) {
 		return new SelectionAdapter() {
 			@Override
 			public final void widgetSelected(SelectionEvent e) {
@@ -58,7 +58,7 @@ public class ChooseHelpPopup {
 		};
 	}
 
-	private static final Scrollable[] getTexts(Shell dialog, CmdPkt cmdPkt) {
+	private static final Scrollable[] getTexts(Shell dialog, Cmd cmdPkt) {
 		ArrayList<Scrollable> texts = new ArrayList<Scrollable>();
 
 		final CmdParam[] params = cmdPkt.getParamList().toArray(

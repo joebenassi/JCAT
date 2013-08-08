@@ -1,5 +1,7 @@
 package packets.parameters;
 
+import utilities.EndianCorrector;
+
 /**
  * NOT DOCUMENTED. Design Notes: 1. This class is intended to be used as an
  * interface to a class providing a user interface such as a GUI or a script.
@@ -16,10 +18,9 @@ package packets.parameters;
  * @author Joe Benassi
  * @author David McComas
  */
-public abstract class CmdParam {
-
+public class CmdParam {
 	public enum ParamType {
-		UNDEF, UINT, INT, STR, SPARE
+		INT, STR, SPARE
 	};
 
 	private final boolean isInputParam;
@@ -30,8 +31,8 @@ public abstract class CmdParam {
 	private final int NumBytes;
 	protected byte[] ByteArray;
 
-	public CmdParam(String Name, boolean isInputParam,
-			ChoiceOption[] choiceOptions, ParamType Type, int NumBytes) {
+	public CmdParam(ParamType Type, String Name, boolean isInputParam,
+			ChoiceOption[] choiceOptions, int NumBytes) {
 		this.isInputParam = isInputParam;
 		this.choiceOptions = choiceOptions;
 		this.Name = Name;
@@ -40,40 +41,141 @@ public abstract class CmdParam {
 		ByteArray = new byte[NumBytes];
 	}
 
-	public String getName() {
+	public static final CmdParam getSpare(String type) {
+		return new CmdParam(ParamType.SPARE, "", true, new ChoiceOption[0], DataType.getDataType(type, "int", "1").getBytes());
+	}
+	
+	public final String getName() {
 		return Name;
 	}
 
-	public ParamType getType() {
+	public final ParamType getType() {
 		return Type;
+	}
+
+	/**
+	 * TODO Think about adding Value also stored as an integer with a non string
+	 * constructor TODO More robust NumByte error handling TODO Add radix
+	 * support
+	 */
+	private final void loadIntByteArray() {
+		switch (ByteArray.length) {
+
+		case 1:
+			ByteArray[0] = Integer.valueOf(Value).byteValue();
+			System.out.println("ByteArray[0] = " + ByteArray[0]);
+			break;
+
+		case 2:
+			int Temp2 = Integer.valueOf(Value);
+			ByteArray[0] = (byte) (Temp2 & 0xFF);
+			ByteArray[1] = (byte) ((Temp2 & 0xFF00) >> 8);
+			System.out.println("ByteArray[0] = " + ByteArray[0]);
+			System.out.println("ByteArray[1] = " + ByteArray[1]);
+			break;
+
+		case 4:
+			int Temp4 = Integer.valueOf(Value);
+			ByteArray[0] = (byte) (Temp4 & 0x00FF);
+			ByteArray[1] = (byte) ((Temp4 & 0x0000FF00) >> 8);
+			ByteArray[2] = (byte) ((Temp4 & 0x00FF0000) >> 16);
+			ByteArray[3] = (byte) ((Temp4 & 0xFF000000) >> 24);
+			System.out.println("ByteArray[0] = " + ByteArray[0]);
+			System.out.println("ByteArray[1] = " + ByteArray[1]);
+			System.out.println("ByteArray[2] = " + ByteArray[2]);
+			System.out.println("ByteArray[3] = " + ByteArray[3]);
+			break;
+		}
+		EndianCorrector.fixParameterOut(ByteArray);
+	}
+
+	/**
+	 * TODO Add error protection (null & invalid length)
+	 */
+	private final void loadStringByteArray() {
+		/* TODO add error protection (null & invalid len. */
+		for (int i = 0; i < ByteArray.length; i++) {
+			if (i < Value.length()) {
+				ByteArray[i] = (byte) (Value.codePointAt(i) & 0x0FF);
+				/* Unicode equals ASCII */
+			}
+
+			else
+				ByteArray[i] = 0;
+		}
+	}
+
+	/**
+	 * nothing
+	 */
+	private final void loadSpareByteArray() {
+		switch (ByteArray.length) {
+
+		case 1:
+			System.out
+					.println("CmdSpareParam::loadByteArray - 1 byte parameter");
+			ByteArray[0] = 0;
+			break;
+
+		case 2:
+			System.out
+					.println("CmdSpareParam::loadByteArray - 2 byte parameter");
+			ByteArray[0] = 0;
+			ByteArray[1] = 0;
+			break;
+
+		case 4:
+			System.out
+					.println("CmdSpareParam::loadByteArray - 4 byte parameter");
+			ByteArray[0] = 0;
+			ByteArray[1] = 0;
+			ByteArray[2] = 0;
+			ByteArray[3] = 0;
+			break;
+
+		default:
+			System.out.println("CMDSPAREPARAM: Unsupported datasize");
+		}
 	}
 
 	/*
 	 * Each subclass type must provide the conversions for the particular
 	 * parameter type
 	 */
-	protected abstract void loadByteArray(); // Load byte array using current
-												// Value. Intent is an internal
-												// helper function
+	public void loadByteArray() {
+		if (Type == ParamType.INT)
+			loadIntByteArray();
 
-	public byte[] getByteArray() {
+		else if (Type == ParamType.STR)
+			loadStringByteArray();
+
+		else if (Type == ParamType.SPARE)
+			loadSpareByteArray();
+
+		; // Load byte array using current
+	}
+
+	// Value. Intent is an internal
+	// helper function
+
+	public final byte[] getByteArray() {
 		return ByteArray;
 	}
 
-	public void setValue(String value) {
+	public final void setValue(String value) {
 		Value = value;
 		loadByteArray();
 	}
 
-	public int getNumBytes() {
+	public final int getNumBytes() {
 		return NumBytes;
 	}
 
-	public boolean isInputParam() {
+	public final boolean isInputParam() {
 		return isInputParam;
 	}
 
-	public ChoiceOption[] getChoiceOptions() {
+	public final ChoiceOption[] getChoiceOptions() {
 		return choiceOptions;
 	}
 }
