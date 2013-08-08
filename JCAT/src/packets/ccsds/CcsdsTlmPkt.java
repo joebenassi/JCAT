@@ -36,11 +36,7 @@ public class CcsdsTlmPkt extends CcsdsPkt {
 		sec += c * 256 * 256;
 		sec += b * 256;
 		sec += a;
-		/*
-		 * int sec =
-		 * Integer.parseInt(DataType.uint32Integer.getTlmStrArray(data,
-		 * CCSDS_IDX_TLM_HDR));
-		 */
+
 		return sec;
 	}
 }
