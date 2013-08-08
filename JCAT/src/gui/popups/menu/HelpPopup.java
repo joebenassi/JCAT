@@ -51,9 +51,11 @@ public enum HelpPopup {
 
 	GettingStarted("Getting Started", Text.GETTINGSTARTED, null), AppsNotImporting(
 			"Apps Not Importing", Text.APPSNOTIMPORTING, null), ProgramFreezes(
-			"Freezes/Crashes", Text.PROGRAMFREEZES, null), AAS("Common Problem 2", Text.AAS,
-			Symptoms.AAS), ASA("Common Problem 3", Text.ASA, Symptoms.ASA), SSS("Common Problem 4",
-			Text.SSS, Symptoms.SSS), ANN("Common Problem 5", Text.ANN, Symptoms.ANN), NNN(
+			"Freezes/Crashes", Text.PROGRAMFREEZES, null), AAS(
+			"Common Problem 2", Text.AAS, Symptoms.AAS), ASA(
+			"Common Problem 3", Text.ASA, Symptoms.ASA), SSS(
+			"Common Problem 4", Text.SSS, Symptoms.SSS), ANN(
+			"Common Problem 5", Text.ANN, Symptoms.ANN), NNN(
 			"Common Problem 6", Text.NNN, Symptoms.NNN);
 
 	public static final HelpPopup[] commonProblemPopups = new HelpPopup[] {
@@ -115,9 +117,9 @@ public enum HelpPopup {
 				"Check the Constant Definition file and ensure that all event message IDs are included.",
 				"If the problem exists with particular configs, you should try to disable and re-enable event messages for them. For each config, navigate to Command > TO_LAB > CFE_TO_REMOVE_PKT_CC. A window will prompt for the config’s msgid. Input the msgid and click ‘Send’. Then, for each config, navigate to Command > TO_LAB > CFE_TO_ADD_PKT_CC. A window will prompt for the config’s msgid, the msgid for the config containing TO_LAB, and two other parameters, for which “0” and “100” are generally appropriate arguments. Input the values and press 'Send'." };
 
-		private static final String[] ASA = new String[] { "If some Apps display telemetry, and others don’t, ensure that the tlmmid defined in the App Profile of the problematic App is correct for the CFS version.", 
-				"If an App has telemetry values that are incorrect, ensure that the App Profile is absolutely accurate to its App running in the CFS."
-				};
+		private static final String[] ASA = new String[] {
+				"If some Apps display telemetry, and others don’t, ensure that the tlmmid defined in the App Profile of the problematic App is correct for the CFS version.",
+				"If an App has telemetry values that are incorrect, ensure that the App Profile is absolutely accurate to its App running in the CFS." };
 
 		private static final String[] SSS = new String[] {
 				"If some Apps send commands, but others don’t, ensure that the cmdmid defined in the App Profile of the problematic App is correct for the CFS version.",
@@ -130,14 +132,12 @@ public enum HelpPopup {
 				"Ensure that your firewall accepts all packets from port 1235." };
 
 		private static final String[] NNN = new String[] { "Ensure you are connected to the CFS, wirelessly, wired, or otherwise. If the command parameter window stalls temporarily after you click ‘Send’, it is likely due to this. Ensure that your firewall and permissions allow for networking." };
-		
-		private static final String[] APPSNOTIMPORTING = new String[] {
-				"If an App is unchoosable in the 'Select Apps' window after importing its App Profile XML, the App Profile is incorrectly formatted. Consult the README in the JCAT repository on GitHub.com." };
+
+		private static final String[] APPSNOTIMPORTING = new String[] { "If an App is unchoosable in the 'Select Apps' window after importing its App Profile XML, the App Profile is incorrectly formatted. Consult the README in the JCAT repository on GitHub.com." };
 
 		private static final String[] PROGRAMFREEZES = new String[] {
-				"If JCAT freezes after sending a command, ensure that the command is correctly defined in its App Profile, specifically with respect to it's primitive. If you define a parameter as an integer, and input something else, this may occur.", 
+				"If JCAT freezes after sending a command, ensure that the command is correctly defined in its App Profile, specifically with respect to it's primitive. If you define a parameter as an integer, and input something else, this may occur.",
 				"If JCAT simply pauses temporarily after sending a command, ensure that you are connected to the CFS, wirelessly, wired, or otherwise.",
-				"If JCAT's menu has missing text or is acting differently, or if JCAT slows down, becomes unresponsive, or has the main page window change appearance, it is the result of processing an App Profile. The App Profile may even be perfectly formatted. This malfunction has yet to be resolved."
-		 };
+				"If JCAT's menu has missing text or is acting differently, or if JCAT slows down, becomes unresponsive, or has the main page window change appearance, it is the result of processing an App Profile. The App Profile may even be perfectly formatted. This malfunction has yet to be resolved." };
 	}
 }

@@ -8,8 +8,6 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 
-import utilities.TimeKeeper;
-
 final class StatusWindowSash extends SashForm {
 	private final StatusWindow eventWindow;
 	private final StatusWindow userWindow;

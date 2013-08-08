@@ -3,22 +3,13 @@ package packets.parameters;
 import utilities.EndianCorrector;
 
 /**
- * NOT DOCUMENTED. Design Notes: 1. This class is intended to be used as an
- * interface to a class providing a user interface such as a GUI or a script.
- * Therefore the user interface will be a string. On the 'back end' is a byte
- * array to the communications to the CFS. Since these interface types are fixed
- * an abstract base class can provide methods for the interfaces and the
- * concrete subclasses would provide the conversion implementation for each data
- * type. 2. When I hard coded some defaults the string constructor seemed odd
- * but if this project expands to use a text based database then it would also
- * use text for the constructor so the design may be okay. 3. Generics didn't
- * fit the problem being solved because they are typically used in containers
- * when the different types are being passed across a class interface.
+ * NOT DOCUMENTED. This contains a 'back end', which is a byte array to the
+ * communications to the CFS.
  * 
  * @author Joe Benassi
  * @author David McComas
  */
-public class CmdParam {
+public final class CmdParam {
 	public enum ParamType {
 		INT, STR, SPARE
 	};
@@ -31,6 +22,22 @@ public class CmdParam {
 	private final int NumBytes;
 	protected byte[] ByteArray;
 
+	/**
+	 * Constructor: creates a CmdParam with the input attributes.
+	 * 
+	 * @param Type
+	 *            The parameter type (int, string, spare, or spare).
+	 * @param Name
+	 *            The name to display in the GUI.
+	 * @param isInputParam
+	 *            If the user has to manually type in the parameter.
+	 * @param choiceOptions
+	 *            If this is not an InputParameter, the different choices
+	 *            available to the user.
+	 * @param NumBytes
+	 *            The amount of bytes that all the parameters will occupy in the
+	 *            command packet.
+	 */
 	public CmdParam(ParamType Type, String Name, boolean isInputParam,
 			ChoiceOption[] choiceOptions, int NumBytes) {
 		this.isInputParam = isInputParam;
@@ -41,108 +48,86 @@ public class CmdParam {
 		ByteArray = new byte[NumBytes];
 	}
 
+	/**
+	 * Returns a CmdParam that is invisible to the GUI and contributes only
+	 * values of zero to the command packet.
+	 * 
+	 * @param type
+	 *            The type. For example, uint8, int16. This is only used to
+	 *            determine the size of the spare.
+	 * @return A CmdPaam that is a spare.
+	 */
 	public static final CmdParam getSpare(String type) {
-		return new CmdParam(ParamType.SPARE, "", true, new ChoiceOption[0], DataType.getDataType(type, "int", "1").getBytes());
+		return new CmdParam(ParamType.SPARE, "", true, new ChoiceOption[0],
+				DataType.getDataType(type, "int", "1").getBytes());
 	}
-	
+
+	/**
+	 * Returns the String representing this perameter's name.
+	 * 
+	 * @return This parameter's name.
+	 */
 	public final String getName() {
 		return Name;
 	}
 
+	/**
+	 * Returns the type of this parameter.
+	 * 
+	 * @return the ParamType of this.
+	 */
 	public final ParamType getType() {
 		return Type;
 	}
 
 	/**
-	 * TODO Think about adding Value also stored as an integer with a non string
-	 * constructor TODO More robust NumByte error handling TODO Add radix
-	 * support
+	 * Updates the byte array by using this parameter's value and encoding it as
+	 * an integer value.
 	 */
 	private final void loadIntByteArray() {
-		switch (ByteArray.length) {
+		int index = 255;
+		final int temp = Integer.valueOf(Value);
 
-		case 1:
-			ByteArray[0] = Integer.valueOf(Value).byteValue();
-			System.out.println("ByteArray[0] = " + ByteArray[0]);
-			break;
-
-		case 2:
-			int Temp2 = Integer.valueOf(Value);
-			ByteArray[0] = (byte) (Temp2 & 0xFF);
-			ByteArray[1] = (byte) ((Temp2 & 0xFF00) >> 8);
-			System.out.println("ByteArray[0] = " + ByteArray[0]);
-			System.out.println("ByteArray[1] = " + ByteArray[1]);
-			break;
-
-		case 4:
-			int Temp4 = Integer.valueOf(Value);
-			ByteArray[0] = (byte) (Temp4 & 0x00FF);
-			ByteArray[1] = (byte) ((Temp4 & 0x0000FF00) >> 8);
-			ByteArray[2] = (byte) ((Temp4 & 0x00FF0000) >> 16);
-			ByteArray[3] = (byte) ((Temp4 & 0xFF000000) >> 24);
-			System.out.println("ByteArray[0] = " + ByteArray[0]);
-			System.out.println("ByteArray[1] = " + ByteArray[1]);
-			System.out.println("ByteArray[2] = " + ByteArray[2]);
-			System.out.println("ByteArray[3] = " + ByteArray[3]);
-			break;
+		for (int i = 0; i < ByteArray.length; i++) {
+			ByteArray[i] = (byte) ((temp & index) >> (8 * i));
+			if (index > Integer.MAX_VALUE / 256)
+				i = ByteArray.length;
+			else
+				index *= 256;
 		}
 		EndianCorrector.fixParameterOut(ByteArray);
 	}
 
 	/**
-	 * TODO Add error protection (null & invalid length)
+	 * Updates the byte array by using this parameter's value and encoding it as
+	 * String information.
 	 */
 	private final void loadStringByteArray() {
-		/* TODO add error protection (null & invalid len. */
+		if (Value == null)
+			return;
 		for (int i = 0; i < ByteArray.length; i++) {
-			if (i < Value.length()) {
-				ByteArray[i] = (byte) (Value.codePointAt(i) & 0x0FF);
-				/* Unicode equals ASCII */
-			}
+			ByteArray[i] = 0;
 
-			else
-				ByteArray[i] = 0;
+			if (i < Value.length())
+				ByteArray[i] = (byte) (Value.codePointAt(i) & 0x0FF);
 		}
 	}
 
 	/**
-	 * nothing
+	 * Updates the byte array for this parameter by setting all values within
+	 * ByteArray to zero.
 	 */
 	private final void loadSpareByteArray() {
-		switch (ByteArray.length) {
-
-		case 1:
-			System.out
-					.println("CmdSpareParam::loadByteArray - 1 byte parameter");
-			ByteArray[0] = 0;
-			break;
-
-		case 2:
-			System.out
-					.println("CmdSpareParam::loadByteArray - 2 byte parameter");
-			ByteArray[0] = 0;
-			ByteArray[1] = 0;
-			break;
-
-		case 4:
-			System.out
-					.println("CmdSpareParam::loadByteArray - 4 byte parameter");
-			ByteArray[0] = 0;
-			ByteArray[1] = 0;
-			ByteArray[2] = 0;
-			ByteArray[3] = 0;
-			break;
-
-		default:
-			System.out.println("CMDSPAREPARAM: Unsupported datasize");
-		}
+		for (byte b : ByteArray)
+			b = 0;
 	}
 
-	/*
-	 * Each subclass type must provide the conversions for the particular
-	 * parameter type
+	/**
+	 * Updates the byte array for this parameter based on the value more
+	 * recently assigned to it. Uses the knowledge of this being an integer,
+	 * string, or spare parameter to pack and adjust for endianness accordingly.
 	 */
-	public void loadByteArray() {
+	public final void loadByteArray() {
 		if (Type == ParamType.INT)
 			loadIntByteArray();
 
@@ -151,30 +136,56 @@ public class CmdParam {
 
 		else if (Type == ParamType.SPARE)
 			loadSpareByteArray();
-
-		; // Load byte array using current
 	}
 
-	// Value. Intent is an internal
-	// helper function
-
+	/**
+	 * Returns the byte array. Returns the array that will be pasted in the
+	 * final command packet. In the packet, it will be together and in its
+	 * original order.
+	 * 
+	 * @return The byte array representing the value of this parameter.
+	 */
 	public final byte[] getByteArray() {
 		return ByteArray;
 	}
 
+	/**
+	 * Sets the value of this parameter to the input value and updates the byte
+	 * array.
+	 * 
+	 * @param value
+	 *            The value to set as this parameter's value.
+	 */
 	public final void setValue(String value) {
 		Value = value;
 		loadByteArray();
 	}
 
+	/**
+	 * Returns the number of bytes that this command parameter occupies in the
+	 * final packet.
+	 * 
+	 * @return The byte length of this paramter.
+	 */
 	public final int getNumBytes() {
 		return NumBytes;
 	}
 
+	/**
+	 * Returns true if this parameter is an input parameter. Otherwise, it is a
+	 * choiceparameter, and returns false.
+	 * 
+	 * @return Whether or not this is an input parameter.
+	 */
 	public final boolean isInputParam() {
 		return isInputParam;
 	}
 
+	/**
+	 * Returns the ChoiceOptions for this command parameter.
+	 * 
+	 * @return The ChoiceOptions available for this.
+	 */
 	public final ChoiceOption[] getChoiceOptions() {
 		return choiceOptions;
 	}

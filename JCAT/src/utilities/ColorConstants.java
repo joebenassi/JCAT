@@ -4,8 +4,8 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Display;
 
 /**
- * FULLY DOCUMENTED. This class provides the Colors specifically referenced and copied by various
- * GUI classes.
+ * FULLY DOCUMENTED. This class provides the Colors specifically referenced and
+ * copied by various GUI classes.
  * 
  * @author Joe Benassi
  */

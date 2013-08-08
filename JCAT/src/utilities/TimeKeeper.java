@@ -1,14 +1,11 @@
 package utilities;
 
-import packets.ccsds.CcsdsTlmPkt;
-import packets.parameters.DataType;
-
 /**
  * NOT DOCUMENTED.
  * 
  * @author Joe Benassi
  */
-public class TimeKeeper {
+public final class TimeKeeper {
 	private static long startTime;
 
 	public static final void reset() {

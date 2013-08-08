@@ -21,7 +21,8 @@ public enum DataType {
 			DataType.uint16Integer, DataType.uint16String,
 			DataType.uint32Integer, DataType.uint32String,
 			DataType.int8Integer, DataType.int8String, DataType.int16Integer,
-			DataType.int16String, DataType.int32Integer, DataType.int32String, DataType.Char};
+			DataType.int16String, DataType.int32Integer, DataType.int32String,
+			DataType.Char };
 
 	private final String type;
 	private final int typeBytes;
@@ -51,10 +52,12 @@ public enum DataType {
 
 	public final CmdParam getCmdParam(String name, boolean isInputParam,
 			ChoiceOption[] choiceArray) {
-		if (isString) 
-			return new CmdParam(CmdParam.ParamType.STR, name, isInputParam, choiceArray, getBytes());
-		
-		return new CmdParam(CmdParam.ParamType.INT, name, isInputParam, choiceArray, getBytes());
+		if (isString)
+			return new CmdParam(CmdParam.ParamType.STR, name, isInputParam,
+					choiceArray, getBytes());
+
+		return new CmdParam(CmdParam.ParamType.INT, name, isInputParam,
+				choiceArray, getBytes());
 	}
 
 	public static DataType getDataType(String type, String primitive,

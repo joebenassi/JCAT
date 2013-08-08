@@ -155,7 +155,7 @@ final class UniversalBox extends Composite {
 		GridData fieldGridData = new GridData(GridData.FILL_HORIZONTAL);
 		fieldGridData.minimumWidth = fieldMinimumWidth;
 		temp.setLayoutData(fieldGridData);
-		
+
 		return temp;
 	}
 

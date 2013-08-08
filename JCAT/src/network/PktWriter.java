@@ -2,7 +2,6 @@ package network;
 
 import java.net.*;
 
-import packets.ccsds.CcsdsPkt;
 import packets.cmd.Cmd;
 
 import utilities.EndianCorrector;
@@ -10,12 +9,13 @@ import utilities.EndianCorrector;
 import main.Launcher;
 
 /**
- * FULLY DOCUMENTED. This class is used to send CmdPkt data to a particular IP address and port.
+ * FULLY DOCUMENTED. This class is used to send CmdPkt data to a particular IP
+ * address and port.
  * 
  * @author Joe Benassi
  * @author David McComas
  */
-public class PktWriter {
+public final class PktWriter {
 
 	/**
 	 * The standard CI_LAB port for the CFS.
@@ -108,7 +108,8 @@ public class PktWriter {
 	/**
 	 * Sets the targetIP to the input String.
 	 * 
-	 * @param IP The IP that future command packets will be sent to.
+	 * @param IP
+	 *            The IP that future command packets will be sent to.
 	 */
 	public static final void setTargetIP(String IP) {
 		targetIP = IP;
@@ -117,7 +118,8 @@ public class PktWriter {
 	/**
 	 * Sets the targetPort to the input String.
 	 * 
-	 * @param Port The port that future command packets will be sent to.
+	 * @param Port
+	 *            The port that future command packets will be sent to.
 	 */
 	public static final void setPort(String Port) {
 		targetPort = Port;

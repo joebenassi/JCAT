@@ -10,9 +10,6 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 
-import packets.ccsds.CcsdsTlmPkt;
-
-import main.Launcher;
 import utilities.EndianCorrector;
 import gui.mainpage.TopBar;
 
@@ -26,12 +23,12 @@ import gui.mainpage.TopBar;
  * @author Joe Benassi
  * @author David McComas
  * 
- *         TODO Read in cFE headers like osconfig.h to get #defines.
- *         TODO Allow multiple instances of JCAT share the same socket.
- *         TODO Ensure that EnableWirelessTelemetry works cross-platform.
- *         TODO Ensure that EnableLocalTelemetry works cross-platform.
+ *         TODO Read in cFE headers like osconfig.h to get #defines. TODO Allow
+ *         multiple instances of JCAT share the same socket. TODO Ensure that
+ *         EnableWirelessTelemetry works cross-platform. TODO Ensure that
+ *         EnableLocalTelemetry works cross-platform.
  */
-public class PktReader {
+public final class PktReader {
 	private static DatagramSocket MsgSock;
 	private static final int port = 1235;
 	private static boolean functional = true;

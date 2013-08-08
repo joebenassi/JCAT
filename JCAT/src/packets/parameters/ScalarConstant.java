@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * 
  * @author Joe Benassi
  */
-public class ScalarConstant {
+public final class ScalarConstant {
 	private static ArrayList<String> names = new ArrayList<String>();
 	private static ArrayList<String> values = new ArrayList<String>();
 

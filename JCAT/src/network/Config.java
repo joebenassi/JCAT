@@ -6,7 +6,7 @@ package network;
  * 
  * @author Joe Benassi
  */
-public class Config {
+public final class Config {
 	/**
 	 * The name of this. For example, "CPU1".
 	 */

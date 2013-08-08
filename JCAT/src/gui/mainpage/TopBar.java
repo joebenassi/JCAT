@@ -6,10 +6,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.layout.FormAttachment;
-import org.eclipse.swt.layout.FormData;
-import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -20,7 +16,8 @@ import utilities.TimeKeeper;
 
 public final class TopBar extends Composite {
 	private static Label lastTelemetryTime;
-	//private static long lastTlmUpdate = TimeKeeper.getLongTime();
+
+	// private static long lastTlmUpdate = TimeKeeper.getLongTime();
 
 	final static void addTopBar(Composite parent, String title,
 			Color backgroundColor, Color foregroundColor, Font titleFont,
@@ -105,9 +102,10 @@ public final class TopBar extends Composite {
 			Display.getDefault().syncExec(new Runnable() {
 				@Override
 				public void run() {
-					lastTelemetryTime.setText(TimeKeeper.getElapsedTime() + "       ");
-					//lastTelemetryTime.setText("never     ");
-					//lastTlmUpdate = TimeKeeper.getLongTime();
+					lastTelemetryTime.setText(TimeKeeper.getElapsedTime()
+							+ "       ");
+					// lastTelemetryTime.setText("never     ");
+					// lastTlmUpdate = TimeKeeper.getLongTime();
 				}
 			});
 		} catch (Throwable e) {

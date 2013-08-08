@@ -1,7 +1,5 @@
 package packets.ccsds;
 
-import packets.parameters.DataType;
-
 /**
  * FULLY DOCUMENTED. An instance of this class is created when a packet is
  * received by PktReader.
@@ -9,7 +7,7 @@ import packets.parameters.DataType;
  * @author Joe Benassi
  * @author David McComas
  */
-public class CcsdsTlmPkt extends CcsdsPkt {
+public final class CcsdsTlmPkt extends CcsdsPkt {
 	private static final int CCSDS_IDX_TLM_HDR = 6;
 	private static final int CCSDS_IDX_TLM_DATA = 12;
 	private static final int CCSDS_TLM_HDR_LEN = 12;

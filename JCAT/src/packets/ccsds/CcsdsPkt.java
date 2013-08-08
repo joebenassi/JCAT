@@ -1,8 +1,5 @@
 package packets.ccsds;
 
-import packets.parameters.DataType;
-import utilities.EndianCorrector;
-
 /**
  * FULLY DOCUMENTED. This class contains a byte array that is the packet. This
  * class is used to perform operations on data that is in all Ccsds packets,

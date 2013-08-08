@@ -13,18 +13,14 @@ import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
-import resources.ResourceLoader;
-
 import utilities.ColorConstants;
 import utilities.FontConstants;
 import utilities.GenericPrompt;
-import utilities.ShellDisposer;
 
 /**
  * This creates a Shell containing a UniversalBox, a LeftBar, and App-specific
@@ -39,7 +35,8 @@ import utilities.ShellDisposer;
  */
 public class PopupFiller {
 	private Shell POPUP = GenericPrompt.getGenericShell();
-	private ScrolledComposite SCROLL = new ScrolledComposite(POPUP, SWT.H_SCROLL | SWT.V_SCROLL);// | SWT.BORDER);
+	private ScrolledComposite SCROLL = new ScrolledComposite(POPUP,
+			SWT.H_SCROLL | SWT.V_SCROLL);// | SWT.BORDER);
 	private Composite SCROLLER = new Composite(SCROLL, SWT.NONE);
 	private static final Font TEXTFONT = FontConstants.bodyFont;
 	private static final Font SCROLLERTITLEFONT = FontConstants.titleFont;
@@ -70,7 +67,7 @@ public class PopupFiller {
 		developShell();
 		addRightBar(PopupName, ENTRYNAMES);
 
-		FormData data = new FormData();		
+		FormData data = new FormData();
 		data.width = 60;
 		data.right = new FormAttachment(SCROLLER.getChildren()[0], 0, SWT.LEFT);
 		data.left = new FormAttachment(0, 0);
@@ -98,6 +95,7 @@ public class PopupFiller {
 			}
 		});
 		SCROLL.addListener(SWT.Activate, new Listener() {
+			@Override
 			public void handleEvent(Event e) {
 				SCROLL.setFocus();
 			}
@@ -114,7 +112,7 @@ public class PopupFiller {
 		SCROLL.setBackground(backgroundColor);
 		SCROLLER.setLayout(formLayout);
 		SCROLLER.setBackground(backgroundColor);
-		//POPUP.setBackground(backgroundColor);
+		// POPUP.setBackground(backgroundColor);
 	}
 
 	/**
@@ -141,8 +139,8 @@ public class PopupFiller {
 
 		data = new GridData(SWT.LEFT, SWT.NONE, true, false);
 		data.horizontalIndent = 15;
-		TitleBox.addTitleBox(rightBar, SCROLLERNAME, backgroundColor, textColor,
-				SCROLLERTITLEFONT, data);
+		TitleBox.addTitleBox(rightBar, SCROLLERNAME, backgroundColor,
+				textColor, SCROLLERTITLEFONT, data);
 
 		data = new GridData(SWT.LEFT, SWT.NONE, true, false);
 		data.horizontalIndent = 15;
@@ -179,7 +177,8 @@ public class PopupFiller {
 	}
 
 	/**
-	 * Disposes of the SCROLLER. This method is required to free system resources.
+	 * Disposes of the SCROLLER. This method is required to free system
+	 * resources.
 	 */
 	public final void dispose() {
 		POPUP.dispose();
@@ -201,6 +200,6 @@ public class PopupFiller {
 
 	public void setSC(String SC) {
 		universalBox.setSCText(SC);
-		
+
 	}
 }

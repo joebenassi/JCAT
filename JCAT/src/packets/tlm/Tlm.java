@@ -1,14 +1,13 @@
 package packets.tlm;
 
 import packets.parameters.DataType;
-import packets.parameters.ScalarConstant;
 
 /**
  * NOT DOCUMENTED.
  * 
  * @author Joe Benassi
  */
-public class Tlm {
+public final class Tlm {
 	private final String name;
 	private String value;
 	private final DataType dataType;

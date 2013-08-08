@@ -14,10 +14,8 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
-import packets.ccsds.CcsdsTlmPkt;
 import packets.cmd.Cmd;
 import packets.tlm.Tlm;
-import utilities.TelemetryUpdater;
 
 /**
  * FULLY DOCUMENTED. A class that has an instance for each App Profile loaded.
@@ -58,9 +56,8 @@ public final class App {
 	 *            matches this, the CFS will treat this as a command packet for
 	 *            the App.
 	 */
-	public App(final String name, String config,
-			final ArrayList<Cmd> commands, final Tlm[] telemetry,
-			final int TlmAppID, final int CmdAppID) {
+	public App(final String name, String config, final ArrayList<Cmd> commands,
+			final Tlm[] telemetry, final int TlmAppID, final int CmdAppID) {
 		final String[] entryNames = new String[telemetry.length];
 
 		for (int i = 0; i < entryNames.length; i++) {

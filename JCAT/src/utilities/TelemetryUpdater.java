@@ -1,8 +1,5 @@
 package utilities;
 
-import gui.mainpage.TopBar;
-import main.Launcher;
-
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Text;
 
@@ -17,17 +14,18 @@ import applications.App;
  * @author Joe Benassi
  * @author David McComas
  */
-public class TelemetryUpdater {
+public final class TelemetryUpdater {
 	public static void updateTelemetry(CcsdsTlmPkt TlmMsg, App app) {
 		String[] TlmStrArray = new String[app.getTelemetryAmt()];
 		loadTlmStrArrayHdr(TlmMsg, TlmStrArray);
-		
+
 		final int ID = TlmMsg.getStreamID();
 		if (ID == app.getTlmAppID()) {
 			loadTlmStrArrayHk(TlmMsg.getPacket(), app.getTelemetry());
 			try {
 				app.setTime(TimeKeeper.getTimeFormatted(TlmMsg.getTime()));
-				app.setSC(TlmMsg.getSeqCount()+ "");//"" + CcsdsTlmPkt.getSeqCount(TlmMsg.getPacket()));
+				app.setSC(TlmMsg.getSeqCount() + "");// "" +
+														// CcsdsTlmPkt.getSeqCount(TlmMsg.getPacket()));
 			} catch (Exception e) {
 			}
 			updatePopup(app);
@@ -35,8 +33,7 @@ public class TelemetryUpdater {
 		/* TODO account for different AppIDs (Non-HK) */
 	}
 
-	private static final void loadTlmStrArrayHk(byte[] RawData,
-			Tlm[] Telemetry) {
+	private static final void loadTlmStrArrayHk(byte[] RawData, Tlm[] Telemetry) {
 		int RawIndex = 12;
 		for (int i = 0; i < Telemetry.length; i++) {
 			Tlm T = Telemetry[i];

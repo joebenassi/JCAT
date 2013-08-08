@@ -7,7 +7,7 @@ import main.Launcher;
  * 
  * @author Joe Benassi
  */
-public class EndianCorrector {
+public final class EndianCorrector {
 	/* Assumes JCAT is running on little endian */
 	private static boolean isBigEndianOut = true; // is ColdFire
 	private static boolean isBigEndianIn = false; // is Coldfire
@@ -56,15 +56,11 @@ public class EndianCorrector {
 		/* TODO fix this */
 	}
 
-	/*public static final byte getValueOut(byte[] buf, int index) {
-		if (isBigEndianOut) {
-			if (index % 2 == 0)
-				index++;
-			else
-				index--;
-		}
-		return buf[index];
-	}*/
+	/*
+	 * public static final byte getValueOut(byte[] buf, int index) { if
+	 * (isBigEndianOut) { if (index % 2 == 0) index++; else index--; } return
+	 * buf[index]; }
+	 */
 
 	private final static void flipHeaderBytes(byte[] init) {
 		for (int i = 0; i < 8; i = i + 2) {

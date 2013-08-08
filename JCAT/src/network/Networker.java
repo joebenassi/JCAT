@@ -8,11 +8,9 @@ import org.eclipse.swt.widgets.Display;
 
 import applications.App;
 
-import packets.ccsds.CcsdsPkt;
 import packets.ccsds.CcsdsTlmPkt;
 import packets.cmd.Cmd;
 import utilities.TelemetryUpdater;
-import utilities.TimeKeeper;
 
 /**
  * FULLY DOCUMENTED. UNSTABLE. This class is primarily responsible for
@@ -23,7 +21,7 @@ import utilities.TimeKeeper;
  * @author Joe Benassi
  * @author David McComas
  */
-public class Networker {
+public final class Networker {
 	private static ArrayList<App> apps;
 	private static ArrayList<Config> configs;
 	private static final String observerID = "arbitrary";

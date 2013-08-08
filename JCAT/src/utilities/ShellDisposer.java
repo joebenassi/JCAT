@@ -9,7 +9,7 @@ import org.eclipse.swt.widgets.Shell;
  * 
  * @author Joe Benassi
  */
-public class ShellDisposer {
+public final class ShellDisposer {
 	private static ArrayList<Shell> popups = new ArrayList<Shell>();
 
 	public static final void disposePopups() {

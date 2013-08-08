@@ -23,10 +23,12 @@ public final class NavConstantXMLPrompt {
 
 		String fullFilePath = dialog.open();
 		String[] fileNames = dialog.getFileNames();
-		if (fileNames.length < 1) return false;
+		if (fileNames.length < 1)
+			return false;
 		try {
-		addConstants(fullFilePath, fileNames);
-		} catch (Throwable e){}
+			addConstants(fullFilePath, fileNames);
+		} catch (Throwable e) {
+		}
 		return true;
 	}
 

@@ -2,14 +2,12 @@ package utilities;
 
 import java.util.prefs.Preferences;
 
-import main.Launcher;
-
 /**
  * NOT DOCUMENTED.
  * 
  * @author Joe Benassi
  */
-public class PreferenceStorage {
+public final class PreferenceStorage {
 	private static volatile Preferences prefs = Preferences
 			.userNodeForPackage(main.Launcher.class);
 	private static final String x = "showHelp";

@@ -28,7 +28,6 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
-import resources.ResourceLoader;
 import utilities.EndianCorrector;
 import utilities.GenericPrompt;
 
@@ -172,8 +171,9 @@ public final class IOPrompt {
 		else {
 			String wirelessIP = PktReader.getWirelessIP();
 			if (wirelessIP != null) {
-			texts[0].setText(wirelessIP);}
-			else texts[0].setText("Could not be found");
+				texts[0].setText(wirelessIP);
+			} else
+				texts[0].setText("Could not be found");
 			texts[0].setEditable(false);
 		}
 

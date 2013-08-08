@@ -5,14 +5,14 @@ import java.util.ArrayList;
 import packets.ccsds.CcsdsTlmPkt;
 
 /**
- * FULLY DOCUMENTED. This class allows telemetry packets received from JCAT to be
- * shared with multiple observers. In JCAT, there is currently only one
+ * FULLY DOCUMENTED. This class allows telemetry packets received from JCAT to
+ * be shared with multiple observers. In JCAT, there is currently only one
  * observer. It has not been tested to be functional with multiple observers.
  * 
  * @author Joe Benassi
  * @author David McComas
  */
-public class FswTlmNetwork {
+public final class FswTlmNetwork {
 	/**
 	 * The observers to receive the telemetry packet.
 	 */
@@ -36,7 +36,9 @@ public class FswTlmNetwork {
 	 * there is no observer with such an ID, then nothing changes. If more than
 	 * one observer has this ID, only the first is removed.
 	 * 
-	 * @param id The id belonging to the observer to no longer send telemetry packets.
+	 * @param id
+	 *            The id belonging to the observer to no longer send telemetry
+	 *            packets.
 	 */
 	public static final void removeObserver(String id) {
 		for (FswTlmObserver o : observers) {
@@ -48,9 +50,11 @@ public class FswTlmNetwork {
 	}
 
 	/**
-	 * Adds the input PktObserver to the set of observers to receive telemetry packets.
+	 * Adds the input PktObserver to the set of observers to receive telemetry
+	 * packets.
 	 * 
-	 * @param o The observer to now receive telemetry packets.
+	 * @param o
+	 *            The observer to now receive telemetry packets.
 	 */
 	public static void addObserver(FswTlmObserver o) {
 		observers.add(o);

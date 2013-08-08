@@ -1,13 +1,5 @@
 package main;
 
-import java.net.InetAddress;
-import java.net.InterfaceAddress;
-import java.net.NetworkInterface;
-import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.List;
-
 import gui.mainpage.MainPageFiller;
 import gui.menu.MenuFiller;
 import gui.popups.menu.NewUserPrompt;
@@ -18,8 +10,6 @@ import network.PktReader;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ShellAdapter;
 import org.eclipse.swt.events.ShellEvent;
-import org.eclipse.swt.graphics.DeviceData;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
@@ -34,7 +24,8 @@ import utilities.ShellDisposer;
 import utilities.TimeKeeper;
 
 /**
- * FULLY DOCUMENTED. The class containing the main method to execute the program.
+ * FULLY DOCUMENTED. The class containing the main method to execute the
+ * program.
  * 
  * @author Joe Benassi
  */
@@ -184,8 +175,8 @@ public final class Launcher {
 	 *            The event message. Third column.
 	 */
 	public static final void addEvent(int time, String config, String msgStr) {
-		mainPageFiller.addEventMessage(TimeKeeper.getTimeFormatted(time), config, msgStr,
-				ColorConstants.textColor);
+		mainPageFiller.addEventMessage(TimeKeeper.getTimeFormatted(time),
+				config, msgStr, ColorConstants.textColor);
 	}
 
 	/**

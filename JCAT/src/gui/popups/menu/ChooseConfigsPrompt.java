@@ -3,13 +3,10 @@ package gui.popups.menu;
 import gui.menu.MenuFiller;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
 import main.Launcher;
 import network.Networker;
 
@@ -27,10 +24,6 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 import org.w3c.dom.Document;
-import org.xml.sax.SAXException;
-
-import resources.ResourceLoader;
-
 import utilities.GenericPrompt;
 import utilities.XMLParser;
 
@@ -56,7 +49,7 @@ public class ChooseConfigsPrompt {
 			checkPath(item.getParentItem(), checked, false);
 			okayB.setFocus();
 		}
-		
+
 		shell.pack();
 		shell.open();
 
@@ -66,9 +59,10 @@ public class ChooseConfigsPrompt {
 		}
 	}
 
-	private static final void developShell(final Shell shell, Tree tree, Button okayB) {
+	private static final void developShell(final Shell shell, Tree tree,
+			Button okayB) {
 		shell.setText("Choose App Configurations");
-		
+
 		FormLayout formLayout = new FormLayout();
 		formLayout.marginBottom = 6;
 		formLayout.marginTop = 6;
@@ -97,21 +91,22 @@ public class ChooseConfigsPrompt {
 		okayB.setLayoutData(data);
 		okayB.setFocus();
 	}
+
 	private static final Document[] populateTree(Document[] docs, Tree tree) {
 		ArrayList<Document> docsArray = new ArrayList<Document>();
-		
+
 		for (Document d : docs) {
-			try {addAppBranch(tree, d);
+			try {
+				addAppBranch(tree, d);
 				docsArray.add(d);
-				}
-			catch (NullPointerException e){}
+			} catch (NullPointerException e) {
+			}
 		}
-		
+
 		return docsArray.toArray(new Document[docsArray.size()]);
 	}
-	
-	private static final Document[] getDocuments(
-			Tree tree, final File[] files) {
+
+	private static final Document[] getDocuments(Tree tree, final File[] files) {
 		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory
 				.newInstance();
 		ArrayList<Document> documents = new ArrayList<Document>();
@@ -124,9 +119,13 @@ public class ChooseConfigsPrompt {
 					Document doc = documentBuilder.parse(files[i]);
 					doc.getDocumentElement().normalize();
 					documents.add(doc);
-				} catch (Throwable e) {e.printStackTrace();}
+				} catch (Throwable e) {
+					e.printStackTrace();
+				}
 			}
-		} catch (Throwable e) {e.printStackTrace();}
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
 		return documents.toArray(new Document[documents.size()]);
 	}
 
@@ -136,11 +135,12 @@ public class ChooseConfigsPrompt {
 		b.addListener(SWT.Selection, new Listener() {
 			@Override
 			public void handleEvent(Event e) {
-				if (!NavConstantXMLPrompt.launch()) return;
+				if (!NavConstantXMLPrompt.launch())
+					return;
 
 				final ArrayList<App> apps = new ArrayList<App>();
 				TreeItem[] items = tree.getItems();
-				
+
 				if (items.length != docs.length)
 					Launcher.addUserActivity("INVALID XML LOADED");
 				else {
@@ -152,8 +152,8 @@ public class ChooseConfigsPrompt {
 								String config = appItem.getItem(j).getText();
 								try {
 									int[] IDs = XMLParser.getIDs(docs[i], j);
-									apps.add(XMLParser.getApp(docs[i],
-											IDs[0], IDs[1], config));
+									apps.add(XMLParser.getApp(docs[i], IDs[0],
+											IDs[1], config));
 								} catch (Throwable ex) {
 									ex.printStackTrace();
 								}

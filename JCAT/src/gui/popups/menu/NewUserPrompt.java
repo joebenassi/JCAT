@@ -1,6 +1,5 @@
 package gui.popups.menu;
 
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -17,7 +16,6 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 
-import resources.ResourceLoader;
 import utilities.GenericPrompt;
 import utilities.PreferenceStorage;
 

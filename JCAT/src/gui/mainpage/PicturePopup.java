@@ -6,7 +6,6 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.*;
 import org.eclipse.swt.widgets.*;
 
-import resources.ResourceLoader;
 import utilities.GenericPrompt;
 
 /**
@@ -45,6 +44,6 @@ public class PicturePopup {
 	 */
 
 	public static void main(String[] args) {
-		//showImage("TITLEHERE", "SHANGHAI");
+		// showImage("TITLEHERE", "SHANGHAI");
 	}
 }

@@ -1,7 +1,5 @@
 package utilities;
 
-import gui.popups.menu.IOPrompt;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
@@ -30,7 +28,7 @@ import resources.ResourceLoader;
  * 
  * @author Joe Benassi
  */
-public class GenericPrompt {
+public final class GenericPrompt {
 	public static final void addLabel(Shell dialog, String text) {
 		Label label = new Label(dialog, SWT.NONE);
 		label.setText(text);
@@ -77,17 +75,19 @@ public class GenericPrompt {
 	}
 
 	public static final Shell getMainShell() {
-		Shell mainShell = new Shell(Display.getCurrent(), SWT.RESIZE | SWT.DIALOG_TRIM | SWT.BORDER_DASH);
+		Shell mainShell = new Shell(Display.getCurrent(), SWT.RESIZE
+				| SWT.DIALOG_TRIM | SWT.BORDER_DASH);
 		mainShell.setImages(ResourceLoader.getImages());
-		
+
 		return mainShell;
 	}
-	
+
 	public static final Shell getGenericShell() {
 		Shell parent = new Shell(Display.getCurrent(), SWT.ON_TOP);
 		ShellDisposer.queueForDisposal(parent);
-		
-		Shell child = new Shell(parent, SWT.RESIZE | SWT.DIALOG_TRIM | SWT.BORDER_DASH);
+
+		Shell child = new Shell(parent, SWT.RESIZE | SWT.DIALOG_TRIM
+				| SWT.BORDER_DASH);
 		child.setImages(ResourceLoader.getImages());
 		return child;
 	}

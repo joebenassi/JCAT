@@ -1,13 +1,9 @@
 package gui.popups.menu;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.DisposeEvent;
-import org.eclipse.swt.events.DisposeListener;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormLayout;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 
@@ -25,7 +21,8 @@ public final class ShowAboutPopup {
 		lines[1] = "Version " + version;
 		lines[2] = "";
 		lines[3] = "Created by NASA to aid CFS App";
-		lines[4] = "development. Go to the JCAT repository";//for both NASA and ";
+		lines[4] = "development. Go to the JCAT repository";// for both NASA and
+															// ";
 		lines[5] = "on GitHub.com for further information.";
 
 		final Label[] labels = new Label[lines.length];

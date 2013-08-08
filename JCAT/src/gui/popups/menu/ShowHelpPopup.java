@@ -8,12 +8,9 @@ import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.graphics.*;
 import org.eclipse.swt.custom.*;
 
-import resources.ResourceLoader;
-
 import utilities.ColorConstants;
 import utilities.FontConstants;
 import utilities.GenericPrompt;
-import utilities.ShellDisposer;
 
 public class ShowHelpPopup {
 	private static final Font titleFont = FontConstants.titleFont;
@@ -68,7 +65,7 @@ public class ShowHelpPopup {
 		data.bottom = new FormAttachment(100, 5);
 		data.left = new FormAttachment(0, 0);
 		data.width = 70;
-		//data.height = 100;
+		// data.height = 100;
 		LeftBar.addLeftBar(internal, panelColors2, borderC, data);
 
 		/* Configure c1 */

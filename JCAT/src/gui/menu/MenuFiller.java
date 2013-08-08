@@ -116,7 +116,8 @@ public final class MenuFiller {
 		}
 
 		final MenuItem enableTelemetryMenuItem = MenuHelper.createMenuItem(
-				fileMenu, SWT.PUSH, "E&nable Wireless Telemetry", null, SWT.NONE);
+				fileMenu, SWT.PUSH, "E&nable Wireless Telemetry", null,
+				SWT.NONE);
 
 		if (apps == null)
 			enableTelemetryMenuItem.setEnabled(false);
@@ -126,9 +127,10 @@ public final class MenuFiller {
 				Networker.enableTelemetry(true);
 			}
 		});
-		
-		final MenuItem enableLocalTelemetryMenuItem = MenuHelper.createMenuItem(
-				fileMenu, SWT.PUSH, "E&nable Local Telemetry", null, SWT.NONE);
+
+		final MenuItem enableLocalTelemetryMenuItem = MenuHelper
+				.createMenuItem(fileMenu, SWT.PUSH, "E&nable Local Telemetry",
+						null, SWT.NONE);
 
 		if (apps == null)
 			enableLocalTelemetryMenuItem.setEnabled(false);
@@ -422,10 +424,9 @@ public final class MenuFiller {
 	private static final void fillCommonProblemsMenu(final Shell shell,
 			final Menu commonProblemsMenu) {
 		for (final HelpPopup h : HelpPopup.commonProblemPopups) {
-			final MenuItem temp = MenuHelper.createMenuItem(
-					commonProblemsMenu, SWT.PUSH, h.getName(), null,
-					SWT.NONE);
-			
+			final MenuItem temp = MenuHelper.createMenuItem(commonProblemsMenu,
+					SWT.PUSH, h.getName(), null, SWT.NONE);
+
 			temp.addListener(SWT.Selection, new Listener() {
 				@Override
 				public void handleEvent(Event e) {
@@ -434,40 +435,34 @@ public final class MenuFiller {
 			});
 		}
 		/*
-		final MenuItem importAppsMenuItem 
-
-
-
-		final MenuItem commandMenuItem = MenuHelper
-				.createMenuItem(commonProblemsMenu, SWT.PUSH,
-						"C&ommand Errors", null, SWT.NONE);
-
-		commandMenuItem.addListener(SWT.Selection, new Listener() {
-			@Override
-			public void handleEvent(Event e) {
-				HelpPopup.CommandErrors.launch();
-			}
-		});
-
-		final MenuItem ANS = MenuHelper.createMenuItem(
-				commonProblemsMenu, SWT.PUSH, HelpPopup.ANS.getName(), null, SWT.NONE);
-
-		ANS.addListener(SWT.Selection, new Listener() {
-			@Override
-			public void handleEvent(Event e) {
-				HelpPopup.ANS.launch();
-			}
-		});
-
-		final MenuItem freezesMenuItem = MenuHelper.createMenuItem(
-				commonProblemsMenu, SWT.PUSH, "P&rogram Freezes", null,
-				SWT.NONE);
-
-		freezesMenuItem.addListener(SWT.Selection, new Listener() {
-			@Override
-			public void handleEvent(Event e) {
-				HelpPopup.ProgramFreezes.launch();
-			}
-		});*/
+		 * final MenuItem importAppsMenuItem
+		 * 
+		 * 
+		 * 
+		 * final MenuItem commandMenuItem = MenuHelper
+		 * .createMenuItem(commonProblemsMenu, SWT.PUSH, "C&ommand Errors",
+		 * null, SWT.NONE);
+		 * 
+		 * commandMenuItem.addListener(SWT.Selection, new Listener() {
+		 * 
+		 * @Override public void handleEvent(Event e) {
+		 * HelpPopup.CommandErrors.launch(); } });
+		 * 
+		 * final MenuItem ANS = MenuHelper.createMenuItem( commonProblemsMenu,
+		 * SWT.PUSH, HelpPopup.ANS.getName(), null, SWT.NONE);
+		 * 
+		 * ANS.addListener(SWT.Selection, new Listener() {
+		 * 
+		 * @Override public void handleEvent(Event e) { HelpPopup.ANS.launch();
+		 * } });
+		 * 
+		 * final MenuItem freezesMenuItem = MenuHelper.createMenuItem(
+		 * commonProblemsMenu, SWT.PUSH, "P&rogram Freezes", null, SWT.NONE);
+		 * 
+		 * freezesMenuItem.addListener(SWT.Selection, new Listener() {
+		 * 
+		 * @Override public void handleEvent(Event e) {
+		 * HelpPopup.ProgramFreezes.launch(); } });
+		 */
 	}
 }

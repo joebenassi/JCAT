@@ -20,7 +20,8 @@ public class ChooseHelpPopup {
 
 	public static void launchShell(final Cmd cmdPkt) {
 		final Shell dialog = GenericPrompt.getGenericShell();
-		GenericPrompt.addFirstLine(dialog, "Describe the following conditions: ");
+		GenericPrompt.addFirstLine(dialog,
+				"Describe the following conditions: ");
 
 		final Scrollable[] texts = getTexts(dialog, cmdPkt);
 		final SelectionListener selectionListener = getSelectionListener(

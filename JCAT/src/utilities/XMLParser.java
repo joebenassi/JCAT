@@ -22,8 +22,6 @@ import packets.parameters.CmdParam;
 import packets.parameters.ScalarConstant;
 import packets.parameters.DataType;
 import packets.tlm.Tlm;
-import resources.ResourceLoader;
-
 import applications.App;
 
 /**
@@ -297,12 +295,12 @@ public final class XMLParser {
 				ChoiceOption[] choiceArray = new ChoiceOption[choiceOptions
 						.size()];
 				choiceOptions.toArray(choiceArray);
-				
-				parameters.add(DataType.getDataType(type, primitive, bytes).getCmdParam(name,
-						isInputParam, choiceArray));
+
+				parameters.add(DataType.getDataType(type, primitive, bytes)
+						.getCmdParam(name, isInputParam, choiceArray));
 			} else
-				parameters.add(DataType.getDataType(type, primitive, bytes).getCmdParam(name,
-						isInputParam, new ChoiceOption[0]));
+				parameters.add(DataType.getDataType(type, primitive, bytes)
+						.getCmdParam(name, isInputParam, new ChoiceOption[0]));
 		}
 		return parameters;
 	}

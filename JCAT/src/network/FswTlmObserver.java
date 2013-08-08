@@ -12,7 +12,7 @@ import packets.ccsds.CcsdsTlmPkt;
  * @author Joe Benassi
  * @author David McComas
  */
-public class FswTlmObserver {
+public final class FswTlmObserver {
 
 	/**
 	 * The telemetry packets that have yet to be parsed by Networker.

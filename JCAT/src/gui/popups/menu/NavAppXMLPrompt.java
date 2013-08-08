@@ -19,11 +19,10 @@ public final class NavAppXMLPrompt {
 		dialog.setFilterPath("c:\\temp");
 
 		String fullFilePath = dialog.open();
-		
-		
+
 		String[] fileNames = dialog.getFileNames();
 		String filterPath = dialog.getFilterPath();
-		
+
 		populateApps(shell, filterPath, fileNames, version);
 	}
 
@@ -33,7 +32,7 @@ public final class NavAppXMLPrompt {
 			SAXException, IOException {
 
 		File[] files = new File[fileNames.length];
-		
+
 		for (int i = 0; i < fileNames.length; i++) {
 			files[i] = new File(new File(filterPath), fileNames[i]);
 		}

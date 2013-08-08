@@ -11,8 +11,8 @@ public class ResourceLoader {
 	public static final Image bigJCATLogo = getImage("JCATLogoBig.png");
 	public static final Image largeJCATLogo = getImage("JCATLogoLarge.png");
 	private static final Image veryBigJCATLogo = getImage("JCATLogoVeryBig");
-	private static final Image[] images = new Image[] {smallJCATLogo,
-			medJCATLogo, bigJCATLogo, veryBigJCATLogo};
+	private static final Image[] images = new Image[] { smallJCATLogo,
+			medJCATLogo, bigJCATLogo, veryBigJCATLogo };
 
 	/**
 	 * Returns the image that has the file name fileName, fileName.png, or
