@@ -11,25 +11,30 @@ import applications.App;
 import packets.ccsds.CcsdsPkt;
 import packets.ccsds.CcsdsTlmPkt;
 import packets.cmd.CmdPkt;
+import utilities.TelemetryUpdater;
 import utilities.TimeKeeper;
 
 /**
- * NOT DOCUMENTED.
+ * FULLY DOCUMENTED. UNSTABLE. This class is primarily responsible for
+ * interpreting all received telemetry/event message packets and handling each
+ * accordingly. This class has methods that are at high-risk of failure in
+ * past/future cFE Apps.
  * 
  * @author Joe Benassi
  * @author David McComas
  */
 public class Networker {
-	private static Networker networker;
 	private static ArrayList<App> apps;
 	private static ArrayList<Config> configs;
 	private static final String observerID = "arbitrary";
-	private static PktObserver observer = new PktObserver(observerID);
-	private static PktWriter PktOutput;
+	private static FswTlmObserver observer = new FswTlmObserver(observerID);
 
 	/**
-	 * If this App has a telemetry msgid unique from those of all other Apps in apps,
+	 * If this App has a telemetry msgid unique from those of all other Apps in
+	 * "apps", it is added to "apps".
+	 * 
 	 * @param app
+	 *            The App to attempt to add.
 	 */
 	public static void addApp(App app) {
 		for (int i = 0; i < apps.size(); i++)
@@ -39,10 +44,29 @@ public class Networker {
 		apps.add(app);
 	}
 
+	/**
+	 * Adds a Config to "configs" based on the input name and msgid. When this
+	 * msgid is parsed from a telemetry packet, the telemetry packet will be
+	 * parsed as an event message and the name of this config will display in
+	 * the Event Window.
+	 * 
+	 * @param name
+	 *            The name to display in the Event Window.
+	 * @param msgid
+	 *            The msgid, in String form, of this config.
+	 */
 	public static void addConfig(String name, String msgid) {
 		configs.add(new Config(name, msgid));
 	}
 
+	/**
+	 * Returns the menuname of the App whose commandID matches that of the input
+	 * byte[] data. If no App has this, this returns "".
+	 * 
+	 * @param data
+	 *            The data within a App's command.
+	 * @return The String representing the menuname of the App.
+	 */
 	public static final String getAppName(byte[] data) {
 		for (App app : apps)
 			if (app.getCmdId() == CcsdsPkt.getID(data))
@@ -50,26 +74,31 @@ public class Networker {
 		return "";
 	}
 
-	public static void startNetworker() {
+	/**
+	 * Completes all the necessary steps for Networker to restart after File >
+	 * Restart.
+	 */
+	public static void restart() {
 		apps = new ArrayList<App>();
 		configs = new ArrayList<Config>();
-		networker = new Networker();
 		FswTlmNetwork.removeObserver(observer.getID());
 		FswTlmNetwork.addObserver(observer);
 	}
 
-	/** functional **/
-	public static Networker getNetworker() {
-		return networker;
-	}
-
-	public void launch() {
-		createTlmMonitorThread();
-	}
-
-	/** functional **/
-	public final static void enableToLabTelemetry(boolean wireless) {
-		/* TODO find a more elegant solution */
+	/**
+	 * UNSTABLE. Attempts to enable telemetry. For all apps whose names start
+	 * with "TO", their 6th command is sent with a String parameter equaling the
+	 * either local or wireless ip address of this machine. Note: You cannot
+	 * enable both local and wireless telemetry at the same time, because the
+	 * CFS can only send messages to one IP address.
+	 * 
+	 * @param wireless
+	 *            If the wireless IP for this machine should receive telemetry
+	 *            packets.
+	 * 
+	 *            TODO find a better, less dirty method to accomplish this.
+	 */
+	public final static void enableTelemetry(boolean wireless) {
 		for (App app : apps) {
 			if (app.getName().substring(0, 2).equalsIgnoreCase("to")) {
 				String ip = PktReader.getLocalIP();
@@ -82,20 +111,31 @@ public class Networker {
 		}
 	}
 
+	/**
+	 * UNSTABLE. Attempts to enable event messages. For all apps whose names
+	 * start with "TO", their 7th command is sent with the String parameter "".
+	 * 
+	 * TODO find a better, less dirty method to accomplish this.
+	 */
 	public static void enableEventMessages() {
-		/* TODO find a more elegant solution */
 		for (App app : apps) {
 			if (app.getName().substring(0, 2).equalsIgnoreCase("to"))
 				app.executeCommand(7, new String[] { "" });
 		}
 	}
 
-	/** functional **/
-	public final static void sendPkt(CmdPkt cmdPkt) {
-		PktOutput.WriteCmdPkt(cmdPkt.getName(), cmdPkt.getCcsdsPkt()
-				.GetPacket(), cmdPkt.getCcsdsPkt().getTotalLength());
-	}
-
+	/**
+	 * UNSTABLE. Prints an event message in the main page based on the input
+	 * config and CcsdsTlmPkt. This algorithm is hardcoded and likely to fail in
+	 * other CFS/cFE releases.
+	 * 
+	 * @param config
+	 *            The config to display in the Event Window.
+	 * @param pkt
+	 *            The CcsdsTlmPkt to parse for event information.
+	 * 
+	 *            TODO FIXME Hardcoded parsing!
+	 */
 	private final static void printEvent(String config, CcsdsTlmPkt pkt) {
 		byte[] TlmPkt = pkt.getPacket();
 		String time = "";
@@ -105,25 +145,20 @@ public class Networker {
 		}
 
 		String MsgA = new String(TlmPkt, 12, 122);
-		/*
-		 * TODO get magic numbers from OS_MAX_API_NAME = 20 or
-		 * CFE_EVS_MAX_MESSAGE_LENGTH = 122?
-		 */
 		String MsgB = new String(TlmPkt, 44, 122);
 
-		/*
-		 * TODO get magic numbers from OS_MAX_API_NAME = 20 or
-		 * CFE_EVS_MAX_MESSAGE_LENGTH = 122?
-		 */
 		String MsgStr = MsgA.substring(0, MsgA.indexOf('\0')) + ": "
 				+ MsgB.substring(0, MsgB.indexOf('\0')) + "\n";
 		Launcher.addEvent(time, config, MsgStr);
 	}
 
-	/** assumed functional **/
-	private final static void createTlmMonitorThread() {
+	/**
+	 * Monitors telemetry and event messages every 40ms. Determines if packets
+	 * are telemetry or event messages, and handles them accordingly. Always
+	 * receives all packets received by PktReader.
+	 */
+	public static final void monitorTelemetry() {
 		final int myInstance = Launcher.getInstanceNum();
-		System.out.println("NETWORKER: MONITORING TLM");
 		final Thread t = new Thread(new Runnable() {
 			@Override
 			public void run() {
@@ -146,7 +181,8 @@ public class Networker {
 								for (App app : apps)
 									if (TlmPkt.getStreamId() == app
 											.getTlmAppID()) {
-										app.ingest(TlmPkt);
+										TelemetryUpdater.updateTelemetry(
+												TlmPkt, app);
 									}
 							}
 						}

@@ -16,7 +16,7 @@ public class FswTlmNetwork {
 	/**
 	 * The observers to receive the telemetry packet.
 	 */
-	private static volatile ArrayList<PktObserver> observers = new ArrayList<PktObserver>();
+	private static volatile ArrayList<FswTlmObserver> observers = new ArrayList<FswTlmObserver>();
 
 	/**
 	 * Creates a CcsdsTlmPkt from the input data and sends it to each observer
@@ -27,7 +27,7 @@ public class FswTlmNetwork {
 	 */
 	public static synchronized void addTlmPkt(byte[] TlmData) {
 		CcsdsTlmPkt TlmPkt = new CcsdsTlmPkt(TlmData);
-		for (PktObserver o : observers)
+		for (FswTlmObserver o : observers)
 			o.addPkt(TlmPkt);
 	}
 
@@ -39,7 +39,7 @@ public class FswTlmNetwork {
 	 * @param id The id belonging to the observer to no longer send telemetry packets.
 	 */
 	public static final void removeObserver(String id) {
-		for (PktObserver o : observers) {
+		for (FswTlmObserver o : observers) {
 			if (o.getID().equals(id)) {
 				observers.remove(o);
 				return;
@@ -52,7 +52,7 @@ public class FswTlmNetwork {
 	 * 
 	 * @param o The observer to now receive telemetry packets.
 	 */
-	public static void addObserver(PktObserver o) {
+	public static void addObserver(FswTlmObserver o) {
 		observers.add(o);
 	}
 }

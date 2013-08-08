@@ -123,7 +123,7 @@ public final class MenuFiller {
 		enableTelemetryMenuItem.addListener(SWT.Selection, new Listener() {
 			@Override
 			public void handleEvent(Event e) {
-				Networker.enableToLabTelemetry(true);
+				Networker.enableTelemetry(true);
 			}
 		});
 		
@@ -135,7 +135,7 @@ public final class MenuFiller {
 		enableLocalTelemetryMenuItem.addListener(SWT.Selection, new Listener() {
 			@Override
 			public void handleEvent(Event e) {
-				Networker.enableToLabTelemetry(false);
+				Networker.enableTelemetry(false);
 			}
 		});
 

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import packets.ccsds.CcsdsCmdPkt;
 import packets.parameters.CmdParam;
 import network.Networker;
+import network.PktWriter;
 
 /**
  * NOT DOCUMENTED.
@@ -44,7 +45,7 @@ public class CmdPkt {
 			}
 		}
 		loadParamList();
-		Networker.sendPkt(this);
+		PktWriter.sendPacket(this);
 	}
 
 	public final String[] getParameterNames() {

@@ -85,7 +85,7 @@ public final class Launcher {
 		final Shell s = GenericPrompt.getMainShell();
 		TimeKeeper.reset();
 
-		Networker.startNetworker();
+		Networker.restart();
 		mainPageFiller = new MainPageFiller(s);
 
 		addShellExitBehavior(s);

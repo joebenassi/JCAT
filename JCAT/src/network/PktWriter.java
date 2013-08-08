@@ -10,6 +10,7 @@ package network;
 import java.net.*;
 
 import packets.ccsds.CcsdsPkt;
+import packets.cmd.CmdPkt;
 
 import utilities.EndianCorrector;
 
@@ -20,10 +21,12 @@ public class PktWriter {
 	// private static String ip = "192.168.224.128"; //VMWare
 	private static String ip = "192.168.1.11"; // ColdFires
 
-	public PktWriter() {
-	}
-
-	public void WriteCmdPkt(String name, byte[] CmdData, int dataL) {
+	public static final void sendPacket(CmdPkt cmdPkt) {
+		final String name = cmdPkt.getName();
+		final byte[] CmdData = cmdPkt.getCcsdsPkt().GetPacket();
+		final int dataLength = cmdPkt.getCcsdsPkt().getTotalLength();
+		
+		
 		try {
 			sendPacket(CmdData);
 			Launcher.addUserActivity("COMMAND SENT: " + name + " to "
@@ -33,9 +36,10 @@ public class PktWriter {
 					+ Networker.getAppName(CmdData));
 			e.printStackTrace();
 		}
+		
 	}
 
-	private final void sendPacket(byte[] buf) throws Exception {
+	private static final void sendPacket(byte[] buf) throws Exception {
 		DatagramSocket socket = new DatagramSocket();
 		InetAddress address = InetAddress.getByName(ip);
 		int intport = Integer.parseInt(PktWriter.port);

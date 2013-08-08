@@ -271,18 +271,6 @@ public final class App {
 	}
 
 	/**
-	 * Using the input CcsdsTlmPkt, this App updates its TlmPkts and their
-	 * representation in the GUI.
-	 * 
-	 * @param ccsdsTlmPkt
-	 *            The CcsdsTlmPkt to parse for telemetry information and update
-	 *            the App accordingly.
-	 */
-	public final void ingest(CcsdsTlmPkt ccsdsTlmPkt) {
-		TelemetryUpdater.updateTelemetry(ccsdsTlmPkt, this);
-	}
-
-	/**
 	 * Returns the command ID for this App.
 	 * 
 	 * @return the cmdmid for this App.

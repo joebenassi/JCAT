@@ -163,7 +163,7 @@ public class ChooseConfigsPrompt {
 					}
 				}
 				if (apps.size() > 0) {
-					Networker.getNetworker().launch();
+					Networker.monitorTelemetry();
 					MenuFiller.addMenu(mainShell,
 							apps.toArray(new App[apps.size()]), "1.0.0");
 				}
