@@ -27,6 +27,10 @@ public class Networker {
 	private static PktObserver observer = new PktObserver(observerID);
 	private static PktWriter PktOutput;
 
+	/**
+	 * If this App has a telemetry msgid unique from those of all other Apps in apps,
+	 * @param app
+	 */
 	public static void addApp(App app) {
 		for (int i = 0; i < apps.size(); i++)
 			if (apps.get(i).getTlmAppID() == app.getTlmAppID())
