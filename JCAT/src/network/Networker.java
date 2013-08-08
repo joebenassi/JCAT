@@ -103,10 +103,12 @@ public class Networker {
 			if (app.getName().substring(0, 2).equalsIgnoreCase("to")) {
 				String ip = PktReader.getLocalIP();
 				if (wireless)
-					ip = PktReader.getIP();
+					ip = PktReader.getWirelessIP();
 
-				app.executeCommand(6, new String[] { ip });
-				Launcher.addUserActivity("Enabled Telemetry for IP: " + ip);
+				if (ip != null) {
+					app.executeCommand(6, new String[] { ip });
+					Launcher.addUserActivity("Enabled Telemetry for IP: " + ip);
+				}
 			}
 		}
 	}

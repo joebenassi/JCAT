@@ -168,9 +168,12 @@ public final class IOPrompt {
 		addLabel(middle, "IP: ");
 		texts[0] = getText(middle);
 		if (isOutput)
-			texts[0].setText(PktWriter.getIP());
+			texts[0].setText(PktWriter.getTargetIP());
 		else {
-			texts[0].setText(PktReader.getIP());
+			String wirelessIP = PktReader.getWirelessIP();
+			if (wirelessIP != null) {
+			texts[0].setText(wirelessIP);}
+			else texts[0].setText("Could not be found");
 			texts[0].setEditable(false);
 		}
 
@@ -190,7 +193,7 @@ public final class IOPrompt {
 			@Override
 			public final void widgetSelected(SelectionEvent e) {
 				if (isOutput) {
-					PktWriter.setIP(texts[0].getText());
+					PktWriter.setTargetIP(texts[0].getText());
 					PktWriter.setPort(texts[1].getText());
 					Launcher.addUserActivity("Set output IP: "
 							+ texts[0].getText());

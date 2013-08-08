@@ -18,7 +18,7 @@ import main.Launcher;
 
 public class PktWriter {
 	private static String port = "1234";
-	// private static String ip = "192.168.224.128"; //VMWare
+	//private static String ip = "192.168.224.128"; //VMWare
 	private static String ip = "192.168.1.11"; // ColdFires
 
 	public static final void sendPacket(CmdPkt cmdPkt) {
@@ -57,7 +57,7 @@ public class PktWriter {
 		socket.close();
 	}
 
-	public static final String getIP() {
+	public static final String getTargetIP() {
 		return ip;
 	}
 
@@ -65,7 +65,7 @@ public class PktWriter {
 		return port;
 	}
 
-	public static final void setIP(String IP) {
+	public static final void setTargetIP(String IP) {
 		ip = IP;
 	}
 

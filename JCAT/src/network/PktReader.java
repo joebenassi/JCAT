@@ -17,18 +17,32 @@ import utilities.EndianCorrector;
 import gui.mainpage.TopBar;
 
 /**
- * NOT DOCUMENTED.
+ * FULLY DOCUMENTED. UNSTABLE. This class is the first to receive telemetry
+ * packets. When it receives them, it adjusts their Endian, and sends them to
+ * all FswTlmObservers. A common error that can occur is if there is an existing
+ * JCAT instance listening to port 1235, the port where the CFS sends packets.
+ * If this happens, the new JCAT instance will not receive packets.
  * 
  * @author Joe Benassi
  * @author David McComas
  * 
- *         TODO read in cFE headers like osconfig.h to get #defines
+ *         TODO Read in cFE headers like osconfig.h to get #defines.
+ *         TODO Allow multiple instances of JCAT share the same socket.
+ *         TODO Ensure that EnableWirelessTelemetry works cross-platform.
+ *         TODO Ensure that EnableLocalTelemetry works cross-platform.
  */
 public class PktReader {
 	private static DatagramSocket MsgSock;
 	private static final int port = 1235;
 	private static boolean functional = true;
+	private static final int pause = 40;
 
+	/**
+	 * If port 1235 is not occupied, it launches a thread to receive packets on
+	 * that port every 40ms. If it IS occupied, this prints an exception and
+	 * sets the variable 'functional' false. This method is called only once,
+	 * and in JCAT's main method.
+	 */
 	public static void start() {
 		try {
 			MsgSock = new DatagramSocket(port);
@@ -37,9 +51,13 @@ public class PktReader {
 			ex.printStackTrace();
 			functional = false;
 		}
-		/* TODO undo this? */
 	}
 
+	/**
+	 * Starts a thread that receives all packets on port 1235. Updates the
+	 * TopBar's 'last received packet' value, adjusts the header of packets
+	 * based on the Endian, and sends all packets to each observer.
+	 */
 	private static void startThread() {
 		final DatagramPacket DataPacket = new DatagramPacket(new byte[1024],
 				1024);
@@ -49,11 +67,7 @@ public class PktReader {
 			public void run() {
 				while (true) {
 					try {
-						/*
-						 * TODO Thread.yield();? // Platform independent
-						 * friendly
-						 */
-						Thread.sleep(40);
+						Thread.sleep(pause);
 					} catch (Throwable e) {
 						e.printStackTrace();
 					}
@@ -62,9 +76,6 @@ public class PktReader {
 						MsgSock.receive(DataPacket);
 						byte[] data = DataPacket.getData();
 						TopBar.packetReceived();
-						// try {Launcher.addUserActivity("PKTREADER: STRMID = "
-						// + CcsdsTlmPkt.getID(data));
-						// } catch (Throwable e){}
 						EndianCorrector.fixHeaderIn(data);
 						FswTlmNetwork.addTlmPkt(data);
 					} catch (Exception ex) {
@@ -76,39 +87,18 @@ public class PktReader {
 		t.start();
 	}
 
-	public static String addZeroes(String s) {
-		String[] components = new String[] { "", "", "", "" };
-
-		int index = 0;
-		for (int i = 0; i < s.length(); i++) {
-			if (s.charAt(i) == ".".charAt(0))
-				index++;
-			else {
-				components[index] += s.charAt(i);
-			}
-		}
-
-		String output = "";
-
-		for (int i = 0; i < 4; i++) {
-			while (components[i].length() != 3) {
-				components[i] = "0" + components[i];
-			}
-			output += components[i];
-			if (i < 4 - 1)
-				output += ".";
-		}
-		return output;
-	}
-
-	/*
-	 * public static void main(String[] args) {
-	 * System.out.println("Wireless IP: " + getIP());
-	 * System.out.println("Local IP: " + getLocalIP()); }
+	/**
+	 * Returns a String that equals either null or the wireless host address. Is
+	 * fully-functional on Windows, but has not been tested on Linux or Mac
+	 * platforms.
+	 * 
+	 * @return A String equaling the host address of this machine. If this could
+	 *         not be determined, this will return null.
+	 * 
+	 *         TODO Ensure this works cross-platform.
+	 * 
 	 */
-
-	/* only tested on windows */
-	public static String getIP() {
+	public static String getWirelessIP() {
 		ArrayList<String> ips = new ArrayList<String>();
 
 		Enumeration<NetworkInterface> interfaces = null;
@@ -128,23 +118,43 @@ public class PktReader {
 							return add.getHostAddress();
 			}
 		}
-		return "Cannot Access";
+		return null;
 	}
 
+	/**
+	 * Returns a String that equals either null or the local host address. It is
+	 * fully-functional on Windows, ut has not been tested on Linux or Mac
+	 * platforms.
+	 * 
+	 * @return A String equaling the host address of this machine. If this could
+	 *         not be determined, this returns null.
+	 * 
+	 *         TODO Ensure this works cross-platform.
+	 */
 	public static String getLocalIP() {
 		try {
 			return InetAddress.getLocalHost().getHostAddress();
 		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return "0.1.2.3";
+		return null;
 	}
 
+	/**
+	 * Returns the port this listens for packets from. Currently 1235.
+	 * 
+	 * @return The String "1235".
+	 */
 	public static final String getPort() {
 		return port + "";
 	}
 
+	/**
+	 * Returns if this is listening for telemetry packets.
+	 * 
+	 * @return If the port '1235' on this machine was not occupied when JCAT
+	 *         launched.
+	 */
 	public static boolean isFunctional() {
 		return functional;
 	}

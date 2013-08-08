@@ -7,7 +7,7 @@ import packets.ccsds.CcsdsTlmPkt;
 /**
  * FULLY DOCUMENTED. This class allows telemetry packets received from JCAT to be
  * shared with multiple observers. In JCAT, there is currently only one
- * observer.
+ * observer. It has not been tested to be functional with multiple observers.
  * 
  * @author Joe Benassi
  * @author David McComas
