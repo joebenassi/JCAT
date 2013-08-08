@@ -37,9 +37,9 @@
 <h1>
 <a name="java-command-and-telemetry-jcat" class="anchor" href="#java-command-and-telemetry-jcat"><span class="octicon octicon-link"></span></a>Java Command And Telemetry (JCAT)</h1>
 
-<p>JCAT is a Java program created at the NASA Goddard Space Flight Center to aid in CFS App development. The CFS (Core Flight System) is a flight software product line used by multiple NASA centers. The CFS provides mission-independent, reusable, core flight software services and applications, also known as "Apps". The cFE (Core Flight Executive) is a set of Apps for the CFS also developed by NASA. </p>
+<p>JCAT is a Java program created at the NASA Goddard Space Flight Center to aid in App development for the CFS (Core Flight System), a flight software product line used by multiple NASA centers. The CFS provides mission-independent, reusable, core flight software services and applications (Apps). Five of these Apps are contained in the cFE (Core Flight Executive).</p>
 
-<p>Versions of the CFS are open-source, and can run on various platforms, including RTEMS virtual machines, embedded ColdFire processors, and, in the future, Raspberry Pi processors. A ground system, such as JCAT, was the missing link to allow a community of CFS developers to form and create Apps for their own and each other's use.</p>
+<p>Versions of the CFS are open-source and can run on platforms such as RTEMS virtual machines, embedded ColdFire processors, and, in the future, Raspberry Pi processors. Until now, however, there was not a ground system to allow a community of CFS developers to form. This is where JCAT comes in.</p>
 
 <h2>
 <a name="what-is-jcat" class="anchor" href="#what-is-jcat"><span class="octicon octicon-link"></span></a>What is JCAT?</h2>
@@ -49,7 +49,7 @@
 <h2>
 <a name="what-is-an-app-profile" class="anchor" href="#what-is-an-app-profile"><span class="octicon octicon-link"></span></a>What is an App Profile?</h2>
 
-<p>An App Profile is an XML file that describes all the information JCAT needs to send commands to and display telemetry from an App running in the CFS. You must create or obtain an App Profile in order to use an App in JCAT. Examples of App Profiles are available in <a href="https://github.com/joebenassi/JCAT/tree/master/JCAT/App-Profiles/cFE-6.1/">JCAT/App-Profiles/cFE-6.1/</a>.
+<p>An App Profile is an XML file that describes all the information JCAT needs to send commands to, and display telemetry from, an App running in the CFS. You must create or obtain an App Profile in order to use an App in JCAT. Examples of App Profiles are available in <a href="https://github.com/joebenassi/JCAT/tree/master/JCAT/App-Profiles/cFE-6.1/">JCAT/App-Profiles/cFE-6.1/</a>.
 To create an App Profile, you must first know its telemetry housekeeping packet and all its commands. Then, open the JCAT wiki's <a href="https://github.com/joebenassi/JCAT/wiki/App-Profile-Creation-Guide">App Profile Creation Guide</a> for further instructions.</p>
 
 <h2>
@@ -79,7 +79,7 @@ To create an App Profile, you must first know its telemetry housekeeping packet 
 <a name="if-you-encounter-a-problem-with-jcat-consult-the-following" class="anchor" href="#if-you-encounter-a-problem-with-jcat-consult-the-following"><span class="octicon octicon-link"></span></a>If you encounter a problem with JCAT, consult the following</h6>
 
 <ol>
-<li>JCAT in-pogram Help pages</li>
+<li>JCAT in-program Help pages</li>
 <li>JCAT repository wiki tab</li>
 <li>JCAT repository Issues tab</li>
 </ol><h5>
