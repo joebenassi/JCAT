@@ -3,8 +3,9 @@ package packets.parameters;
 import utilities.EndianCorrector;
 
 /**
- * NOT DOCUMENTED. This contains a 'back end', which is a byte array to the
- * communications to the CFS.
+ * FULLY DOCUMENTED. This is used to defined a command parameter. This contains all
+ * the information about a parameter needed to both display it in the GUI and
+ * read/write CCSDS packets.
  * 
  * @author Joe Benassi
  * @author David McComas
@@ -18,9 +19,9 @@ public final class CmdParam {
 	private final ChoiceOption[] choiceOptions;
 	private final String Name;
 	private final ParamType Type;
-	protected String Value;
+	private String Value;
 	private final int NumBytes;
-	protected byte[] ByteArray;
+	private byte[] ByteArray;
 
 	/**
 	 * Constructor: creates a CmdParam with the input attributes.

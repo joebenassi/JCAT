@@ -30,19 +30,6 @@ import applications.App;
  * @author Joe Benassi
  */
 public final class XMLParser {
-	/**
-	 * 
-	 * Parses input files for configuration details of Apps and returns those
-	 * Apps in array form.
-	 * 
-	 * @param files
-	 *            The array of files to parse for configuration details of Apps.
-	 * @return The array of Apps
-	 * @throws ParserConfigurationException
-	 * @throws SAXException
-	 * @throws IOException
-	 */
-
 	public static final void addConstants(File f) {
 		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory
 				.newInstance();
@@ -157,15 +144,6 @@ public final class XMLParser {
 		return document.getElementsByTagName(tag).item(0).getTextContent();
 	}
 
-	/**
-	 * Returns the array of Commands as defined in the input document
-	 * 
-	 * @param document
-	 *            The document to parse for App configuration details
-	 * @param cmdMID
-	 * @return the array of Commands as defined in the input document
-	 */
-
 	private static final ArrayList<Cmd> getCommands(Document document,
 			int CmdMID) {
 		int commandOffset = 0;
@@ -186,12 +164,6 @@ public final class XMLParser {
 		return commands;
 	}
 
-	/**
-	 * @param commandElement
-	 *            The Element that represents the particular command within the
-	 *            XML document.
-	 * @return
-	 */
 	private static final Cmd getCommand(Element commandBase, int funcCode,
 			int appID) {
 		final String name = getFirstInstance("name", commandBase);
@@ -249,14 +221,6 @@ public final class XMLParser {
 			final String type = getFirstInstance("type", elements.get(i));
 
 			final String constant = getFirstInstance("const", elements.get(i));
-			/*
-			 * if (!constant.equals("DNE")) try { if
-			 * (!ScalarConstant.hasConstant(constant))
-			 * 
-			 * } catch (ParserConfigurationException | SAXException |
-			 * IOException e1) { e1.printStackTrace(); }
-			 */
-
 			final String bytes = ScalarConstant.getValue(constant);
 
 			final String primitive = getFirstInstance("primitive", // may have

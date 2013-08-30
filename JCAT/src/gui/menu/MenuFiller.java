@@ -65,7 +65,7 @@ public final class MenuFiller {
 	 * 
 	 * @param shell
 	 *            The Shell to contain the File menu.
-	 * @param Apps
+	 * @param apps
 	 *            The Apps to be contained.
 	 * @param version
 	 *            The version of this program.
@@ -89,7 +89,7 @@ public final class MenuFiller {
 	 *            The Shell to contain the File menu.
 	 * @param fileMenu
 	 *            The File menu.
-	 * @param Apps
+	 * @param apps
 	 *            The Apps to be contained.
 	 * @param version
 	 *            The version of this program.

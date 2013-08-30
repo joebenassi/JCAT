@@ -1,5 +1,7 @@
 package packets.ccsds;
 
+import packets.parameters.DataType;
+
 /**
  * FULLY DOCUMENTED. An instance of this class is created when a packet is
  * received by PktReader.
@@ -29,7 +31,8 @@ public final class CcsdsTlmPkt extends CcsdsPkt {
 	 * @return The time that the CFS encoded the packet with, in seconds.
 	 */
 	public final int getTime() {
-		int sec = 0;
+		
+		/*int sec = 0;
 
 		int a = Packet[CCSDS_IDX_TLM_HDR];
 		int b = Packet[CCSDS_IDX_TLM_HDR + 1];
@@ -44,6 +47,9 @@ public final class CcsdsTlmPkt extends CcsdsPkt {
 		sec += b * 256;
 		sec += a;
 
-		return sec;
+		return sec;*/
+		
+		return Integer.parseInt(DataType.uint32Integer.getTlmStrArray(Packet,
+		         CCSDS_IDX_TLM_HDR));
 	}
 }

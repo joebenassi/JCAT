@@ -40,7 +40,6 @@ final class UniversalBox extends Composite {
 	 *            The color of the border of this.
 	 * @param layoutData
 	 *            The layout data to assign to this.
-	 * @param data
 	 */
 	public static final void addUniversalBox(Composite parent,
 			Color backgroundColor, Color textColor, Color textBoxColor,
@@ -128,9 +127,6 @@ final class UniversalBox extends Composite {
 	}
 
 	/**
-	 * 
-	 * @param isTopContent
-	 *            True if the text is for GMT, SC, or UTC
 	 * @param parent
 	 *            The Composite to contain the Text.
 	 * @param textColor
@@ -138,10 +134,8 @@ final class UniversalBox extends Composite {
 	 *            Texts, and Composites.
 	 * @param textBoxColor
 	 *            The color of the background of the various Texts (textboxes).
-	 * @param name
-	 *            The name representing the content. Should be "GMT", "SC",
-	 *            "UTC", or "Sequence Count".
 	 * @param font
+	 *            The font for this Text object.
 	 */
 	private static final Text addText(Composite parent, Color textColor,
 			Color textBoxColor, Font font) {

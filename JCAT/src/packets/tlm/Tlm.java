@@ -3,7 +3,9 @@ package packets.tlm;
 import packets.parameters.DataType;
 
 /**
- * NOT DOCUMENTED.
+ * FULLY DOCUMENTED. This class contains the name and value of a telemetry
+ * parameter to display in the GUI. It also contains the DataType of this
+ * parameter, to be used for parsing of telemetry CCSDS packets.
  * 
  * @author Joe Benassi
  */
@@ -13,9 +15,7 @@ public final class Tlm {
 	private final DataType dataType;
 
 	/**
-	 * The object that represents a single telemetry value. Contains a name
-	 * identifying the value, and the value itself. There are as many Telemetry
-	 * objects for an App as there are qualities that can be displayed. For
+	 * For
 	 * example, the Executive Services app has 35 potential Telemetry objects,
 	 * with <code>name</code> instance variables such as "CmdCounter",
 	 * "ErrCounter", "CFECoreChecksum".
@@ -23,15 +23,37 @@ public final class Tlm {
 	 * @param name
 	 *            What quality this represents
 	 */
+
+	/**
+	 * This constructs a Tlm object with the given attributes. Contains a name
+	 * identifying the value, and the value itself. There are as many Tlm
+	 * objects for an App as there are qualities that can be displayed. 
+	 * 
+	 * @param name
+	 *            The name to display as what it represents.
+	 * @param type
+	 *            The data type for this parameter. For example, uint8, int15,
+	 *            char.
+	 * @param primitive
+	 *            Whether or not this should display a string. If this value
+	 *            starts with 's', this is deemed a String.
+	 * @param constant
+	 *            The name of the constant used if this is a String parameter.
+	 *            If this is a String parameter, the value tied to this String
+	 *            as defined in the Constant Definition file is used to increase
+	 *            the amount of bytes allocated to this. The value tied to this
+	 *            name represents the numerical amount of "type"s in the App's
+	 *            Housekeeping packet.
+	 */
 	public Tlm(String name, String type, String primitive, String constant) {
 		this.name = name;
 		dataType = DataType.getDataType(type, primitive, constant);
 	}
 
 	/**
-	 * Returns a String equal to the name of this Telemetry object.
+	 * Returns a String equal to the name of this Tlm object.
 	 * 
-	 * @return The name of this Telemetry object.
+	 * @return The name of this Tlm object.
 	 */
 	public final String getName() {
 		return name;
@@ -48,14 +70,19 @@ public final class Tlm {
 	}
 
 	/**
-	 * Returns The value assigned to this Telemetry quality
+	 * Returns The value assigned to this Tlm attribute.
 	 * 
-	 * @return The String representing the status of this Telemetry quality
+	 * @return The String representing the status of this Tlm attribute.
 	 */
 	public final String getValue() {
 		return value;
 	}
 
+	/**
+	 * The DataType of this Tlm object.
+	 * 
+	 * @return The DataType of this Parameter.
+	 */
 	public DataType getDataType() {
 		return dataType;
 	}

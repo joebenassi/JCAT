@@ -58,8 +58,6 @@ public class PopupFiller {
 	 * is the only entity that other classes in other packages need to
 	 * communicate with.
 	 * 
-	 * @param SCROLLERNAME
-	 *            The name of the Shell.
 	 * @param ENTRYNAMES
 	 *            The names of the various Telemetry data subjects.
 	 */

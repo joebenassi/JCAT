@@ -61,8 +61,8 @@ public final class Networker {
 	 * Returns the menuname of the App whose commandID matches that of the input
 	 * cmdPkt. If no App has this, this returns "".
 	 * 
-	 * @param data
-	 *            The data within a App's command.
+	 * @param cmdPkt
+	 *            An App's command.
 	 * @return The String representing the menuname of the App.
 	 */
 	public static final String getAppName(Cmd cmdPkt) {
@@ -113,14 +113,14 @@ public final class Networker {
 
 	/**
 	 * UNSTABLE. Attempts to enable event messages. For all apps whose names
-	 * start with "TO", their 7th command is sent with the String parameter "".
+	 * start with "TO", their 7th command is sent with the no string parameters.
 	 * 
 	 * TODO find a better, less dirty method to accomplish this.
 	 */
 	public static void enableEventMessages() {
 		for (App app : apps) {
 			if (app.getName().substring(0, 2).equalsIgnoreCase("to"))
-				app.executeCommand(7, new String[] { "" });
+				app.executeCommand(7, new String[0]);
 		}
 	}
 

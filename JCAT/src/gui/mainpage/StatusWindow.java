@@ -71,24 +71,6 @@ final class StatusWindow extends Composite {
 		});
 	}
 
-	/**
-	 * Adds an entry into this EventWindow instance's table. This is an
-	 * instantaneous command, and automatically scrolls the table downward.
-	 * Displays information in 3 different columns. To be invoked whenever an
-	 * event occurs. For public use.
-	 * 
-	 * @param time
-	 *            the time that should be included in this entry. Occupies the
-	 *            first column.
-	 * @param details1
-	 *            some text that should be included in this entry. Occupies the
-	 *            second column.
-	 * @param details2
-	 *            some text that should be included in this entry. Occupies the
-	 *            third column.
-	 * @param color
-	 *            the color of all three columns' text for this entry
-	 */
 	public final void addTextEntry(final String[] details, final Color color) {
 		Display.getDefault().syncExec(new Runnable() {
 			@Override
